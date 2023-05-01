@@ -6,6 +6,23 @@ export default {
     backgroundColor: colors.white,
     flex: 1
   },
+  containerCenter: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  phoneInput: {
+    marginBottom: 20,
+  },
+  input: {
+    width: '80%',
+    height: 40,
+    borderBottomWidth: 1,
+    marginBottom: 20,
+  },
+  button: {
+    width: '80%',
+  },
   flexCenter: {
     alignItems: 'center',
     justifyContent: 'center'
