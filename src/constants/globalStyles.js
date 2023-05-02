@@ -36,6 +36,11 @@ export default {
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
+  link: {
+    color: 'blue',
+    marginTop: 10,
+    textDecorationLine: 'underline'
+  },
   navHeaderStyle: {
     backgroundColor: colors.black,
     borderBottomWidth: 0,
