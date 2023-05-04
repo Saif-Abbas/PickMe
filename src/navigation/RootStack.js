@@ -10,6 +10,7 @@ import ModalHelp from '../screens/ModalHelp';
 import ModalQRCode from '../screens/ModalQRCode';
 import ModalTutorialBike from '../screens/ModalTutorialBike';
 import Login from '../screens/Login';
+import Signup from '../screens/Signup';
 
 const Stack = createNativeStackNavigator();
 
@@ -38,6 +39,13 @@ export default () => (
       <Stack.Screen
         name="Login"
         component={Login}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name="Signup"
+        component={Signup}
         options={{
           headerShown: false
         }}
