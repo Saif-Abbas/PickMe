@@ -134,7 +134,7 @@ const Home = ({ navigation }) => {
         {type === 'car' && <View style={styles.placeholder} />}
         {type === 'bike' && (
           <TouchText
-            onPress={() => navigation.navigate('Signup')}
+            onPress={() => navigation.navigate('Login')}
             style={styles.help}
             text="Help"
           />
