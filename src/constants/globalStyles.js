@@ -9,19 +9,22 @@ export default {
   containerCenter: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   phoneInput: {
     marginBottom: 20,
+    width: '80%',
+    height: 40,
+    borderBottomWidth: 1
   },
   input: {
     width: '80%',
     height: 40,
     borderBottomWidth: 1,
-    marginBottom: 20,
+    marginBottom: 20
   },
   button: {
-    width: '80%',
+    width: '80%'
   },
   flexCenter: {
     alignItems: 'center',
@@ -71,5 +74,14 @@ export default {
   pH4: { paddingHorizontal: 4 },
   pH8: { paddingHorizontal: 8 },
   pH16: { paddingHorizontal: 16 },
-  pH24: { paddingHorizontal: 24 }
+  pH24: { paddingHorizontal: 24 },
+
+  country: {
+    borderRadius: 5,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginBottom: 20,
+    flexDirection: 'row',
+    alignItems: 'center'
+  }
 };
