@@ -21,10 +21,20 @@ export default {
     width: '80%',
     height: 40,
     borderBottomWidth: 1,
-    marginBottom: 20
+    marginRight: 10,
+    marginLeft: 5,
+    fontSize: 16
   },
   button: {
     width: '80%'
+  },
+  inputName: {
+    width: '80%',
+    height: 40,
+    borderBottomWidth: 1,
+    marginRight: 10,
+    marginLeft: 5,
+    fontSize: 16
   },
   flexCenter: {
     alignItems: 'center',
@@ -39,10 +49,20 @@ export default {
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
+  flexRowNewLine: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginTop: 30
+  },
   link: {
     color: 'blue',
     marginTop: 10,
     textDecorationLine: 'underline'
+  },
+  imgUser: {
+    width: 100,
+    height: 100,
+    borderRadius: 100 / 2
   },
   navHeaderStyle: {
     backgroundColor: colors.black,

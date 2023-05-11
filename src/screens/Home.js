@@ -106,13 +106,13 @@ const Home = ({ navigation }) => {
             <TouchIcon
               icon={<SvgQRCode />}
               iconSize={20}
-              onPress={() => navigation.navigate('ModalQRCode')}
+              onPress={() => navigation.navigate('Profile')}
               style={[styles.icon, styles.iconQRCode]}
             />
             <TouchIcon
               icon={<SvgCheckShield />}
               iconSize={20}
-              onPress={() => navigation.navigate('ModalTutorialBike')}
+              onPress={() => navigation.navigate('TripHistory')}
               style={[styles.icon, styles.iconShield]}
             />
           </View>

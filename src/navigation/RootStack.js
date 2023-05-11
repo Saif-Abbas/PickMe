@@ -11,6 +11,8 @@ import ModalQRCode from '../screens/ModalQRCode';
 import ModalTutorialBike from '../screens/ModalTutorialBike';
 import Login from '../screens/Login';
 import Signup from '../screens/Signup';
+import Profile from '../screens/Profile';
+import TripHistory from '../screens/TripHistory';
 
 const Stack = createNativeStackNavigator();
 
@@ -51,6 +53,13 @@ export default () => (
         }}
       />
       <Stack.Screen
+        name="TripHistory"
+        component={TripHistory}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
         name="ModalQRCode"
         component={ModalQRCode}
         options={{
@@ -60,6 +69,13 @@ export default () => (
       <Stack.Screen
         name="ModalTutorialBike"
         component={ModalTutorialBike}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
         options={{
           headerShown: false
         }}

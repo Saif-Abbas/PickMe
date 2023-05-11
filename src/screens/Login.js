@@ -41,14 +41,14 @@ const Login = () => {
             style={gStyle.input}
             placeholder="Phone Number"
             placeholderTextColor="#000000"
-            pattern="[0-9]{10}"
+            maxLength={9}
             keyboardType="phone-pad"
             value={phoneNumber}
             onChangeText={(text) => setPhoneNumber(text)}
           />
         </TouchableOpacity>
         {/* Conditional Rendering */}
-        {phoneNumber.length === 10 && (
+        {phoneNumber.length === 9 && (
           <>
             <Button
               title="Login"
