@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import CountryPicker from 'react-native-country-picker-modal';
 // firebase
+import { useNavigation } from '@react-navigation/native';
 import ModalHeader from '../components/ModalHeader';
 import { gStyle } from '../constants';
 
@@ -16,7 +17,7 @@ const Login = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [selectedCountry, setSelectedCountry] = useState();
   const [countryModalVisible, setCountryModalVisible] = useState();
-
+  const navigation = useNavigation();
   return (
     <View style={gStyle.container}>
       <ModalHeader text="Login" />
@@ -57,7 +58,11 @@ const Login = () => {
             />
           </>
         )}
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Signup');
+          }}
+        >
           <Text style={gStyle.link}>Dont have an account? Sign up</Text>
         </TouchableOpacity>
       </View>

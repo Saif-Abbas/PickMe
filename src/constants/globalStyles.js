@@ -25,9 +25,6 @@ export default {
     marginLeft: 5,
     fontSize: 16
   },
-  button: {
-    width: '80%'
-  },
   inputName: {
     width: '80%',
     height: 40,
@@ -54,6 +51,9 @@ export default {
     flexDirection: 'row',
     marginTop: 30
   },
+  button: {
+    width: '80%'
+  },
   link: {
     color: 'blue',
     marginTop: 10,
@@ -69,7 +69,38 @@ export default {
     borderBottomWidth: 0,
     elevation: 0
   },
-
+  navProfileHeaderContainer: {
+    backgroundColor: '#F0F8FF',
+    borderBottomWidth: 0,
+    elevation: 0
+  },
+  navProfileHeaderImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 100 / 2
+  },
+  navButton: {
+    width: '100%',
+    height: 60,
+    marginTop: 20,
+    backgroundColor: '#F0F8FF',
+    colors: '#000',
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  navText: {
+    fontSize: 20,
+    color: '#000'
+  },
+  navBox: {
+    width: '100%',
+    height: 50
+  },
+  navRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap,'
+  },
   flex1: { flex: 1 },
   flex2: { flex: 2 },
   flex3: { flex: 3 },

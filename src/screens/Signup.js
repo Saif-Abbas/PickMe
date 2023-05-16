@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { gStyle } from '../constants';
 import ModalHeader from '../components/ModalHeader';
 
@@ -7,6 +8,7 @@ const Signup = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [name, setName] = useState('');
   const [nationalId, setNationalId] = useState('');
+  const navigation = useNavigation();
 
   return (
     <View style={gStyle.container}>
@@ -46,7 +48,11 @@ const Signup = () => {
               </TouchableOpacity>
             </>
           )}
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Login');
+          }}
+        >
           <Text style={gStyle.link}>Already have an account? Login</Text>
         </TouchableOpacity>
       </View>
