@@ -117,6 +117,12 @@ export default {
     height: 100,
     borderRadius: 100 / 2
   },
+  imgUserProfile: {
+    margenTop:24,
+    width: 100,
+    height: 100,
+    borderRadius: 100 / 2
+  },
   navHeaderStyle: {
     backgroundColor: colors.black,
     borderBottomWidth: 0,
@@ -200,7 +206,7 @@ export default {
   },
   profilePictureContainer: {
     alignItems: 'center',
-    marginBottom: 24
+    marginVertical: 24
   },
   input: {
     height: 40,
@@ -224,5 +230,46 @@ export default {
   datePickerStyle: {
     width: 150,
     marginTop: 20
+  },
+
+  //Trip History Styling
+  tripContainer: {
+    flexDirection: 'row',
+    marginBottom: 16,
+  },
+  driverImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25/2,
+    marginRight: 16,
+  },
+  tripDetails: {
+    flex: 1,
+  },
+  driverInfo: {
+    marginBottom: 8,
+  },
+  driverName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  driverRating: {
+    fontSize: 14,
+    color: '#888',
+  },
+  driverCar: {
+    fontSize: 14,
+  },
+  tripRoute: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  routeText: {
+    flex: 1,
+    fontSize: 14,
+  },
+  tripCost: {
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 };

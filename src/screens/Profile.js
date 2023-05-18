@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import ModalHeader from '../components/ModalHeader';
+import { gStyle } from '../constants';
 
 const Profile = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [birthday, setBirthday] = useState('');
+  const [birthday, setBirthday] = useState(new Date());
   const [password, setPassword] = useState('');
 
   const handleChangeProfilePicture = () => {
@@ -20,13 +23,11 @@ const Profile = () => {
   };
 
   return (
-    <View style={styles.profileContainer}>
-      <TouchableOpacity style={styles.returnIcon} onPress={handleGoBack}>
-        {/* Add your return icon here */}
-      </TouchableOpacity>
+    <View style={gStyle.container}>
+      <ModalHeader text="Profile" />
 
-      <TouchableOpacity style={styles.profilePictureContainer} onPress={handleChangeProfilePicture}>
-        {/* Add your profile picture component here */}
+      <TouchableOpacity style={gStyle.profilePictureContainer} onPress={handleChangeProfilePicture}>
+      <Image style={gStyle.imgUserProfile} source={require('../assets/icon.png')} />
       </TouchableOpacity>
 
       <TextInput
@@ -47,13 +48,12 @@ const Profile = () => {
         autoCapitalize="none"
       />
 
-      <TextInput
-        style={styles.input}
+      <DateTimePicker
         value={birthday}
-        onChangeText={setBirthday}
-        placeholder="Birthday"
-        placeholderTextColor="#999"
-        keyboardType="numeric"
+        mode="date"
+        display="default"
+        onChange={(event, date) => setBirthday(date)}
+        maximumDate={new Date()}
       />
 
       <TextInput
