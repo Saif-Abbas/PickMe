@@ -11,6 +11,59 @@ export default {
     alignItems: 'center',
     justifyContent: 'center'
   },
+
+  //Nav Menu Styling
+  navContainer: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#fff'
+  },
+  userInfoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 24
+  },
+  userImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 50/2,
+    marginRight: 16
+  },
+  userInfo: {
+    flex: 1
+  },
+  userName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 4
+  },
+  userRating: {
+    fontSize: 14,
+    color: '#888'
+  },
+  menuItem: {
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+    marginVertical: 12
+  },
+  menuItemText: {
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
+  bottomContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 'auto'
+  },
+  bottomIcon: {
+    padding: 16
+  },
+  bottomIconText: {
+    fontSize: 20
+  },
+
+  //Login Styling
   phoneInput: {
     marginBottom: 20,
     width: '80%',
@@ -134,5 +187,42 @@ export default {
     marginBottom: 20,
     flexDirection: 'row',
     alignItems: 'center'
-  }
+  },
+  profileContainer: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#fff'
+  },
+  returnIcon: {
+    position: 'absolute',
+    top: 16,
+    left: 16
+  },
+  profilePictureContainer: {
+    alignItems: 'center',
+    marginBottom: 24
+  },
+  input: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 4,
+    marginBottom: 16,
+    paddingHorizontal: 8
+  },
+  saveButton: {
+    backgroundColor: '#00c',
+    paddingVertical: 12,
+    borderRadius: 4,
+    alignItems: 'center'
+  },
+  saveButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
+  datePickerStyle: {
+    width: 150,
+    marginTop: 20
+  },
 };

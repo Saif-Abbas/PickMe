@@ -1,37 +1,111 @@
-import * as React from 'react';
-import { Text, View, Image, TextInput } from 'react-native';
-import { gStyle } from '../constants';
-
-// components
-import ModalHeader from '../components/ModalHeader';
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
 const Profile = () => {
-  // TODO: Implement Back-end
-  const test = '';
-  return (
-    <View style={gStyle.container}>
-      <ModalHeader text="Profile" />
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [birthday, setBirthday] = useState('');
+  const [password, setPassword] = useState('');
 
-      <View style={gStyle.containerCenter}>
-        <Text>{test} </Text>
-        <Image style={gStyle.imgUser} source={require('../assets/icon.png')} />
-        <View style={gStyle.flexCenter}>
-          <View style={gStyle.flexRowNewLine}>
-            <Text>Name</Text>
-            <TextInput style={gStyle.input} placeholder="useless placeholder" />
-          </View>
-          <View style={gStyle.flexRowNewLine}>
-            <Text>Email</Text>
-            <TextInput
-              style={gStyle.input}
-              placeholder="useless placeholder"
-              inputMode="email"
-            />
-          </View>
-        </View>
-      </View>
+  const handleChangeProfilePicture = () => {
+    // Handle changing profile picture
+  };
+
+  const handleSave = () => {
+    // Handle saving profile changes
+  };
+
+  const handleGoBack = () => {
+    // Handle navigating back
+  };
+
+  return (
+    <View style={styles.profileContainer}>
+      <TouchableOpacity style={styles.returnIcon} onPress={handleGoBack}>
+        {/* Add your return icon here */}
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.profilePictureContainer} onPress={handleChangeProfilePicture}>
+        {/* Add your profile picture component here */}
+      </TouchableOpacity>
+
+      <TextInput
+        style={styles.input}
+        value={name}
+        onChangeText={setName}
+        placeholder="Name"
+        placeholderTextColor="#999"
+      />
+
+      <TextInput
+        style={styles.input}
+        value={email}
+        onChangeText={setEmail}
+        placeholder="Email"
+        placeholderTextColor="#999"
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
+
+      <TextInput
+        style={styles.input}
+        value={birthday}
+        onChangeText={setBirthday}
+        placeholder="Birthday"
+        placeholderTextColor="#999"
+        keyboardType="numeric"
+      />
+
+      <TextInput
+        style={styles.input}
+        value={password}
+        onChangeText={setPassword}
+        placeholder="Password"
+        placeholderTextColor="#999"
+        secureTextEntry
+      />
+
+      <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+        <Text style={styles.saveButtonText}>Save</Text>
+      </TouchableOpacity>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  profileContainer: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#fff',
+  },
+  returnIcon: {
+    position: 'absolute',
+    top: 16,
+    left: 16,
+  },
+  profilePictureContainer: {
+    alignItems: 'center',
+    marginBottom: 24,
+  },
+  input: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 4,
+    marginBottom: 16,
+    paddingHorizontal: 8,
+  },
+  saveButton: {
+    backgroundColor: '#00c',
+    paddingVertical: 12,
+    borderRadius: 4,
+    alignItems: 'center',
+  },
+  saveButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});
 
 export default Profile;
