@@ -39,7 +39,7 @@ const Login = () => {
             onSelect={(country) => setSelectedCountry(country)}
           />
           <TextInput
-            style={gStyle.input}
+            style={gStyle.phoneInput}
             placeholder="Phone Number"
             placeholderTextColor="#000000"
             maxLength={9}
@@ -51,11 +51,9 @@ const Login = () => {
         {/* Conditional Rendering */}
         {phoneNumber.length === 9 && (
           <>
-            <Button
-              title="Login"
-              style={gStyle.button}
-              onPress={() => Alert.alert('Login')}
-            />
+          <TouchableOpacity onPress={() => Alert.alert("Login")} style={gStyle.loginButton}>
+            <Text style={gStyle.loginButtonText}>Login</Text>
+            </TouchableOpacity>
           </>
         )}
         <TouchableOpacity
@@ -63,7 +61,7 @@ const Login = () => {
             navigation.navigate('Signup');
           }}
         >
-          <Text style={gStyle.link}>Dont have an account? Sign up</Text>
+          <Text style={gStyle.loginLink}>Dont have an account? Sign up</Text>
         </TouchableOpacity>
       </View>
     </View>

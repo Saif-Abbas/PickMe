@@ -26,7 +26,7 @@ export default {
   userImage: {
     width: 50,
     height: 50,
-    borderRadius: 50/2,
+    borderRadius: 50 / 2,
     marginRight: 16
   },
   userInfo: {
@@ -63,20 +63,62 @@ export default {
     fontSize: 20
   },
 
-  //Login Styling
+  //Log In Styling
   phoneInput: {
-    marginBottom: 20,
-    width: '80%',
-    height: 40,
-    borderBottomWidth: 1
-  },
-  input: {
-    width: '80%',
-    height: 40,
+    width: '60%',
+    height: 30,
     borderBottomWidth: 1,
     marginRight: 10,
     marginLeft: 5,
     fontSize: 16
+  },
+  loginButton: {
+    width: '30%',
+    backgroundColor: '#000',
+    borderRadius: 6,
+    borderColor: '#000',
+    alignItems: 'center',
+    paddingVertical: 12,
+    height: '8%'
+  },
+  loginButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  loginLink: {
+    color: '#0f0f0f',
+    marginTop: 10,
+    textDecorationLine: 'underline'
+  },
+  country: {
+    borderRadius: 5,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  
+  //Sign Up Styling
+  nameInput: {
+    width: '88%',
+    height: 30,
+    borderRadius: 5,
+    borderBottomWidth: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    fontSize: 16,
+    textAlign: 'left'
+  },
+  nationalIDInput: {
+    width: '88%',
+    height: 30,
+    borderRadius: 5,
+    borderBottomWidth: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    fontSize: 16,
+    textAlign: 'left'
   },
   inputName: {
     width: '80%',
@@ -104,21 +146,13 @@ export default {
     flexDirection: 'row',
     marginTop: 30
   },
-  button: {
-    width: '80%'
-  },
-  link: {
-    color: 'blue',
-    marginTop: 10,
-    textDecorationLine: 'underline'
-  },
   imgUser: {
     width: 100,
     height: 100,
     borderRadius: 100 / 2
   },
   imgUserProfile: {
-    margenTop:24,
+    margenTop: 24,
     width: 100,
     height: 100,
     borderRadius: 100 / 2
@@ -186,14 +220,6 @@ export default {
   pH16: { paddingHorizontal: 16 },
   pH24: { paddingHorizontal: 24 },
 
-  country: {
-    borderRadius: 5,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    marginBottom: 20,
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
   profileContainer: {
     flex: 1,
     padding: 16,
@@ -235,41 +261,42 @@ export default {
   //Trip History Styling
   tripContainer: {
     flexDirection: 'row',
-    marginBottom: 16,
+    marginBottom: 16
   },
   driverImage: {
     width: 50,
     height: 50,
-    borderRadius: 25/2,
-    marginRight: 16,
+    borderRadius: 25 / 2,
+    marginRight: 16
   },
   tripDetails: {
-    flex: 1,
+    flex: 1
   },
   driverInfo: {
-    marginBottom: 8,
+    marginBottom: 8
   },
   driverName: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   driverRating: {
     fontSize: 14,
-    color: '#888',
+    color: '#888'
   },
   driverCar: {
-    fontSize: 14,
+    fontSize: 14
   },
   tripRoute: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   routeText: {
     flex: 1,
-    fontSize: 14,
+    fontSize: 14
   },
   tripCost: {
     fontSize: 16,
     fontWeight: 'bold',
-  },
+    textAlign: 'right'
+  }
 };

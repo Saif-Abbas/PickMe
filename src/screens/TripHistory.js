@@ -50,9 +50,6 @@ const TripHistory = () => {
               <Text style={gStyle.driverCar}>Car: {trip.driver.car}</Text>
             </View>
             <View style={gStyle.tripRoute}>
-              <Text style={gStyle.routeText}>
-                From: {trip.from} - To: {trip.to}
-              </Text>
               <Text style={gStyle.tripCost}>{trip.cost}</Text>
             </View>
           </View>
