@@ -79,7 +79,7 @@ export default {
     borderColor: '#000',
     alignItems: 'center',
     paddingVertical: 12,
-    height: '8%'
+    height: '20px'
   },
   loginButtonText: {
     color: '#fff',
@@ -98,7 +98,7 @@ export default {
     flexDirection: 'row',
     alignItems: 'center'
   },
-  
+
   //Sign Up Styling
   nameInput: {
     width: '88%',
@@ -151,8 +151,10 @@ export default {
     height: 100,
     borderRadius: 100 / 2
   },
+  //Profile Styling
+
   imgUserProfile: {
-    margenTop: 24,
+    marginTop: 24,
     width: 100,
     height: 100,
     borderRadius: 100 / 2
@@ -171,6 +173,16 @@ export default {
     width: 100,
     height: 100,
     borderRadius: 100 / 2
+  },
+  profileDatePicker: {
+    width: '100%',
+    height: 50,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 16
   },
   navButton: {
     width: '100%',
@@ -301,46 +313,46 @@ export default {
     fontWeight: 'bold',
     textAlign: 'right'
   },
-//Payment Method Styling
-paymentContainer: {
-  flex: 1,
-  alignItems: 'center',
-  justifyContent: 'center'
-},
-paymentTitle: {
-  fontSize: 24,
-  fontWeight: 'bold',
-  marginBottom: 20
-},
-paymentMethod: {
-  borderWidth: 1,
-  borderColor: '#ccc',
-  borderRadius: 5,
-  padding: 10,
-  marginVertical: 5,
-  width: '80%',
-  alignItems: 'center',
-},
-//Settings Styling
-settingHeader: {
-  fontSize: 24,
-  fontWeight: 'bold',
-  marginBottom: 24,
-},
-settingButton: {
-  width: '30%',
+  //Payment Method Styling
+  paymentContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  paymentTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20
+  },
+  paymentMethod: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+    marginVertical: 5,
+    width: '80%',
+    alignItems: 'center'
+  },
+  //Settings Styling
+  settingHeader: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 24
+  },
+  settingButton: {
+    width: '30%',
     backgroundColor: '#000',
     borderRadius: 6,
     borderColor: '#000',
     alignItems: 'center',
     paddingVertical: 12,
     height: '8%',
-    marginVertical: 10,
-},
-settingButtonText: {
-  color: '#000',
-  backgroundColor: '#red',
+    marginVertical: 10
+  },
+  settingButtonText: {
+    color: '#000',
+    backgroundColor: '#red',
     fontWeight: 'bold',
     textAlign: 'center'
-},
+  }
 };

@@ -7,8 +7,7 @@ const FAQ = () => {
   const test = '';
   return (
     <View style={gStyle.container}>
-      <ModalHeader text={'FAQ'}/>
-      
+      <ModalHeader text={'FAQ'} />
     </View>
   );
 };

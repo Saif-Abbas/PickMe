@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  StyleSheet
+} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ModalHeader from '../components/ModalHeader';
 import { gStyle } from '../constants';
@@ -26,8 +33,14 @@ const Profile = () => {
     <View style={gStyle.container}>
       <ModalHeader text="Profile" />
 
-      <TouchableOpacity style={gStyle.profilePictureContainer} onPress={handleChangeProfilePicture}>
-      <Image style={gStyle.imgUserProfile} source={require('../assets/icon.png')} />
+      <TouchableOpacity
+        style={gStyle.profilePictureContainer}
+        onPress={handleChangeProfilePicture}
+      >
+        <Image
+          style={gStyle.imgUserProfile}
+          source={require('../assets/icon.png')}
+        />
       </TouchableOpacity>
 
       <TextInput
@@ -47,11 +60,11 @@ const Profile = () => {
         keyboardType="email-address"
         autoCapitalize="none"
       />
-
       <DateTimePicker
         value={birthday}
         mode="date"
         display="default"
+        style={gStyle.profileDatePicker}
         onChange={(event, date) => setBirthday(date)}
         maximumDate={new Date()}
       />
@@ -76,16 +89,16 @@ const styles = StyleSheet.create({
   profileContainer: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
   returnIcon: {
     position: 'absolute',
     top: 16,
-    left: 16,
+    left: 16
   },
   profilePictureContainer: {
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: 24
   },
   input: {
     height: 40,
@@ -93,19 +106,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     marginBottom: 16,
-    paddingHorizontal: 8,
+    paddingHorizontal: 8
   },
   saveButton: {
     backgroundColor: '#00c',
     paddingVertical: 12,
     borderRadius: 4,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   saveButtonText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: 'bold',
-  },
+    fontWeight: 'bold'
+  }
 });
 
 export default Profile;

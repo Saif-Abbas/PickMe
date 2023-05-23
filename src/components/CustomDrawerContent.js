@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import NavProfileHeader from './NavProfileHeader';
 import { gStyle } from '../constants';
 import { useNavigation } from '@react-navigation/native';
-
+import { user } from '../services/firebase';
 const CustomwerDrawerContent = () => {
   const navigation = useNavigation();
 
@@ -12,7 +12,7 @@ const CustomwerDrawerContent = () => {
     name: 'Saif Abbas',
     rating: 4.5
   };
-
+  console.log(user);
   return (
     <View style={gStyle.navContainer}>
       {/* User Info */}
