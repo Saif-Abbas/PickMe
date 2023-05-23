@@ -18,7 +18,7 @@ const Signup = () => {
       <ModalHeader text="Sign Up" />
       <View style={gStyle.containerCenter}>
         {/* User Phone Number */}
-        <TouchableOpacity
+        <View
           style={gStyle.country}
           onPress={() => setCountryModalVisible(true)}
         >
@@ -38,11 +38,11 @@ const Signup = () => {
             placeholder="Phone Number"
             placeholderTextColor="#000000"
             maxLength={9}
-            keyboardType="phone-pad"
+            keyboardType="numeric"
             value={phoneNumber}
             onChangeText={(text) => setPhoneNumber(text)}
           />
-        </TouchableOpacity>
+        </View>
 
         {/*User Name*/}
         <View style={gStyle.country}>

@@ -261,7 +261,9 @@ export default {
   //Trip History Styling
   tripContainer: {
     flexDirection: 'row',
-    marginBottom: 16
+    marginVertical: 24,
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
   driverImage: {
     width: 50,
@@ -298,5 +300,47 @@ export default {
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'right'
-  }
+  },
+//Payment Method Styling
+paymentContainer: {
+  flex: 1,
+  alignItems: 'center',
+  justifyContent: 'center'
+},
+paymentTitle: {
+  fontSize: 24,
+  fontWeight: 'bold',
+  marginBottom: 20
+},
+paymentMethod: {
+  borderWidth: 1,
+  borderColor: '#ccc',
+  borderRadius: 5,
+  padding: 10,
+  marginVertical: 5,
+  width: '80%',
+  alignItems: 'center',
+},
+//Settings Styling
+settingHeader: {
+  fontSize: 24,
+  fontWeight: 'bold',
+  marginBottom: 24,
+},
+settingButton: {
+  width: '30%',
+    backgroundColor: '#000',
+    borderRadius: 6,
+    borderColor: '#000',
+    alignItems: 'center',
+    paddingVertical: 12,
+    height: '8%',
+    marginVertical: 10,
+},
+settingButtonText: {
+  color: '#000',
+  backgroundColor: '#red',
+    fontWeight: 'bold',
+    textAlign: 'center'
+},
 };
