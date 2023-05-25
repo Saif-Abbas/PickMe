@@ -1,28 +1,40 @@
 {
   "expo": {
-    "name": "Expo Uber",
-    "description": "Uber: UI Clone with React Native & Expo",
-    "scheme": "uberclone",
-    "slug": "uberclone",
-    "privacy": "public",
-    "version": "0.0.1",
-    "platforms": ["android", "ios"],
-    "githubUrl": "https://github.com/calebnance/expo-uber",
+    "name": "PickMe",
+    "slug": "PickMe",
+    "description": "Our Motto: We Can Help!",
+    "primaryColor": "#FFFFFF",
+    "version": "2.1.5",
     "orientation": "portrait",
-    "primaryColor": "#000000",
-    "icon": "src/assets/icon.png",
+    "icon": "./assets/icon.png",
     "splash": {
-      "backgroundColor": "#000000",
-      "image": "src/assets/splash.png",
-      "resizeMode": "contain"
+      "image": "./assets/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#1F2530"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
-    "android": {
-      "versionCode": 1
-    },
     "ios": {
-      "buildNumber": "0.0.1",
       "supportsTablet": true
-    }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to make you add a profile picture, and share your talents."
+        }
+      ]
+    ]
   }
 }

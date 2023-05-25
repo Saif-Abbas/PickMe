@@ -1,0 +1,10 @@
+export {default as Home} from './Home';
+export {default as Profile} from './Profile';
+export {default as Settings} from './Settings';
+export {default as Login} from './Login';
+export {default as Talented} from './Talented';
+export {default as UserProfile} from './UserProfile';
+export {default as BecomeTalented} from './BecomeTalented';
+export {default as Orders} from './Orders';
+export {default as Hire} from './Hire';
+export {default as Chat} from './ChatPage';
