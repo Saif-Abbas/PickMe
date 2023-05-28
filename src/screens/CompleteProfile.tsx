@@ -5,35 +5,45 @@ import DateTimePicker from "react-native-modal-datetime-picker";
 import { useData, useTheme, useTranslation } from "../hooks/";
 import { useRoute } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import { Alert, Block, Button, Input, Image, Text } from "../components/";
-
+import {
+  Alert,
+  Block,
+  Button,
+  Input,
+  Image,
+  Text,
+  Modal,
+} from "../components/";
+import { FlatList } from "react-native-gesture-handler";
+import { db, update, ref } from "../services/firebase";
 const isAndroid = Platform.OS === "android";
 
-interface IHire {
+interface IComplete {
+  name: string;
+  email: string;
   date: string;
-  message: string;
-  accepted: boolean;
+  gender: string;
 }
 
 const CompleteProfile = () => {
   const { t } = useTranslation();
   const { isDark, user } = useData();
-  const params: any = useRoute().params;
-  const requestedTalented = params?.requested;
   const navigation = useNavigation();
   const { assets, colors, gradients, sizes } = useTheme();
   const [date, setDate] = useState("");
   const [requested, setRequested] = useState(false);
-  const [order, setOrder] = useState<IHire>({
+  const genders = ["Male", "Female"];
+  const [complete, setComplete] = useState<IComplete>({
+    name: "",
+    email: "",
     date: "",
-    message: "",
-    accepted: false,
+    gender: "",
   });
   const handleChange = useCallback(
     (value: any) => {
-      setOrder((state) => ({ ...state, ...value }));
+      setComplete((state) => ({ ...state, ...value }));
     },
-    [setOrder]
+    [setComplete]
   );
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [alert, setAlert] = useState({
@@ -64,22 +74,28 @@ const CompleteProfile = () => {
     setDate(date.toLocaleString("en-US"));
     hideDateTimePicker();
   };
-  const handleHire = () => {
-    if (!order.date || !order.message) {
-      return;
-    }
-    if (order.message && order.message.length < 10) {
-      showAlert("danger", "Message must be at least 10 characters");
-      return;
-    }
-    if (!params.requested) {
+  const [showGenderModal, setGenderModal] = useState(false);
+
+  const handleHire = async () => {
+    if (
+      !complete.date ||
+      !complete.name ||
+      !complete.email ||
+      !complete.gender
+    ) {
       return;
     }
     try {
-      setRequested(true);
-
-      showAlert("success", "Order sent successfully");
-      navigation.navigate("Home");
+      await update(ref(db, `users/${user.auth?.currentUser?.uid}`), {
+        ...complete,
+      })
+        .then(() => {
+          showAlert("success", "Profile Completed successfully");
+          navigation.navigate("Home");
+        })
+        .catch((error) => {
+          showAlert("danger", error.message);
+        });
     } catch (e) {
       showAlert("danger", "Something went wrong");
     }
@@ -119,7 +135,9 @@ const CompleteProfile = () => {
             </Text>
           </Image>
         </Block>
-        {/* hire form */}
+
+        {/* Complete Profile Form */}
+
         <Block
           keyboard
           behavior={!isAndroid ? "padding" : "height"}
@@ -142,15 +160,62 @@ const CompleteProfile = () => {
               paddingVertical={sizes.sm}
             >
               <Block paddingHorizontal={sizes.sm}>
+                <Input
+                  autoCapitalize="none"
+                  marginBottom={sizes.s}
+                  label={"Name"}
+                  keyboardType="default"
+                  placeholder={"Enter your name"}
+                  onChangeText={(value) => handleChange({ name: value })}
+                />
+                <Input
+                  autoCapitalize="none"
+                  marginBottom={sizes.s}
+                  label={"Email"}
+                  keyboardType="email-address"
+                  placeholder={"Enter your email"}
+                  onChangeText={(value) => handleChange({ email: value })}
+                />
                 <DateTimePicker
                   isVisible={isDateTimePickerVisible}
                   mode="datetime"
                   display="inline"
-                  minimumDate={new Date()}
+                  maximumDate={new Date()}
                   onConfirm={handleDatePicked}
                   onCancel={hideDateTimePicker}
                   onChange={(value) => handleChange({ date: value })}
                 />
+                <Modal
+                  visible={showGenderModal}
+                  onRequestClose={() => setGenderModal(false)}
+                >
+                  <FlatList
+                    keyExtractor={(index) => `${index}`}
+                    data={genders}
+                    renderItem={({ item }) => (
+                      <Button
+                        marginBottom={sizes.sm}
+                        onPress={() => {
+                          setGenderModal(false);
+                        }}
+                      >
+                        <Text p white semibold transform="uppercase">
+                          {item}
+                        </Text>
+                      </Button>
+                    )}
+                  />
+                </Modal>
+                <Button
+                  white
+                  outlined
+                  shadow={false}
+                  radius={sizes.m}
+                  onPress={() => {
+                    setGenderModal(true);
+                  }}
+                />
+
                 <Button
                   flex={1}
                   primary
@@ -170,8 +235,6 @@ const CompleteProfile = () => {
                 <Input
                   autoCapitalize="none"
                   marginBottom={sizes.s}
-                  style={{ height: 200 }}
-                  multiline
                   label={t("hire.msg")}
                   keyboardType="default"
                   placeholder={t("hire.msgPlaceholder")}
@@ -181,7 +244,13 @@ const CompleteProfile = () => {
                   onPress={handleHire}
                   marginVertical={sizes.s}
                   gradient={gradients.primary}
-                  disabled={requested || !order.message || !order.date}
+                  disabled={
+                    requested ||
+                    !complete.date ||
+                    !complete.email ||
+                    !complete.gender ||
+                    !complete.name
+                  }
                 >
                   <Text bold white transform="uppercase">
                     {t("hire.send")}

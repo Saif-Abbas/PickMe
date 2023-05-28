@@ -65,7 +65,7 @@
   },
   "profile": {
     "title": "الحساب",
-    "addSkills": "اضافة مهارة",
+    "editProfile": "تعديل الملف الشخصي",
     "aboutMe": "عني",
     "rating": "التقييم",
     "jobsDone": "الأعمال",

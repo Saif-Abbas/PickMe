@@ -65,7 +65,7 @@
   },
   "profile": {
     "title": "Profile",
-    "addSkills": "Add Skills",
+    "editProfile": "Edit Profile",
     "aboutMe": "About me",
     "rating": "Rating",
     "jobsDone": "Jobs",

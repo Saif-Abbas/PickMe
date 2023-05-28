@@ -70,6 +70,8 @@ const loginWithCredentials = async (credential: any, phone: any) => {
         name: "",
         nationalId: "",
         dob: "",
+        avatar:
+          "https://firebasestorage.googleapis.com/v0/b/pickme-7a71e.appspot.com/o/default-avatar.png?alt=media&token=21bbd37b-847b-40a1-9ea5-28ee126463c5",
       });
       console.log("Data set.");
       return {

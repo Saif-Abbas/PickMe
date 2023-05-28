@@ -157,7 +157,9 @@ export default () => {
                   console.log(data);
                 }}
               >
-                <Text p>{data.description}</Text>
+                <Text p black>
+                  {data.description}
+                </Text>
               </TouchableOpacity>
             </Block>
           )}
@@ -168,12 +170,24 @@ export default () => {
           styles={
             isDark
               ? {
+                  container: {
+                    position: "absolute",
+                    top: -23,
+                    left: 0,
+                    right: 0,
+                    height: sizes.xxl * 6,
+                  },
+                  description: null,
+                  textInput: isDark ? colors.dark : colors.white,
+                  loader: null,
+                  row: {},
+                }
+              : {
                   textInput: {
-                    backgroundColor: colors.black,
-                    color: colors.white,
+                    backgroundColor: colors.white,
+                    color: colors.black,
                   },
                 }
-              : {}
           }
           query={{
             key: keys.GooglePlacesAPIKey,

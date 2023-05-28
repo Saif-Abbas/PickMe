@@ -14,6 +14,7 @@ export interface IUser {
     nationalId: string;
     dob: string;
     type: string;
+    gender: string;
   };
   auth: Auth;
 }
@@ -31,6 +32,7 @@ export interface IDriver {
     carLicense: string;
     carPlate: string;
     type: string;
+    gender: string;
   };
   auth: Auth;
 }
