@@ -6,7 +6,7 @@ import {useTheme, useTranslation} from '../hooks/';
 import {Block, Button, Image, Text} from '../components/';
 const isAndroid = Platform.OS === 'android';
 
-const BecomeTalented = () => {
+const BecomeDriver = () => {
   const {t} = useTranslation();
   const navigation = useNavigation();
   const Z_INDEX = 0;
@@ -194,4 +194,4 @@ const BecomeTalented = () => {
   );
 };
 
-export default BecomeTalented;
+export default BecomeDriver;

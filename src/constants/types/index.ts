@@ -1,25 +1,38 @@
-import i18n from 'i18n-js';
-import {ITheme} from './theme';
+import i18n from "i18n-js";
+import { ITheme } from "./theme";
+import { Auth } from "firebase/auth";
 
-export * from './components';
-export * from './theme';
+export * from "./components";
+export * from "./theme";
 
 export interface IUser {
-  id: string;
-  avatar: string;
-  fullName: string;
-  phoneNumber: string;
-  type: string;
-  stats: {
-    jobsDone: number;
-    rating: number;
+  data: {
+    id: string;
+    phone: string;
+    name: string;
+    avatar: string;
+    nationalId: string;
+    dob: string;
+    type: string;
   };
-  skills: {
-    skillId: number;
-    skillName: string;
+  auth: Auth;
+}
+
+export interface IDriver {
+  data: {
+    id: string;
+    phone: string;
+    name: string;
+    avatar: string;
+    nationalId: string;
+    dob: string;
+    car: string;
+    license: string;
+    carLicense: string;
+    carPlate: string;
+    type: string;
   };
-  github: string;
-  linkedin: string;
+  auth: Auth;
 }
 
 export interface ICard {
@@ -64,5 +77,5 @@ export interface INotification {
   message?: string;
   read?: boolean;
   createdAt?: number | Date;
-  type: 'approve' | 'reject' | 'chat' | 'notification';
+  type: "approve" | "reject" | "chat" | "notification";
 }

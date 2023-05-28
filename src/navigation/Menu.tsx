@@ -1,25 +1,25 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {Animated, Alert, StyleSheet} from 'react-native';
-import {Ionicons} from '@expo/vector-icons';
-import * as Updates from 'expo-updates';
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Animated, Alert, StyleSheet } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import * as Updates from "expo-updates";
 import {
   useIsDrawerOpen,
   createDrawerNavigator,
   DrawerContentComponentProps,
   DrawerContentOptions,
   DrawerContentScrollView,
-} from '@react-navigation/drawer';
+} from "@react-navigation/drawer";
 
-import Screens from './Screens';
-import {Block, Text, Button, Image} from '../components';
-import {useData, useTheme, useTranslation} from '../hooks';
-import {firebase} from '../services/firebase';
+import Screens from "./Screens";
+import { Block, Text, Button, Image } from "../components";
+import { useData, useTheme, useTranslation } from "../hooks";
+import { signOut } from "firebase/auth";
 
 const Drawer = createDrawerNavigator();
 
 /* drawer menu screens navigation */
 const ScreensStack = () => {
-  const {colors} = useTheme();
+  const { colors } = useTheme();
   const isDrawerOpen = useIsDrawerOpen();
   const animation = useRef(new Animated.Value(0)).current;
 
@@ -35,7 +35,7 @@ const ScreensStack = () => {
 
   const animatedStyle = {
     borderRadius: borderRadius,
-    transform: [{scale: scale}],
+    transform: [{ scale: scale }],
   };
 
   useEffect(() => {
@@ -52,11 +52,12 @@ const ScreensStack = () => {
         animatedStyle,
         {
           flex: 1,
-          overflow: 'hidden',
+          overflow: "hidden",
           borderColor: colors.card,
           borderWidth: isDrawerOpen ? 1 : 0,
         },
-      ])}>
+      ])}
+    >
       <Screens />
     </Animated.View>
   );
@@ -64,13 +65,13 @@ const ScreensStack = () => {
 
 /* custom drawer menu */
 const DrawerContent = (
-  props: DrawerContentComponentProps<DrawerContentOptions>,
+  props: DrawerContentComponentProps<DrawerContentOptions>
 ) => {
-  const {navigation} = props;
-  const {t} = useTranslation();
-  const {user, isDark} = useData();
-  const [active, setActive] = useState('Home');
-  const {assets, colors, gradients, sizes} = useTheme();
+  const { navigation } = props;
+  const { t } = useTranslation();
+  const { user, isDark } = useData();
+  const [active, setActive] = useState("Home");
+  const { assets, colors, gradients, sizes } = useTheme();
   const labelColor = colors.text;
 
   const handleNavigation = useCallback(
@@ -78,29 +79,29 @@ const DrawerContent = (
       setActive(to);
       navigation.navigate(to);
     },
-    [navigation, setActive],
+    [navigation, setActive]
   );
   const handleSignOut = () =>
     new Promise((resolve) => {
       Alert.alert(
-        t('common.signout'),
-        t('common.sure'),
+        t("common.signout"),
+        t("common.sure"),
         [
           {
-            text: t('common.yes'),
+            text: t("common.yes"),
             onPress: () => {
-              firebase.auth().signOut();
+              signOut(user.auth);
               Updates.reloadAsync();
             },
           },
           {
-            text: t('common.no'),
+            text: t("common.no"),
             onPress: () => {
-              resolve('NO');
+              resolve("NO");
             },
           },
         ],
-        {cancelable: false},
+        { cancelable: false }
       );
     });
   // const handleWebLink = useCallback((url) => Linking.openURL(url), []);
@@ -109,16 +110,16 @@ const DrawerContent = (
   let screens = [];
   if (!user) {
     screens = [
-      {name: t('screens.home'), to: 'Home', icon: assets.home},
-      {name: t('screens.login'), to: 'Login', icon: assets.login},
-      {name: t('screens.settings'), to: 'Settings', icon: assets.settings},
+      { name: t("screens.home"), to: "Home", icon: assets.home },
+      { name: t("screens.login"), to: "Login", icon: assets.login },
+      { name: t("screens.settings"), to: "Settings", icon: assets.settings },
     ];
   } else {
     screens = [
-      {name: t('screens.home'), to: 'Home', icon: assets.home},
-      {name: t('screens.talented'), to: 'Talented', icon: assets.star},
-      {name: t('screens.order'), to: 'Orders', icon: assets.add},
-      {name: t('screens.settings'), to: 'Settings', icon: assets.settings},
+      { name: t("screens.home"), to: "Home", icon: assets.home },
+      { name: t("screens.talented"), to: "Talented", icon: assets.star },
+      { name: t("screens.order"), to: "Orders", icon: assets.add },
+      { name: t("screens.settings"), to: "Settings", icon: assets.settings },
     ];
   }
 
@@ -128,7 +129,8 @@ const DrawerContent = (
       scrollEnabled
       removeClippedSubviews
       renderToHardwareTextureAndroid
-      contentContainerStyle={{paddingBottom: sizes.padding}}>
+      contentContainerStyle={{ paddingBottom: sizes.padding }}
+    >
       <Block paddingHorizontal={sizes.padding} marginTop={sizes.s}>
         {user ? (
           <Block row justify="space-between" marginTop={sizes.sm}>
@@ -138,19 +140,20 @@ const DrawerContent = (
                 left={5}
                 bottom={10}
                 onPress={() => {
-                  handleNavigation('Profile');
-                }}>
+                  handleNavigation("Profile");
+                }}
+              >
                 <Image
                   radius={40}
                   width={40}
                   height={40}
-                  source={{uri: user.avatar}}
+                  source={{ uri: user.data.avatar }}
                 />
                 <Text bold h5 left={10}>
-                  {user.fullName.split(' ')[0] + ' '}
+                  {user.data.name.split(" ")[0] + " "}
                   <Ionicons
                     size={14}
-                    name={user.type === 'User' ? 'person' : 'star-outline'}
+                    name={user.data.type === "User" ? "person" : "star-outline"}
                     color={isDark ? colors.white : colors.black}
                   />
                 </Text>
@@ -161,7 +164,8 @@ const DrawerContent = (
               gradient={gradients.primary}
               marginBottom={sizes.base}
               left={2}
-              onPress={() => handleSignOut()}>
+              onPress={() => handleSignOut()}
+            >
               <Text white bold transform="uppercase">
                 <Ionicons
                   size={18}
@@ -172,12 +176,13 @@ const DrawerContent = (
             </Button>
           </Block>
         ) : null}
-        {user && user.type === 'User' ? (
+        {user && user.data.type === "User" ? (
           <Block
             row
             justify="space-between"
             marginTop={sizes.s}
-            marginBottom={sizes.s}>
+            marginBottom={sizes.s}
+          >
             <Block row>
               <Button
                 flex={1}
@@ -186,11 +191,12 @@ const DrawerContent = (
                 bottom={10}
                 left={5}
                 onPress={() => {
-                  handleNavigation('BecomeTalented');
-                }}>
+                  handleNavigation("BecomeDriver");
+                }}
+              >
                 <Ionicons size={18} name="star" color={colors.white} />
                 <Text bold white left={10}>
-                  {t('screens.becomeTalented')}
+                  {t("screens.becomeTalented")}
                 </Text>
               </Button>
             </Block>
@@ -205,7 +211,8 @@ const DrawerContent = (
               marginBottom={sizes.s}
               marginTop={sizes.xs}
               key={`menu-screen-${screen.name}-${index}`}
-              onPress={() => handleNavigation(screen.to)}>
+              onPress={() => handleNavigation(screen.to)}
+            >
               <Block
                 flex={0}
                 radius={6}
@@ -214,13 +221,14 @@ const DrawerContent = (
                 width={sizes.md}
                 height={sizes.md}
                 marginRight={sizes.s}
-                gradient={gradients[isActive ? 'primary' : 'white']}>
+                gradient={gradients[isActive ? "primary" : "white"]}
+              >
                 <Image
                   radius={0}
                   width={14}
                   height={14}
                   source={screen.icon}
-                  color={colors[isActive ? 'white' : 'black']}
+                  color={colors[isActive ? "white" : "black"]}
                 />
               </Block>
               <Text p semibold={isActive} color={labelColor}>
@@ -235,12 +243,13 @@ const DrawerContent = (
           align="center"
           marginBottom={sizes.l}
           marginTop={
-            user && user.type === 'User'
+            user && user.data.type === "User"
               ? sizes.xxl * 7.0
-              : user && user.type === 'Talented'
+              : user && user.data.type === "Talented"
               ? sizes.xxl * 8
               : sizes.xxl * 10.4
-          }>
+          }
+        >
           <Image
             radius={0}
             width={33}
@@ -250,10 +259,10 @@ const DrawerContent = (
           />
           <Block>
             <Text size={12} semibold>
-              {t('app.name')}
+              {t("app.name")}
             </Text>
             <Text size={12} semibold>
-              {t('app.motto')}
+              {t("app.motto")}
             </Text>
           </Block>
         </Block>
@@ -264,11 +273,11 @@ const DrawerContent = (
 
 /* drawer menu navigation */
 export default () => {
-  const {gradients} = useTheme();
-  const {isDark} = useData();
-  const BACKGROUND_COLOR = isDark ? '#000000' : 'transparent';
+  const { gradients } = useTheme();
+  const { isDark } = useData();
+  const BACKGROUND_COLOR = isDark ? "#000000" : "transparent";
   const FLEX = 1;
-  const WIDTH = '60%';
+  const WIDTH = "60%";
   const BORDER_RIGHT_WIDTH = 0;
   return (
     <Block gradient={gradients.light}>
@@ -284,7 +293,8 @@ export default () => {
           width: WIDTH,
           borderRightWidth: BORDER_RIGHT_WIDTH,
           backgroundColor: BACKGROUND_COLOR,
-        }}>
+        }}
+      >
         <Drawer.Screen name="Screens" component={ScreensStack} />
       </Drawer.Navigator>
     </Block>

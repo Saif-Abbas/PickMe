@@ -1,9 +1,10 @@
 {
-  "databaseURL": "https://talentdesire-387c6-default-rtdb.firebaseio.com/",
-  "apiKey": "AIzaSyD3gc3FkVhYsecWrIyXLwBZEZVjYr91Wzk",
-  "authDomain": "talentdesire-387c6.firebaseapp.com",
-  "projectId": "talentdesire-387c6",
-  "storageBucket": "talentdesire-387c6.appspot.com",
-  "messagingSenderId": "78594681936",
-  "appId": "1:78594681936:web:1c0cdaafbf759e7cb6b555"
+  "apiKey": "AIzaSyAxdxH_Yh-n7WOBgullJK86SvzbZP5d-5w",
+  "authDomain": "pickme-7a71e.firebaseapp.com",
+  "databaseURL": "https://pickme-7a71e-default-rtdb.firebaseio.com",
+  "projectId": "pickme-7a71e",
+  "storageBucket": "pickme-7a71e.appspot.com",
+  "messagingSenderId": "262788238252",
+  "appId": "1:262788238252:web:bd131f322832a6389a8809",
+  "GooglePlacesAPIKey": "AIzaSyBT39I5oL6kzmu2Eb9g-XKrUFdQmxkH4D4"
 }

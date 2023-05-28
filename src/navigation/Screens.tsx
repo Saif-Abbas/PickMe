@@ -1,5 +1,5 @@
-import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
 
 import {
   Home,
@@ -8,12 +8,13 @@ import {
   Settings,
   Talented,
   UserProfile,
-  BecomeTalented,
+  BecomeDriver,
   Orders,
   Hire,
   Chat,
-} from '../screens';
-import {useScreenOptions} from '../hooks';
+  CompleteProfile,
+} from "../screens";
+import { useScreenOptions } from "../hooks";
 const Stack = createStackNavigator();
 export default () => {
   const screenOptions = useScreenOptions();
@@ -24,13 +25,13 @@ export default () => {
       <Stack.Screen
         name="Profile"
         component={Profile}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
 
       <Stack.Screen
         name="Login"
         component={Login}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
 
       <Stack.Screen
@@ -47,12 +48,12 @@ export default () => {
       <Stack.Screen
         name="UserProfile"
         component={UserProfile}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="BecomeTalented"
-        component={BecomeTalented}
-        options={{headerShown: false}}
+        name="BecomeDriver"
+        component={BecomeDriver}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Orders"
@@ -62,12 +63,17 @@ export default () => {
       <Stack.Screen
         name="Hire"
         component={Hire}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Chat"
         component={Chat}
         options={screenOptions.profile}
+      />
+      <Stack.Screen
+        name="CompleteProfile"
+        component={CompleteProfile}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

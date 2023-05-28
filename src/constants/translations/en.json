@@ -28,8 +28,8 @@
   },
   "app": {
     "name": "PickMe",
-    "fullname": "Talent Desire - رغبة المواهب",
-    "motto": "Future is in your hands"
+    "fullname": "PickMe -  خذني معك",
+    "motto": "for a better future"
   },
   "darkMode": "Dark Mode",
   "screens": {
@@ -56,8 +56,8 @@
   },
   "login": {
     "title": "Login",
-    "uid": "Enter your University ID",
-    "uidPlaceholder": "21XXXXX",
+    "phoneNumber": "Phone Number",
+    "phoneNumberPlaceholder": "5XXXXXXXX",
     "requestCode": "Request Code",
     "code": "Enter Your Verification Code",
     "codePlaceholder": "XXXXXX",

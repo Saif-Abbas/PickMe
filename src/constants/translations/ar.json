@@ -27,9 +27,9 @@
     "no": "لا"
   },
   "app": {
-    "name": "رغبة المواهب",
-    "fullname": "PickMe - رغبة المواهب",
-    "motto": "المستقبل في راحة يديك"
+    "name": "خذني معك ",
+    "fullname": "PickMe -  خذني معك",
+    "motto": " من أجل مستقبل أفضل "
   },
   "darkMode": "الوضع الليلي",
   "screens": {
@@ -43,7 +43,7 @@
     "becomeTalented": "كن موهوباً"
   },
   "navigation": {
-    "home": "رغبة المواهب",
+    "home": "خذني معك ",
     "profile": "الحساب",
     "settings": "الإعدادات",
     "notifications": "الإشعارات",
@@ -52,12 +52,12 @@
   },
 
   "home": {
-    "title": "رغبة المواهب"
+    "title": "خذني معك "
   },
   "login": {
     "title": "تسجيل الدخول",
-    "uid": "ادخل رقمك الجامعي",
-    "uidPlaceholder": "21XXXXX",
+    "phoneNumber": "رقم الهاتف",
+    "phoneNumberPlaceholder": "5XXXXXXXX",
     "requestCode": "أرسل رمز التفعيل",
     "code": "أدخل رمز التفعيل",
     "codePlaceholder": "XXXXXX",

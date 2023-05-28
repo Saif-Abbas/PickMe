@@ -1,15 +1,14 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react';
-import Storage from '@react-native-async-storage/async-storage';
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import Storage from "@react-native-async-storage/async-storage";
 
-import {IUseData, ITheme, IUser} from '../constants/types';
+import { IUseData, ITheme, IUser } from "../constants/types";
 
-import {light, dark} from '../constants';
-import {firebase} from '../services/firebase';
-import {getAuth} from 'firebase/auth';
-import appData from '../../app.json';
+import { light, dark } from "../constants";
+import appData from "../../app.json";
+import { Auth, onAuthStateChanged } from "firebase/auth";
 
 export const DataContext = React.createContext({});
-export const DataProvider = ({children}: {children: React.ReactNode}) => {
+export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const [isDark, setIsDark] = useState(false);
   const [theme, setTheme] = useState<ITheme>(light);
   const [user, setUser] = useState<IUser>();
@@ -17,7 +16,7 @@ export const DataProvider = ({children}: {children: React.ReactNode}) => {
   // get isDark mode from storage
   const getIsDark = useCallback(async () => {
     // get preference from storage
-    const isDarkJSON = await Storage.getItem('isDark');
+    const isDarkJSON = await Storage.getItem("isDark");
     if (isDarkJSON !== null) {
       // set isDark / compare if has updated
       setIsDark(JSON.parse(isDarkJSON));
@@ -30,43 +29,25 @@ export const DataProvider = ({children}: {children: React.ReactNode}) => {
       // set isDark / compare if has updated
       setIsDark(payload);
       payload
-        ? (appData.expo.splash.backgroundColor = '#000')
-        : (appData.expo.splash.backgroundColor = '#fff');
+        ? (appData.expo.splash.backgroundColor = "#000")
+        : (appData.expo.splash.backgroundColor = "#fff");
       // save preference to storage
-      Storage.setItem('isDark', JSON.stringify(payload));
+      Storage.setItem("isDark", JSON.stringify(payload));
     },
-    [setIsDark],
+    [setIsDark]
   );
 
   // handle users / profiles
   const handleUsers = useCallback(() => {}, []);
 
   // handle user
-  const handleUser = useCallback(() => {
-    // set user / compare if has updated
-    const auth = getAuth();
-    const authUser = auth.currentUser;
-    if (authUser != null) {
-      firebase.auth().onAuthStateChanged((currentUser: any) => {
-        if (currentUser) {
-          if (JSON.stringify(currentUser) !== JSON.stringify(user)) {
-            firebase
-              .database()
-              .ref('users')
-              .child(currentUser?.displayName)
-              .get()
-              .then((data) => {
-                let dataJSON: any = data.toJSON();
-                setUser(dataJSON);
-              });
-          }
-        } else {
-          // User is signed out
-          // ...
-        }
-      });
-    }
-  }, [user, setUser]);
+  const handleUser = useCallback(
+    (user: IUser) => {
+      // set user / compare if has updated
+      setUser(user);
+    },
+    [user, setUser]
+  );
 
   // get initial data for: isDark & language
   useEffect(() => {
