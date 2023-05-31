@@ -70,6 +70,20 @@
     "gender": "* الجنس",
     "note": "ملاحظة: * تعني ان الخانة مطلوبة"
   },
+  "completeDriverProfile": {
+    "title": "استكمال ملف تعريف السائق",
+    "drivingLicense": "رخصة القيادة *",
+    "carLicense": "رخصة السيارة *",
+    "carName": "اسم السيارة *",
+    "carPlate": "لوحة السيارة *",
+    "carModel": "طراز السيارة *",
+    "uploadCarLicense": "تحميل رخصة السيارة *",
+    "uploadLicense": "تحميل رخصة سياقة *",
+    "uploaded": "الرفع",
+    "note": "ملاحظة: * تشير إلى أنه حقل إلزامي",
+    "carManufacturer": "الشركة المصنعة *",
+    "send": "تأكيد معلومات السائق"
+  },
   "profile": {
     "title": "الحساب",
     "editProfile": "تعديل الملف الشخصي",

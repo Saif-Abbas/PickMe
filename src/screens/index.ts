@@ -10,3 +10,5 @@ export { default as Hire } from "./Hire";
 export { default as Chat } from "./ChatPage";
 export { default as CompleteProfile } from "./CompleteProfile";
 export { default as CompleteDriverProfile } from "./CompleteDriverProfile";
+export { default as BookRide } from "./BookRide";
+export { default as PostRide } from "./PostRide";
