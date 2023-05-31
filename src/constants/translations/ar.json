@@ -63,6 +63,11 @@
     "codePlaceholder": "XXXXXX",
     "signin": "تسجيل الدخول"
   },
+  "completeProfile": {
+    "name": "* الاسم",
+    "nationalId": "* رقم الهوية",
+    "note": "ملاحظة: * تعني ان الخانة مطلوبة"
+  },
   "profile": {
     "title": "الحساب",
     "editProfile": "تعديل الملف الشخصي",

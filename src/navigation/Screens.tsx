@@ -13,6 +13,7 @@ import {
   Hire,
   Chat,
   CompleteProfile,
+  CompleteDriverProfile,
 } from "../screens";
 import { useScreenOptions } from "../hooks";
 const Stack = createStackNavigator();
@@ -73,6 +74,11 @@ export default () => {
       <Stack.Screen
         name="CompleteProfile"
         component={CompleteProfile}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="CompleteDriverProfile"
+        component={CompleteDriverProfile}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
