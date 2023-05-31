@@ -14,6 +14,8 @@ import {
   Chat,
   CompleteProfile,
   CompleteDriverProfile,
+  PostRide,
+  BookRide,
 } from "../screens";
 import { useScreenOptions } from "../hooks";
 const Stack = createStackNavigator();
@@ -22,25 +24,21 @@ export default () => {
   return (
     <Stack.Navigator screenOptions={screenOptions.stack}>
       <Stack.Screen name="Home" component={Home} options={screenOptions.home} />
-
       <Stack.Screen
         name="Profile"
         component={Profile}
         options={{ headerShown: false }}
       />
-
       <Stack.Screen
         name="Login"
         component={Login}
         options={{ headerShown: false }}
       />
-
       <Stack.Screen
         name="Talented"
         component={Talented}
         options={screenOptions.profile}
       />
-
       <Stack.Screen
         name="Settings"
         component={Settings}
@@ -79,6 +77,16 @@ export default () => {
       <Stack.Screen
         name="CompleteDriverProfile"
         component={CompleteDriverProfile}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="PostRide"
+        component={PostRide}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="BookRide"
+        component={BookRide}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

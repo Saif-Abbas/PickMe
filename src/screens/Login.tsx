@@ -32,8 +32,7 @@ interface IVerifyValidation {
 }
 
 const Login = () => {
-  const { isDark } = useData();
-  const { handleUser } = useData();
+  const { isDark, handleUser } = useData();
   const { t } = useTranslation();
 
   const navigation = useNavigation();
@@ -118,23 +117,28 @@ const Login = () => {
     setIsLoading(!isLoading);
     if (!Object.values(isValid).includes(false) && !isLoading) {
       try {
-        console.log(credential);
         const c = PhoneAuthProvider.credential(
           credential.verificationId,
           verify.code
         );
-        const user: any = await loginWithCredentials(
+        const currentUser: any = await loginWithCredentials(
           c,
           "+966" + login.phoneNumber
         );
-        console.log(user);
-        if (user && user.data.name) {
+        console.log(`currentUser:`, currentUser);
+        console.log(
+          `currentUser name: ${currentUser.data.name}`,
+          currentUser.data.name.length > 0
+        );
+        if (currentUser && currentUser.data.name.length > 0) {
+          handleUser(currentUser);
           showAlert("success", "You're Logged in.");
-          handleUser(user);
           navigation.navigate("Home");
         } else {
           showAlert("danger", "You're not registered.");
-          navigation.navigate("CompleteProfile");
+          navigation.navigate("CompleteProfile", {
+            uid: currentUser.auth.uid,
+          });
         }
       } catch (error: any) {
         showAlert("danger", `There was an error: ${error.message}`);
@@ -146,9 +150,7 @@ const Login = () => {
     isLoading,
     isValid,
     login.phoneNumber,
-    navigation,
     showAlert,
-    userData,
     credential.verificationId,
     verify.code,
   ]);

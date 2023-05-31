@@ -1,64 +1,28 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { Platform } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { useData, useTheme, useTranslation } from "../hooks/";
 import { useRoute } from "@react-navigation/native";
+import { Alert, Image, Block, Text, Button } from "../components/";
 import { Ionicons } from "@expo/vector-icons";
-import {
-  Alert,
-  Block,
-  Button,
-  Input,
-  Image,
-  Text,
-  Modal,
-} from "../components/";
-import { FlatList } from "react-native-gesture-handler";
 import { db, update, ref } from "../services/firebase";
-import * as regex from "../constants/regex";
-import { IUser } from "../constants/types";
 const isAndroid = Platform.OS === "android";
 
 interface IComplete {
-  name: string;
-  nationalId: string;
   date: string;
-  gender: string;
 }
 
-interface ICompleteValidation {
-  name: boolean;
-  nationalId: boolean;
-}
-
-const CompleteProfile = ({ route }: { route: any }) => {
+const BookRide = () => {
   const { t } = useTranslation();
-  const { isDark, handleUser } = useData();
   const navigation = useNavigation();
-  const { uid } = route.params;
+  const { isDark } = useData();
   const { assets, colors, gradients, sizes } = useTheme();
   const [date, setDate] = useState("");
   const [requested, setRequested] = useState(false);
-  const genders = ["Male", "Female"];
   const [complete, setComplete] = useState<IComplete>({
-    name: "",
-    nationalId: "",
     date: "",
-    gender: "",
   });
-  const [isValid, setIsValid] = useState<ICompleteValidation>({
-    name: false,
-    nationalId: false,
-  });
-
-  useEffect(() => {
-    setIsValid((state) => ({
-      ...state,
-      name: regex.name.test(complete.name),
-      nationalId: regex.nationalId.test(complete.nationalId),
-    }));
-  }, [complete, setIsValid]);
 
   const handleChange = useCallback(
     (value: any) => {
@@ -92,29 +56,17 @@ const CompleteProfile = ({ route }: { route: any }) => {
   };
 
   const handleDatePicked = (date: Date) => {
-    setDate(date.toLocaleString("en-US").split(",")[0]);
+    setDate(date.toLocaleString("en-US"));
     hideDateTimePicker();
   };
-  const [showGenderModal, setGenderModal] = useState(false);
 
-  const handleHire = async () => {
-    if (
-      !complete.date ||
-      !complete.name ||
-      !complete.nationalId ||
-      !complete.gender
-    ) {
+  const handleBook = async () => {
+    if (!complete.date) {
       return;
     }
     try {
       setRequested(true);
-      update(ref(db, `users/${uid}`), {
-        name: complete.name,
-        nationalId: complete.nationalId,
-        dob: complete.date,
-        gender: complete.gender,
-      });
-      // Update the data to the user object
+      console.log(date);
       showAlert("success", "Completed");
       navigation.navigate("Home");
     } catch (e) {
@@ -152,12 +104,12 @@ const CompleteProfile = ({ route }: { route: any }) => {
               </Text>
             </Button>
             <Text h4 center white marginBottom={sizes.md}>
-              {t("completeProfile.title")}
+              {t("completeDriverProfile.title")}
             </Text>
           </Image>
         </Block>
 
-        {/* Complete Profile Form */}
+        {/* Complete Driver Profile Form */}
 
         <Block
           keyboard
@@ -181,30 +133,11 @@ const CompleteProfile = ({ route }: { route: any }) => {
               paddingVertical={sizes.sm}
             >
               <Block paddingHorizontal={sizes.sm}>
-                <Input
-                  autoCapitalize="none"
-                  marginBottom={sizes.s}
-                  label={t("completeProfile.name")}
-                  keyboardType="default"
-                  placeholder={"Enter your name"}
-                  success={Boolean(complete.name && isValid.name)}
-                  danger={Boolean(complete.name && !isValid.name)}
-                  onChangeText={(value) => handleChange({ name: value })}
-                />
-                <Input
-                  marginBottom={sizes.sm}
-                  label={t("completeProfile.nationalId")}
-                  keyboardType="numeric"
-                  placeholder={"Enter your National ID"}
-                  success={Boolean(complete.nationalId && isValid.nationalId)}
-                  danger={Boolean(complete.nationalId && !isValid.nationalId)}
-                  onChangeText={(value) => handleChange({ nationalId: value })}
-                />
                 <DateTimePicker
                   isVisible={isDateTimePickerVisible}
-                  mode="date"
-                  display="inline"
-                  maximumDate={new Date()}
+                  mode="datetime"
+                  display="spinner"
+                  minimumDate={new Date()}
                   onConfirm={handleDatePicked}
                   onCancel={hideDateTimePicker}
                   onChange={(value) => handleChange({ date: value })}
@@ -222,63 +155,19 @@ const CompleteProfile = ({ route }: { route: any }) => {
                       color={isDark ? colors.white : colors.black}
                       size={16}
                     />
-                    {`  ${date.length <= 0 ? t("completeProfile.date") : date}`}
+                    {`${date.length <= 0 ? t("completeProfile.date") : date}`}
                   </Text>
                 </Button>
 
-                <Modal
-                  visible={showGenderModal}
-                  onRequestClose={() => setGenderModal(false)}
-                >
-                  <FlatList
-                    keyExtractor={(index) => `${index}`}
-                    data={genders}
-                    renderItem={({ item }) => (
-                      <Button
-                        marginBottom={sizes.sm}
-                        onPress={() => {
-                          setGenderModal(false);
-                          handleChange({ gender: item });
-                        }}
-                      >
-                        <Text p white semibold transform="uppercase">
-                          {item}
-                        </Text>
-                      </Button>
-                    )}
-                  />
-                </Modal>
+                <Text>{t("completeDriverProfile.note")}</Text>
                 <Button
-                  primary
-                  outlined
-                  shadow={false}
-                  marginBottom={sizes.s}
-                  onPress={() => {
-                    setGenderModal(true);
-                  }}
-                >
-                  <Text p bold color={isDark ? colors.white : colors.dark}>
-                    {complete.gender || "Gender *"}
-                  </Text>
-                </Button>
-
-                <Text>{t("completeProfile.note")}</Text>
-                <Button
-                  onPress={handleHire}
+                  onPress={handleBook}
                   marginVertical={sizes.s}
                   gradient={gradients.primary}
-                  disabled={
-                    requested ||
-                    !complete.date ||
-                    !complete.nationalId ||
-                    !complete.gender ||
-                    !complete.name ||
-                    !isValid.name ||
-                    !isValid.nationalId
-                  }
+                  disabled={requested || !complete.date}
                 >
                   <Text bold white transform="uppercase">
-                    {t("completeProfile.send")}
+                    {t("completeDriverProfile.send")}
                   </Text>
                 </Button>
               </Block>
@@ -297,4 +186,4 @@ const CompleteProfile = ({ route }: { route: any }) => {
   );
 };
 
-export default CompleteProfile;
+export default BookRide;

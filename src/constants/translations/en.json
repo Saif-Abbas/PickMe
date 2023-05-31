@@ -111,12 +111,36 @@
     "title": "Complete Driver Profile",
     "drivingLicense": "Driving License *",
     "carLicense": "Car License *",
-    "carInsurance": "Car Insurance *",
+    "carName": "Car Name *",
+    "carPlate": "Car Plate *",
     "carModel": "Car Model *",
-    "carYear": "Car Year *",
-    "carColor": "Car Color *",
+    "uploadCarLicense": "Upload Car License *",
+    "uploadLicense": "Upload License *",
+    "uploaded": "Uploaded",
     "note": "NOTE: * Indicates it's a mandatory field",
-    "send": "Confirm Information"
+    "carManufacturer": "Car Manufacturer *",
+    "send": "Confirm Driver Information"
+  },
+  "postRide": {
+    "title": "Post Ride",
+    "from": "From",
+    "to": "To",
+    "date": "Date",
+    "time": "Time",
+    "price": "Price",
+    "pricePlaceholder": "Price",
+    "send": "Post Ride"
+  },
+
+  "bookRide": {
+    "title": "Post Ride",
+    "from": "From",
+    "to": "To",
+    "date": "Date",
+    "time": "Time",
+    "price": "Price",
+    "pricePlaceholder": "Price",
+    "send": "Book Ride"
   },
   "settings": {
     "language": "Language",

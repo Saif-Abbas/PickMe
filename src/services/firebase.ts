@@ -34,7 +34,6 @@ const sendVerificationCode = async (
   phoneNumber: string,
   recaptchaVerifier: any
 ) => {
-  console.log(phoneNumber, recaptchaVerifier);
   try {
     const verificationId = await signInWithPhoneNumber(
       auth,
@@ -47,12 +46,9 @@ const sendVerificationCode = async (
     return null;
   }
 };
-// /users/${auth.currentUser.uid}
-//- Phone Number, Name, National ID, DOB, Gender, Type, Img?
-// .... license, carLicense, carName, carPlate < for drivers
+
 const loginWithCredentials = async (credential: any, phone: any) => {
   try {
-    console.log(credential, phone);
     await signInWithCredential(auth, credential);
     if (!auth.currentUser) {
       Alert.alert("Something went wrong, please try again");
@@ -70,12 +66,15 @@ const loginWithCredentials = async (credential: any, phone: any) => {
         name: "",
         nationalId: "",
         dob: "",
+        type: "User",
         avatar:
           "https://firebasestorage.googleapis.com/v0/b/pickme-7a71e.appspot.com/o/default-avatar.png?alt=media&token=21bbd37b-847b-40a1-9ea5-28ee126463c5",
       });
       console.log("Data set.");
       return {
-        name: "",
+        data: {
+          name: "",
+        },
         auth: auth.currentUser,
       };
     }

@@ -10,29 +10,15 @@ export interface IUser {
     id: string;
     phone: string;
     name: string;
-    avatar: string;
+    avatar?: string;
     nationalId: string;
     dob: string;
     type: string;
     gender: string;
-  };
-  auth: Auth;
-}
-
-export interface IDriver {
-  data: {
-    id: string;
-    phone: string;
-    name: string;
-    avatar: string;
-    nationalId: string;
-    dob: string;
-    car: string;
-    license: string;
-    carLicense: string;
-    carPlate: string;
-    type: string;
-    gender: string;
+    car?: string;
+    license?: string;
+    carLicense?: string;
+    carPlate?: string;
   };
   auth: Auth;
 }

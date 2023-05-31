@@ -14,6 +14,7 @@ import Screens from "./Screens";
 import { Block, Text, Button, Image } from "../components";
 import { useData, useTheme, useTranslation } from "../hooks";
 import { signOut } from "firebase/auth";
+import { logout } from "../services/firebase";
 
 const Drawer = createDrawerNavigator();
 
@@ -90,7 +91,7 @@ const DrawerContent = (
           {
             text: t("common.yes"),
             onPress: () => {
-              signOut(user.auth);
+              logout();
               Updates.reloadAsync();
             },
           },
@@ -114,8 +115,13 @@ const DrawerContent = (
       { name: t("screens.login"), to: "Login", icon: assets.login },
       {
         name: t("screens.settings"),
-        to: "CompleteProfile",
+        to: "CompleteDriverProfile",
         icon: assets.settings,
+      },
+      {
+        name: "Test",
+        to: "BookRide",
+        icon: assets.bell,
       },
     ];
   } else {

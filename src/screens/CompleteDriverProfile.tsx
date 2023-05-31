@@ -5,6 +5,7 @@ import DateTimePicker from "react-native-modal-datetime-picker";
 import { useData, useTheme, useTranslation } from "../hooks/";
 import { useRoute } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
 import {
   Alert,
   Block,
@@ -18,12 +19,23 @@ import { FlatList } from "react-native-gesture-handler";
 import { db, update, ref } from "../services/firebase";
 const isAndroid = Platform.OS === "android";
 
+declare var Blob: {
+  prototype: Blob;
+  new (): Blob;
+  new (request: any, mime: string): Blob;
+};
+
 interface IComplete {
-  name: string;
-  nationalId: string;
-  email: string;
-  date: string;
-  gender: string;
+  carManufacturer: string;
+  carName: string;
+  carModel: string;
+  carPlate: string;
+}
+
+interface ICompleteValidation {
+  carName: boolean;
+  carModel: boolean;
+  carPlate: boolean;
 }
 
 const CompleteDriverProfile = () => {
@@ -33,14 +45,60 @@ const CompleteDriverProfile = () => {
   const { assets, colors, gradients, sizes } = useTheme();
   const [date, setDate] = useState("");
   const [requested, setRequested] = useState(false);
-  const genders = ["Male", "Female"];
+  const [carLicenseUploaded, setCarLicenseUpload] = useState(false);
+  const [licenseUploaded, setLicenseUploaded] = useState(false);
+  const [licenseImage, setLicenseImage] = useState(new Blob());
+  const [carLicenseImage, setCarLicenseImage] = useState(new Blob());
   const [complete, setComplete] = useState<IComplete>({
-    name: "",
-    nationalId: "",
-    email: "",
-    date: "",
-    gender: "",
+    carManufacturer: "",
+    carName: "",
+    carModel: "",
+    carPlate: "",
   });
+
+  const cars = [
+    "Audi",
+    "Auston Marten",
+    "BMW",
+    "Bently",
+    "Citeroin",
+    "Cheery",
+    "Chevrolet",
+    "Changan",
+    "Chery",
+    "Daihatsu",
+    "Dodge",
+    "Fiat",
+    "Ford",
+    "GEELY",
+    "GMC",
+    "HAVAL",
+    "Honda",
+    "HUMMER",
+    "Huyandai",
+    "Infinity",
+    "Jaguar",
+    "Kia",
+    "Land-Rover",
+    "Lexus",
+    "Lincoln",
+    "Maserati",
+    "Mazda",
+    "Mercedes-Benz",
+    "MG",
+    "Nissan",
+    "Porsche",
+    "Reno",
+    "Sang-Yong",
+    "Subaru",
+    "Suzuki",
+    "Tesla",
+    "Toyota",
+    "Volkswagen",
+    "Volvo",
+    "ZX-Auto",
+  ];
+
   const handleChange = useCallback(
     (value: any) => {
       setComplete((state) => ({ ...state, ...value }));
@@ -62,6 +120,33 @@ const CompleteDriverProfile = () => {
     },
     [setAlert, setIsAlertVisible]
   );
+
+  // HEEEERRREEEEEE
+  const uploadMedia = async (which: string) => {
+    if (carLicenseUploaded && licenseUploaded) {
+      return;
+    }
+
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 0,
+    });
+    if (!result.canceled) {
+      const response = await fetch(result.assets![0].uri);
+      let blob = new Blob();
+      blob = await response.blob();
+      if (which === "license") {
+        setLicenseImage(blob);
+        setLicenseUploaded(true);
+      } else {
+        setCarLicenseImage(blob);
+        setCarLicenseUpload(true);
+      }
+    }
+  };
+
   const [isDateTimePickerVisible, setIsDateTimePickerVisible] = useState(false);
 
   const showDateTimePicker = () => {
@@ -76,14 +161,16 @@ const CompleteDriverProfile = () => {
     setDate(date.toLocaleString("en-US"));
     hideDateTimePicker();
   };
-  const [showGenderModal, setGenderModal] = useState(false);
+  const [showCarManufacturerModal, setCarManufacturerModal] = useState(false);
 
-  const handleHire = async () => {
+  const handleCompleteDriverProfile = async () => {
     if (
-      !complete.date ||
-      !complete.name ||
-      !complete.email ||
-      !complete.gender
+      !complete.carManufacturer ||
+      !complete.carPlate ||
+      !complete.carModel ||
+      !complete.carName ||
+      !licenseImage ||
+      !carLicenseImage
     ) {
       return;
     }
@@ -138,7 +225,7 @@ const CompleteDriverProfile = () => {
           </Image>
         </Block>
 
-        {/* Complete Profile Form */}
+        {/* Complete Driver Profile Form */}
 
         <Block
           keyboard
@@ -162,60 +249,19 @@ const CompleteDriverProfile = () => {
               paddingVertical={sizes.sm}
             >
               <Block paddingHorizontal={sizes.sm}>
-                <Input
-                  autoCapitalize="none"
-                  marginBottom={sizes.s}
-                  label={t("completeProfile.name")}
-                  keyboardType="default"
-                  placeholder={"Enter your name"}
-                  onChangeText={(value) => handleChange({ name: value })}
-                />
-                <Input
-                  autoCapitalize="none"
-                  marginBottom={sizes.sm}
-                  label={t("completeProfile.nationalId")}
-                  keyboardType="numeric"
-                  placeholder={"Enter your National ID"}
-                  onChangeText={(value) => handleChange({ nationalId: value })}
-                />
-                <DateTimePicker
-                  isVisible={isDateTimePickerVisible}
-                  mode="datetime"
-                  display="inline"
-                  maximumDate={new Date()}
-                  onConfirm={handleDatePicked}
-                  onCancel={hideDateTimePicker}
-                  onChange={(value) => handleChange({ date: value })}
-                />
-                <Button
-                  flex={1}
-                  primary
-                  outlined
-                  onPress={showDateTimePicker}
-                  marginBottom={sizes.sm}
-                >
-                  <Text p bold transform="uppercase">
-                    <Ionicons
-                      name="calendar-outline"
-                      color={isDark ? colors.white : colors.black}
-                      size={16}
-                    />
-                    {`  ${date.length <= 0 ? t("completeProfile.date") : date}`}
-                  </Text>
-                </Button>
-
                 <Modal
-                  visible={showGenderModal}
-                  onRequestClose={() => setGenderModal(false)}
+                  visible={showCarManufacturerModal}
+                  onRequestClose={() => setCarManufacturerModal(false)}
                 >
                   <FlatList
                     keyExtractor={(index) => `${index}`}
-                    data={genders}
+                    data={cars}
                     renderItem={({ item }) => (
                       <Button
                         marginBottom={sizes.sm}
                         onPress={() => {
-                          setGenderModal(false);
+                          setCarManufacturerModal(false);
+                          handleChange({ carManufacturer: item });
                         }}
                       >
                         <Text p white semibold transform="uppercase">
@@ -231,29 +277,98 @@ const CompleteDriverProfile = () => {
                   shadow={false}
                   marginBottom={sizes.s}
                   onPress={() => {
-                    setGenderModal(true);
+                    setCarManufacturerModal(true);
                   }}
                 >
                   <Text p bold color={isDark ? colors.white : colors.dark}>
-                    Gender *
+                    {complete.carManufacturer ||
+                      t("completeDriverProfile.carManufacturer")}
                   </Text>
                 </Button>
-
-                <Text>{t("completeProfile.note")}</Text>
+                <Input
+                  autoCapitalize="none"
+                  marginBottom={sizes.sm}
+                  label={t("completeDriverProfile.carName")}
+                  placeholder={"Fusion"}
+                  onChangeText={(value) => handleChange({ carName: value })}
+                />
+                <Input
+                  autoCapitalize="none"
+                  marginBottom={sizes.sm}
+                  label={t("completeDriverProfile.carModel")}
+                  placeholder={"2014"}
+                  onChangeText={(value) => handleChange({ carModel: value })}
+                />
+                <Input
+                  autoCapitalize="none"
+                  marginBottom={sizes.sm}
+                  label={t("completeDriverProfile.carPlate")}
+                  placeholder={"ZRJ 3775"}
+                  onChangeText={(value) => handleChange({ carPlate: value })}
+                />
                 <Button
-                  onPress={handleHire}
+                  row
+                  flex={0}
+                  disabled={licenseUploaded}
+                  onPress={() => {
+                    uploadMedia("license");
+                  }}
+                  marginVertical={sizes.xs}
+                  gradient={gradients.primary}
+                >
+                  <Image
+                    radius={0}
+                    width={10}
+                    height={18}
+                    marginRight={8}
+                    color={colors.white}
+                    source={licenseUploaded ? assets.star : assets.check}
+                  />
+                  <Text bold white transform="uppercase">
+                    {licenseUploaded
+                      ? t("completeDriverProfile.uploaded")
+                      : t("completeDriverProfile.uploadLicense")}
+                  </Text>
+                </Button>
+                <Button
+                  row
+                  flex={0}
+                  disabled={carLicenseUploaded}
+                  onPress={() => {
+                    uploadMedia("carLicense");
+                  }}
+                  marginVertical={sizes.s}
+                  gradient={gradients.primary}
+                >
+                  <Image
+                    radius={0}
+                    width={10}
+                    height={18}
+                    marginRight={8}
+                    color={colors.white}
+                    source={carLicenseUploaded ? assets.star : assets.check}
+                  />
+                  <Text bold white transform="uppercase">
+                    {carLicenseUploaded
+                      ? t("completeDriverProfile.uploaded")
+                      : t("completeDriverProfile.uploadCarLicense")}
+                  </Text>
+                </Button>
+                <Text>{t("completeDriverProfile.note")}</Text>
+                <Button
+                  onPress={handleCompleteDriverProfile}
                   marginVertical={sizes.s}
                   gradient={gradients.primary}
                   disabled={
                     requested ||
-                    !complete.date ||
-                    !complete.email ||
-                    !complete.gender ||
-                    !complete.name
+                    !complete.carManufacturer ||
+                    !complete.carPlate ||
+                    !complete.carModel ||
+                    !complete.carName
                   }
                 >
                   <Text bold white transform="uppercase">
-                    {t("completeProfile.send")}
+                    {t("completeDriverProfile.send")}
                   </Text>
                 </Button>
               </Block>

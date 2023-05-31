@@ -46,7 +46,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
       // set user / compare if has updated
       setUser(user);
     },
-    [user, setUser]
+    [setUser]
   );
 
   // get initial data for: isDark & language
