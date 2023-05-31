@@ -21,6 +21,8 @@ export const password: RegExp =
 
 export const legalName: RegExp = /^(?!.*\d)\S[a-z\u0600-\u06FF\s]{9,44}$/;
 
+export const nationalId: RegExp = /^(1|2)([0-9]{9})$/;
+
 export const phoneNumber: RegExp = /^(5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/;
 
 export const code: RegExp = /^([0-9]{6})$/;

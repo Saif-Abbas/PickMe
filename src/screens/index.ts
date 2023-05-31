@@ -9,3 +9,4 @@ export { default as Orders } from "./Orders";
 export { default as Hire } from "./Hire";
 export { default as Chat } from "./ChatPage";
 export { default as CompleteProfile } from "./CompleteProfile";
+export { default as CompleteDriverProfile } from "./CompleteDriverProfile";

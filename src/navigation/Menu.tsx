@@ -112,7 +112,11 @@ const DrawerContent = (
     screens = [
       { name: t("screens.home"), to: "Home", icon: assets.home },
       { name: t("screens.login"), to: "Login", icon: assets.login },
-      { name: t("screens.settings"), to: "Settings", icon: assets.settings },
+      {
+        name: t("screens.settings"),
+        to: "CompleteProfile",
+        icon: assets.settings,
+      },
     ];
   } else {
     screens = [

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { Platform } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import DateTimePicker from "react-native-modal-datetime-picker";
@@ -16,22 +16,17 @@ import {
 } from "../components/";
 import { FlatList } from "react-native-gesture-handler";
 import { db, update, ref } from "../services/firebase";
-import * as regex from "../constants/regex";
 const isAndroid = Platform.OS === "android";
 
 interface IComplete {
   name: string;
   nationalId: string;
+  email: string;
   date: string;
   gender: string;
 }
 
-interface ICompleteValidation {
-  name: boolean;
-  nationalId: boolean;
-}
-
-const CompleteProfile = () => {
+const CompleteDriverProfile = () => {
   const { t } = useTranslation();
   const { isDark, user } = useData();
   const navigation = useNavigation();
@@ -42,23 +37,10 @@ const CompleteProfile = () => {
   const [complete, setComplete] = useState<IComplete>({
     name: "",
     nationalId: "",
+    email: "",
     date: "",
     gender: "",
   });
-
-  const [isValid, setIsValid] = useState<ICompleteValidation>({
-    name: false,
-    nationalId: false,
-  });
-
-  useEffect(() => {
-    setIsValid((state) => ({
-      ...state,
-      name: regex.name.test(complete.name),
-      nationalId: regex.nationalId.test(complete.nationalId),
-    }));
-  }, [complete, setIsValid]);
-
   const handleChange = useCallback(
     (value: any) => {
       setComplete((state) => ({ ...state, ...value }));
@@ -91,7 +73,7 @@ const CompleteProfile = () => {
   };
 
   const handleDatePicked = (date: Date) => {
-    setDate(date.toLocaleString("en-US").split(",")[0]);
+    setDate(date.toLocaleString("en-US"));
     hideDateTimePicker();
   };
   const [showGenderModal, setGenderModal] = useState(false);
@@ -100,16 +82,24 @@ const CompleteProfile = () => {
     if (
       !complete.date ||
       !complete.name ||
-      !complete.nationalId ||
+      !complete.email ||
       !complete.gender
     ) {
       return;
     }
     try {
-      setRequested(true);
-      showAlert("success", "Completed");
+      await update(ref(db, `users/${user.auth?.currentUser?.uid}`), {
+        ...complete,
+      })
+        .then(() => {
+          showAlert("success", "Profile Completed successfully");
+          navigation.navigate("Home");
+        })
+        .catch((error) => {
+          showAlert("danger", error.message);
+        });
     } catch (e) {
-      showAlert("danger", `${e}`);
+      showAlert("danger", "Something went wrong");
     }
   };
   return (
@@ -143,7 +133,7 @@ const CompleteProfile = () => {
               </Text>
             </Button>
             <Text h4 center white marginBottom={sizes.md}>
-              {t("completeProfile.title")}
+              {t("completeDriverProfile.title")}
             </Text>
           </Image>
         </Block>
@@ -178,22 +168,19 @@ const CompleteProfile = () => {
                   label={t("completeProfile.name")}
                   keyboardType="default"
                   placeholder={"Enter your name"}
-                  success={Boolean(complete.name && isValid.name)}
-                  danger={Boolean(complete.name && !isValid.name)}
                   onChangeText={(value) => handleChange({ name: value })}
                 />
                 <Input
+                  autoCapitalize="none"
                   marginBottom={sizes.sm}
                   label={t("completeProfile.nationalId")}
                   keyboardType="numeric"
                   placeholder={"Enter your National ID"}
-                  success={Boolean(complete.nationalId && isValid.nationalId)}
-                  danger={Boolean(complete.nationalId && !isValid.nationalId)}
                   onChangeText={(value) => handleChange({ nationalId: value })}
                 />
                 <DateTimePicker
                   isVisible={isDateTimePickerVisible}
-                  mode="date"
+                  mode="datetime"
                   display="inline"
                   maximumDate={new Date()}
                   onConfirm={handleDatePicked}
@@ -229,7 +216,6 @@ const CompleteProfile = () => {
                         marginBottom={sizes.sm}
                         onPress={() => {
                           setGenderModal(false);
-                          handleChange({ gender: item });
                         }}
                       >
                         <Text p white semibold transform="uppercase">
@@ -249,7 +235,7 @@ const CompleteProfile = () => {
                   }}
                 >
                   <Text p bold color={isDark ? colors.white : colors.dark}>
-                    {complete.gender || "Gender *"}
+                    Gender *
                   </Text>
                 </Button>
 
@@ -261,11 +247,9 @@ const CompleteProfile = () => {
                   disabled={
                     requested ||
                     !complete.date ||
-                    !complete.nationalId ||
+                    !complete.email ||
                     !complete.gender ||
-                    !complete.name ||
-                    !isValid.name ||
-                    !isValid.nationalId
+                    !complete.name
                   }
                 >
                   <Text bold white transform="uppercase">
@@ -288,4 +272,4 @@ const CompleteProfile = () => {
   );
 };
 
-export default CompleteProfile;
+export default CompleteDriverProfile;

@@ -1,13 +1,13 @@
-import React, {useState, useCallback} from 'react';
-import {Platform} from 'react-native';
-import {useNavigation} from '@react-navigation/core';
-import DateTimePicker from 'react-native-modal-datetime-picker';
-import {useData, useTheme, useTranslation} from '../hooks/';
-import {useRoute} from '@react-navigation/native';
-import {Ionicons} from '@expo/vector-icons';
-import {Alert, Block, Button, Input, Image, Text} from '../components/';
-import {firebase} from '../services/firebase';
-const isAndroid = Platform.OS === 'android';
+import React, { useState, useCallback } from "react";
+import { Platform } from "react-native";
+import { useNavigation } from "@react-navigation/core";
+import DateTimePicker from "react-native-modal-datetime-picker";
+import { useData, useTheme, useTranslation } from "../hooks/";
+import { useRoute } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
+import { Alert, Block, Button, Input, Image, Text } from "../components/";
+
+const isAndroid = Platform.OS === "android";
 
 interface IHire {
   date: string;
@@ -16,39 +16,39 @@ interface IHire {
 }
 
 const Hire = () => {
-  const {t} = useTranslation();
-  const {isDark, user} = useData();
+  const { t } = useTranslation();
+  const { isDark, user } = useData();
   const params: any = useRoute().params;
   const requestedTalented = params?.requested;
   const navigation = useNavigation();
-  const {assets, colors, gradients, sizes} = useTheme();
-  const [date, setDate] = useState('');
+  const { assets, colors, gradients, sizes } = useTheme();
+  const [date, setDate] = useState("");
   const [requested, setRequested] = useState(false);
   const [order, setOrder] = useState<IHire>({
-    date: '',
-    message: '',
+    date: "",
+    message: "",
     accepted: false,
   });
   const handleChange = useCallback(
     (value: any) => {
-      setOrder((state) => ({...state, ...value}));
+      setOrder((state) => ({ ...state, ...value }));
     },
-    [setOrder],
+    [setOrder]
   );
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [alert, setAlert] = useState({
-    type: '',
-    message: '',
+    type: "",
+    message: "",
   });
   const showAlert = useCallback(
     (type: string, message: string) => {
-      setAlert({type, message});
+      setAlert({ type, message });
       setIsAlertVisible(true);
       setTimeout(() => {
         setIsAlertVisible(false);
       }, 5500);
     },
-    [setAlert, setIsAlertVisible],
+    [setAlert, setIsAlertVisible]
   );
   const [isDateTimePickerVisible, setIsDateTimePickerVisible] = useState(false);
 
@@ -61,7 +61,7 @@ const Hire = () => {
   };
 
   const handleDatePicked = (date: Date) => {
-    setDate(date.toLocaleString('en-US'));
+    setDate(date.toLocaleString("en-US"));
     hideDateTimePicker();
   };
   const handleHire = () => {
@@ -69,7 +69,7 @@ const Hire = () => {
       return;
     }
     if (order.message && order.message.length < 10) {
-      showAlert('danger', 'Message must be at least 10 characters');
+      showAlert("danger", "Message must be at least 10 characters");
       return;
     }
     if (!params.requested) {
@@ -79,32 +79,11 @@ const Hire = () => {
       setRequested(true);
       const id = Math.floor(Math.random() * 10000);
       // Append order to user's orders
-      firebase
-        .database()
-        .ref(`users/${firebase.auth().currentUser?.displayName}/orders/${id}`)
-        .set({
-          id: id,
-          message: order.message,
-          date: order.date,
-          accepted: false,
-          sender: true,
-          user: requestedTalented,
-        });
 
-      // Append order to requested user's orders
-      firebase.database().ref(`users/${params.requested.id}/orders/${id}`).set({
-        id: id,
-        message: order.message,
-        date: order.date,
-        accepted: false,
-        sender: false,
-        user,
-      });
-
-      showAlert('success', 'Order sent successfully');
-      navigation.navigate('Home');
+      showAlert("success", "Order sent successfully");
+      navigation.navigate("Home");
     } catch (e) {
-      showAlert('danger', 'Something went wrong');
+      showAlert("danger", "Something went wrong");
     }
   };
   return (
@@ -117,34 +96,37 @@ const Hire = () => {
             padding={sizes.sm}
             radius={sizes.cardRadius}
             source={assets.background}
-            height={sizes.height * 0.3}>
+            height={sizes.height * 0.3}
+          >
             <Button
               row
               flex={0}
               justify="flex-start"
-              onPress={() => navigation.goBack()}>
+              onPress={() => navigation.goBack()}
+            >
               <Image
                 radius={0}
                 width={10}
                 height={18}
                 color={colors.white}
                 source={assets.arrow}
-                transform={[{rotate: '180deg'}]}
+                transform={[{ rotate: "180deg" }]}
               />
               <Text p white marginLeft={sizes.s}>
-                {t('common.goBack')}
+                {t("common.goBack")}
               </Text>
             </Button>
             <Text h4 center white marginBottom={sizes.md}>
-              {t('hire.title')}
+              {t("hire.title")}
             </Text>
           </Image>
         </Block>
         {/* hire form */}
         <Block
           keyboard
-          behavior={!isAndroid ? 'padding' : 'height'}
-          marginTop={-(sizes.height * 0.2 - sizes.l)}>
+          behavior={!isAndroid ? "padding" : "height"}
+          marginTop={-(sizes.height * 0.2 - sizes.l)}
+        >
           <Block
             flex={0}
             radius={sizes.sm}
@@ -159,7 +141,8 @@ const Hire = () => {
               overflow="hidden"
               justify="space-evenly"
               tint={colors.blurTint}
-              paddingVertical={sizes.sm}>
+              paddingVertical={sizes.sm}
+            >
               <Block paddingHorizontal={sizes.sm}>
                 <DateTimePicker
                   isVisible={isDateTimePickerVisible}
@@ -168,40 +151,42 @@ const Hire = () => {
                   minimumDate={new Date()}
                   onConfirm={handleDatePicked}
                   onCancel={hideDateTimePicker}
-                  onChange={(value) => handleChange({date: value})}
+                  onChange={(value) => handleChange({ date: value })}
                 />
                 <Button
                   flex={1}
                   primary
                   outlined
                   onPress={showDateTimePicker}
-                  marginBottom={sizes.sm}>
+                  marginBottom={sizes.sm}
+                >
                   <Text p bold transform="uppercase">
                     <Ionicons
                       name="calendar-outline"
                       color={isDark ? colors.white : colors.black}
                       size={16}
                     />
-                    {`  ${date.length <= 0 ? t('hire.date') : date}`}
+                    {`  ${date.length <= 0 ? t("hire.date") : date}`}
                   </Text>
                 </Button>
                 <Input
                   autoCapitalize="none"
                   marginBottom={sizes.s}
-                  style={{height: 200}}
+                  style={{ height: 200 }}
                   multiline
-                  label={t('hire.msg')}
+                  label={t("hire.msg")}
                   keyboardType="default"
-                  placeholder={t('hire.msgPlaceholder')}
-                  onChangeText={(value) => handleChange({message: value})}
+                  placeholder={t("hire.msgPlaceholder")}
+                  onChangeText={(value) => handleChange({ message: value })}
                 />
                 <Button
                   onPress={handleHire}
                   marginVertical={sizes.s}
                   gradient={gradients.primary}
-                  disabled={requested || !order.message || !order.date}>
+                  disabled={requested || !order.message || !order.date}
+                >
                   <Text bold white transform="uppercase">
-                    {t('hire.send')}
+                    {t("hire.send")}
                   </Text>
                 </Button>
               </Block>

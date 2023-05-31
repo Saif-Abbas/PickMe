@@ -66,6 +66,8 @@
   "completeProfile": {
     "name": "* الاسم",
     "nationalId": "* رقم الهوية",
+    "date": "* التاريخ",
+    "gender": "* الجنس",
     "note": "ملاحظة: * تعني ان الخانة مطلوبة"
   },
   "profile": {

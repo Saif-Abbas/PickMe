@@ -50,7 +50,6 @@
     "about": "About",
     "login": "Login"
   },
-
   "home": {
     "title": "PickMe"
   },
@@ -98,6 +97,26 @@
     "chat": "Chat",
     "pending": "Pending...",
     "details": "Order Details"
+  },
+  "completeProfile": {
+    "title": "Complete Profile",
+    "name": "Name *",
+    "nationalId": "National ID *",
+    "date": "Date *",
+    "gender": "Gender *",
+    "note": "NOTE: * Indicates it's a mandatory field",
+    "send": "Confirm Information"
+  },
+  "completeDriverProfile": {
+    "title": "Complete Driver Profile",
+    "drivingLicense": "Driving License *",
+    "carLicense": "Car License *",
+    "carInsurance": "Car Insurance *",
+    "carModel": "Car Model *",
+    "carYear": "Car Year *",
+    "carColor": "Car Color *",
+    "note": "NOTE: * Indicates it's a mandatory field",
+    "send": "Confirm Information"
   },
   "settings": {
     "language": "Language",
