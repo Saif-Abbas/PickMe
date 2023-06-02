@@ -115,14 +115,19 @@ const DrawerContent = (
       { name: t("screens.login"), to: "Login", icon: assets.login },
       {
         name: t("screens.settings"),
-        to: "CompleteDriverProfile",
+        to: "Settings",
         icon: assets.settings,
       },
       {
         name: "Test",
-        to: "PaymentMethods",
+        to: "TripsHistory",
         icon: assets.bell,
       },
+      {
+        name: "Test2",
+        to: "PaymentMethods",
+        icon: assets.bell,
+      }
     ];
   } else {
     screens = [
@@ -131,6 +136,7 @@ const DrawerContent = (
       { name: t("screens.order"), to: "Orders", icon: assets.add },
       { name: t("screens.settings"), to: "Settings", icon: assets.settings },
       { name: t("screens.test"), to: "Test", icon: assets.bell },
+      { name: t("screens.test2"), to: "Test2", icon: assets.bell}
     ];
   }
 
