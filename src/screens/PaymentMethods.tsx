@@ -19,7 +19,7 @@ import * as regex from "../constants/regex";
 import { IUser } from "../constants/types";
 const isAndroid = Platform.OS === "android";
 
-
+const PaymentMethods = () => {
   return (
     <Block safe marginTop={sizes.md}>
       <Block paddingHorizontal={sizes.s}>
