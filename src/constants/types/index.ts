@@ -19,16 +19,33 @@ export interface IUser {
     license?: string;
     carLicense?: string;
     carPlate?: string;
+    rating: number;
   };
   auth: Auth;
 }
 
-export interface ICard {
-  cardId: string;
-  cardName: string;
-  cardPicture: string;
-  type: string;
+export interface IHistory {
+  name: string;
+  avatar: string;
+  car: string;
+  carPlate: string;
+  rating: string;
+  price: number;
+  date: string;
+  trip: ITrip;
 }
+
+export interface ITrip {
+  from: {
+    latitude: number;
+    longitude: number;
+  };
+  to: {
+    latitude: number;
+    longitude: number;
+  };
+}
+
 export interface ICategory {
   id?: number;
   name?: string;
@@ -48,6 +65,13 @@ export interface IUseData {
   users: IUser[];
   handleUser: (data?: IUser) => void;
   handleUsers: (data?: IUser[]) => void;
+  selectedLocation: any;
+  setSelectedLocation: (data?: any) => void;
+  locationSelected: boolean;
+  mapRegion: any;
+  setMapRegion: (data?: any) => void;
+  setLocationSelected: (data?: boolean) => void;
+  handleSelectedLocation: (lat: any, lng: any) => void;
   notifications: INotification[];
   handleNotifications: (data?: INotification[]) => void;
 }

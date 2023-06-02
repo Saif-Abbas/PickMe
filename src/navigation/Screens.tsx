@@ -16,6 +16,9 @@ import {
   CompleteDriverProfile,
   PostRide,
   BookRide,
+  Trips,
+  TripsHistory,
+  PaymentMethods,
 } from "../screens";
 import { useScreenOptions } from "../hooks";
 const Stack = createStackNavigator();
@@ -87,6 +90,22 @@ export default () => {
       <Stack.Screen
         name="BookRide"
         component={BookRide}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="Trips"
+        component={Trips}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="TripsHistory"
+        component={TripsHistory}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="PaymentMethods"
+        component={PaymentMethods}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

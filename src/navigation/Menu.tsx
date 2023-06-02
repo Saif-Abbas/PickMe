@@ -120,7 +120,7 @@ const DrawerContent = (
       },
       {
         name: "Test",
-        to: "BookRide",
+        to: "PaymentMethods",
         icon: assets.bell,
       },
     ];
@@ -130,6 +130,7 @@ const DrawerContent = (
       { name: t("screens.talented"), to: "Talented", icon: assets.star },
       { name: t("screens.order"), to: "Orders", icon: assets.add },
       { name: t("screens.settings"), to: "Settings", icon: assets.settings },
+      { name: t("screens.test"), to: "Test", icon: assets.bell },
     ];
   }
 

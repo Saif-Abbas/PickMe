@@ -12,3 +12,6 @@ export { default as CompleteProfile } from "./CompleteProfile";
 export { default as CompleteDriverProfile } from "./CompleteDriverProfile";
 export { default as BookRide } from "./BookRide";
 export { default as PostRide } from "./PostRide";
+export { default as Trips } from "./Trips";
+export { default as TripsHistory } from "./TripsHistory";
+export { default as PaymentMethods } from "./PaymentMethods";

@@ -40,6 +40,7 @@
     "login": "Login",
     "logout": "Logout",
     "order": "Order",
+    "test": "Test",
     "becomeTalented": "Become Talented"
   },
   "navigation": {
@@ -145,6 +146,10 @@
   "settings": {
     "language": "Language",
     "save": "Save"
+  },
+  "tripsHistory": {
+    "title": "Trips History",
+    "noTrips": "No Trips Yet"
   },
   "becomeTalented": {
     "title": "Become Talented",

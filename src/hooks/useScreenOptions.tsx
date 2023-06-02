@@ -21,7 +21,7 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import keys from "../../keys.json";
 export default () => {
   const { t, locale } = useTranslation();
-  const { user, isDark } = useData();
+  const { user, isDark, handleSelectedLocation } = useData();
   const navigation = useNavigation();
   const { icons, colors, gradients, sizes } = useTheme();
 
@@ -150,6 +150,7 @@ export default () => {
           isRowScrollable
           minLength={4}
           placeholder="Search"
+          fetchDetails={true}
           renderRow={(data) => (
             <Block collapsable row safe>
               <TouchableOpacity
@@ -163,9 +164,13 @@ export default () => {
               </TouchableOpacity>
             </Block>
           )}
-          onPress={(data, details = null) => {
+          onPress={(data, details) => {
             // 'details' is provided when fetchDetails = true
             console.log(data, details);
+            handleSelectedLocation(
+              details?.geometry.location.lat,
+              details?.geometry.location.lng
+            );
           }}
           styles={
             isDark
@@ -192,6 +197,7 @@ export default () => {
           query={{
             key: keys.GooglePlacesAPIKey,
             language: locale,
+            components: "country:sa",
           }}
         />
       ),

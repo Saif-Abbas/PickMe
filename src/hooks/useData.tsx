@@ -5,13 +5,15 @@ import { IUseData, ITheme, IUser } from "../constants/types";
 
 import { light, dark } from "../constants";
 import appData from "../../app.json";
-import { Auth, onAuthStateChanged } from "firebase/auth";
 
 export const DataContext = React.createContext({});
 export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const [isDark, setIsDark] = useState(false);
   const [theme, setTheme] = useState<ITheme>(light);
   const [user, setUser] = useState<IUser>();
+  const [selectedLocation, setSelectedLocation] = useState<any>(null);
+  const [locationSelected, setLocationSelected] = useState(false);
+  const [mapRegion, setMapRegion] = useState<any>(null);
 
   // get isDark mode from storage
   const getIsDark = useCallback(async () => {
@@ -54,6 +56,24 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     getIsDark();
   }, [getIsDark]);
 
+  const handleSelectedLocation = useCallback(
+    (lat: any, lng: any) => {
+      console.log(lat, lng);
+      setMapRegion({
+        latitude: lat,
+        longitude: lng,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      });
+      setSelectedLocation({
+        latitude: lat,
+        longitude: lng,
+      });
+      setLocationSelected(true);
+    },
+    [selectedLocation]
+  );
+
   // change theme based on isDark updates
   useEffect(() => {
     setTheme(isDark ? dark : light);
@@ -67,6 +87,11 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     user,
     handleUsers,
     handleUser,
+    selectedLocation,
+    setSelectedLocation,
+    locationSelected,
+    setLocationSelected,
+    handleSelectedLocation,
   };
 
   return (
