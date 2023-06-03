@@ -54,7 +54,8 @@
     "title": "خذني معك ",
     "distance": "المسافة {{distance}} كم",
     "duration": "مدة {{duration}} دقيقة",
-    "price": "السعر {{price}} ريال"
+    "price": "السعر {{price}} ريال",
+    "search": "بحث"
   },
   "login": {
     "title": "تسجيل الدخول",
@@ -128,29 +129,29 @@
     "title": "نشر رحله",
     "from": "من",
     "to": "الى",
-    "date": "Date",
-    "time": "Time",
-    "price": "Price",
-    "pricePlaceholder": "Price",
-    "send": "Post Ride"
+    "date": "التاريخ",
+    "time": "الوقت",
+    "price": "السعر",
+    "pricePlaceholder": "السعر",
+    "send": "نشر الرحلة"
   },
   "bookRide": {
-    "title": "Post Ride",
-    "from": "From",
-    "to": "To",
-    "date": "Date",
-    "time": "Time",
-    "price": "Price",
-    "pricePlaceholder": "Price",
-    "send": "Book Ride"
+    "title": "حجز رحلة",
+    "from": "من",
+    "to": "الى",
+    "date": "التاريخ",
+    "time": "الوقت",
+    "price": "السعر",
+    "pricePlaceholder": "السعر",
+    "send": "حجز الرحلة"
   },
   "settings": {
     "language": "اللغه",
     "save": "حفظ"
   },
   "tripsHistory": {
-    "title": "Trips History",
-    "noTrips": "No Trips Yet"
+    "title": "تاريخ الرحلات",
+    "noTrips": "لا توجد رحلات"
   },
   "becomeTalented": {
     "title": "كن موهوباً",

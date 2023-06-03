@@ -36,6 +36,10 @@ export interface IHistory {
 }
 
 export interface ITrip {
+  date: Date;
+  user: IUser;
+  status: "pending" | "approved" | "rejected" | "completed";
+  availability: "available" | "unavailable";
   from: {
     latitude: number;
     longitude: number;

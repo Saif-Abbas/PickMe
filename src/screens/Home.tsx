@@ -8,13 +8,16 @@ import { useData, useTheme, useTranslation } from "../hooks";
 import { Ionicons } from "@expo/vector-icons";
 import keys from "../../keys.json";
 import { calculateDistance } from "../functions/mathematical";
-import { get } from "firebase/database";
+import { get, ref, db } from "../services/firebase";
+import { ITrip } from "../constants/types";
 
 const Home = () => {
   const [showMap, setShowMap] = useState(false);
   const [coordinates, setCoords] = useState({ lat: 0, lon: 0 });
   const [route, setRoute] = useState<any>(null);
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
+  const [searched, setSearched] = useState(false);
+  const [circle, setCircle] = useState(0);
   const mapView = useRef<MapView>(null);
   const {
     isDark,
@@ -43,7 +46,29 @@ const Home = () => {
   );
 
   const handleTripSearch = useCallback(() => {
-    get(ref(db, "trips", { orderByChild: "status", equalTo: "open" }));
+    setSearched(true);
+    setCircle(500);
+    get(ref(db, "trips")).then((snapshot) => {
+      const trips = snapshot.val();
+      const trip = trips.find((trip: ITrip) => {
+        const distance = calculateDistance(
+          coordinates.lat,
+          coordinates.lon,
+          trip.to.latitude,
+          trip.to.longitude
+        );
+        console.log(distance);
+        return distance <= 0.5;
+      });
+      if (trip) {
+        showAlert("success", t("home.tripFound"));
+        handleSelectedLocation(trip.latitude, trip.longitude);
+        setCircle(0);
+      } else {
+        showAlert("danger", t("home.tripNotFound"));
+        setCircle(0);
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -147,37 +172,62 @@ const Home = () => {
           padding={sizes.sm}
           style={{
             position: "absolute",
-            bottom: sizes.sm,
+            bottom: sizes.xxl,
             left: sizes.sm,
             right: sizes.sm,
-            height: 200,
+            height: 190,
           }}
         >
-          <Block flex={0} padding={sizes.m}>
-            <Text black bold>
-              <Ionicons
-                name="location"
-                size={sizes.sm * 1.2}
-                color={colors.secondary}
-              />
-              {t("home.distance", { distance: Math.round(route.distance) })}
-            </Text>
-            <Text black bold>
-              <Ionicons
-                name="time"
-                size={sizes.sm * 1.2}
-                color={colors.secondary}
-              />
-              {t("home.duration", { duration: Math.round(route.duration) })}
-            </Text>
-            <Text black bold>
-              <Ionicons
-                name="cash-outline"
-                size={sizes.sm * 1.2}
-                color={colors.secondary}
-              />
-              {t("home.price", { price: Math.round(route.distance * 0.5) })}
-            </Text>
+          <Block flex={0} padding={sizes.sm}>
+            <Block
+              flex={0}
+              // TODO: Implement RTL support for this
+              justify="space-between"
+              horizontal
+            >
+              {route && !searched ? (
+                <>
+                  <Text black bold>
+                    <Ionicons
+                      name="location"
+                      size={sizes.sm * 1.2}
+                      color={colors.secondary}
+                    />{" "}
+                    {t("home.distance", {
+                      distance: Math.round(route.distance),
+                    })}
+                  </Text>
+                  <Text black bold>
+                    <Ionicons
+                      name="time"
+                      size={sizes.sm * 1.2}
+                      color={colors.secondary}
+                    />{" "}
+                    {t("home.duration", {
+                      duration: Math.round(route.duration),
+                    })}
+                  </Text>
+                  <Text black bold>
+                    <Ionicons
+                      name="cash-outline"
+                      size={sizes.sm * 1.2}
+                      color={colors.secondary}
+                    />{" "}
+                    {t("home.price", {
+                      price: Math.round(5 + route.distance * 0.5),
+                    })}
+                  </Text>
+                </>
+              ) : (
+                <>
+                  <ActivityIndicator
+                    size="small"
+                    color={isDark ? colors.white : colors.black}
+                  />
+                  <Text bold>{t("home.searching")}</Text>
+                </>
+              )}
+            </Block>
             <Button
               top={10}
               vibrate={[300, 200, 100]}

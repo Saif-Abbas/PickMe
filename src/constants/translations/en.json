@@ -56,7 +56,8 @@
     "title": "PickMe",
     "distance": "Distance {{distance}} km",
     "duration": "Duration {{duration}} min",
-    "price": "Price {{price}} SAR"
+    "price": "Price {{price}} SAR",
+    "search": "Search"
   },
   "login": {
     "title": "Login",
