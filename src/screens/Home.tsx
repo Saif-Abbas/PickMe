@@ -1,20 +1,50 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { ActivityIndicator, View } from "react-native";
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
-import { Block, Button, Text } from "../components/";
-import { useData, useTheme } from "../hooks";
+import { Alert, Block, Button, Text } from "../components/";
+import { useData, useTheme, useTranslation } from "../hooks";
+import { Ionicons } from "@expo/vector-icons";
 import keys from "../../keys.json";
+import { calculateDistance } from "../functions/mathematical";
+import { get } from "firebase/database";
 
 const Home = () => {
   const [showMap, setShowMap] = useState(false);
   const [coordinates, setCoords] = useState({ lat: 0, lon: 0 });
   const [route, setRoute] = useState<any>(null);
+  const { t } = useTranslation();
   const mapView = useRef<MapView>(null);
-  const { isDark, locationSelected, handleSelectedLocation, selectedLocation } =
-    useData();
+  const {
+    isDark,
+    locationSelected,
+    setLocationSelected,
+    handleSelectedLocation,
+    selectedLocation,
+  } = useData();
   const { colors, sizes, gradients } = useTheme();
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const [alert, setAlert] = useState({
+    type: "",
+    message: "",
+  });
+
+  // Show the alert and close it after 5 seconds
+  const showAlert = useCallback(
+    (type: string, message: string) => {
+      setAlert({ type, message });
+      setIsAlertVisible(true);
+      setTimeout(() => {
+        setIsAlertVisible(false);
+      }, 5500);
+    },
+    [setAlert, setIsAlertVisible]
+  );
+
+  const handleTripSearch = useCallback(() => {
+    get(ref(db, "trips", { orderByChild: "status", equalTo: "open" }));
+  }, []);
 
   useEffect(() => {
     const getLocation = async () => {
@@ -101,6 +131,9 @@ const Home = () => {
                 }}
                 onError={(errorMessage) => {
                   console.log("GOT AN ERROR");
+                  handleSelectedLocation(coordinates.lat, coordinates.lon);
+                  showAlert("danger", "You can't go there!");
+                  setLocationSelected(false);
                 }}
               />
             </>
@@ -110,23 +143,50 @@ const Home = () => {
       {route && (
         <Block
           white
-          shadow
           radius={sizes.sm}
+          padding={sizes.sm}
           style={{
             position: "absolute",
             bottom: sizes.sm,
             left: sizes.sm,
             right: sizes.sm,
-            height: 90,
+            height: 200,
           }}
         >
-          <Block flex={0}>
-            <Text black bold center>
-              Distance: {route.distance} km, Duration: {route.duration} min.
+          <Block flex={0} padding={sizes.m}>
+            <Text black bold>
+              <Ionicons
+                name="location"
+                size={sizes.sm * 1.2}
+                color={colors.secondary}
+              />
+              {t("home.distance", { distance: Math.round(route.distance) })}
             </Text>
-            <Text black>Estimated Price: {route.distance < 10}</Text>
-            <Button top={10} gradient={gradients.primary}>
-              <Text bold>START MATCHING</Text>
+            <Text black bold>
+              <Ionicons
+                name="time"
+                size={sizes.sm * 1.2}
+                color={colors.secondary}
+              />
+              {t("home.duration", { duration: Math.round(route.duration) })}
+            </Text>
+            <Text black bold>
+              <Ionicons
+                name="cash-outline"
+                size={sizes.sm * 1.2}
+                color={colors.secondary}
+              />
+              {t("home.price", { price: Math.round(route.distance * 0.5) })}
+            </Text>
+            <Button
+              top={10}
+              vibrate={[300, 200, 100]}
+              gradient={gradients.primary}
+              onPress={() => {
+                handleTripSearch();
+              }}
+            >
+              <Text bold>{t("home.search")}</Text>
             </Button>
           </Block>
         </Block>
@@ -139,6 +199,13 @@ const Home = () => {
             style={{ marginVertical: 350 }}
           />
         </Block>
+      )}
+      {isAlertVisible && (
+        <Alert
+          type={alert.type}
+          message={alert.message}
+          isVisible={isAlertVisible}
+        />
       )}
     </View>
   );

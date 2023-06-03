@@ -1,27 +1,24 @@
 import { useState, useEffect } from "react";
-import { Platform } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { useData, useTheme, useTranslation } from "../hooks/";
 import { useRoute } from "@react-navigation/native";
-import {
-  Block,
-  Button,
-  Image,
-  Text,
-} from "../components/";
+import { Block, Button, Image, Text } from "../components/";
 import { IHistory, ITrip } from "../constants/types";
+import { ActivityIndicator } from "react-native";
 
 const TripsHistory = ({ route }: { route: any }) => {
   const { t } = useTranslation();
-  const { isDark, handleUser } = useData();
+  const { isDark } = useData();
   const navigation = useNavigation();
   //const { uid } = route.params;
-  const { assets, colors, gradients, sizes } = useTheme();
-  const [history, setHistory] = useState<IHistory>(null);
+  const { assets, colors, sizes } = useTheme();
+  const [history, setHistory] = useState<IHistory>();
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     // get Data from the firebase later
   }, []);
-  
+
   return (
     <Block safe marginTop={sizes.md}>
       <Block paddingHorizontal={sizes.s}>
@@ -58,9 +55,16 @@ const TripsHistory = ({ route }: { route: any }) => {
           </Image>
         </Block>
         {/* Trips History Here*/}
-        {history && (
-          <Text p white center marginLeft={sizes.s}>
-            {t("tripsHistory.noTrips")}
+        {loading && (
+          <ActivityIndicator
+            size="large"
+            color={isDark ? colors.white : colors.black}
+            style={{ marginTop: sizes.xxl * 3.5 }}
+          />
+        )}
+        {!history && !loading && (
+          <Text p marginTop={sizes.xxl * 3.5} center marginLeft={sizes.s}>
+            {t("tripsHistory.noHistory")}
           </Text>
         )}
       </Block>

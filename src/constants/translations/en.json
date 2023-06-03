@@ -53,7 +53,10 @@
     "login": "Login"
   },
   "home": {
-    "title": "PickMe"
+    "title": "PickMe",
+    "distance": "Distance {{distance}} km",
+    "duration": "Duration {{duration}} min",
+    "price": "Price {{price}} SAR"
   },
   "login": {
     "title": "Login",
@@ -133,7 +136,6 @@
     "pricePlaceholder": "Price",
     "send": "Post Ride"
   },
-
   "bookRide": {
     "title": "Post Ride",
     "from": "From",

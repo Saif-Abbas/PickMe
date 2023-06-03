@@ -50,9 +50,11 @@
     "about": "حول",
     "login": "تسجيل الدخول"
   },
-
   "home": {
-    "title": "خذني معك "
+    "title": "خذني معك ",
+    "distance": "المسافة {{distance}} كم",
+    "duration": "مدة {{duration}} دقيقة",
+    "price": "السعر {{price}} ريال"
   },
   "login": {
     "title": "تسجيل الدخول",
@@ -62,27 +64,6 @@
     "code": "أدخل رمز التفعيل",
     "codePlaceholder": "XXXXXX",
     "signin": "تسجيل الدخول"
-  },
-  "completeProfile": {
-    "name": "* الاسم",
-    "nationalId": "* رقم الهوية",
-    "date": "* التاريخ",
-    "gender": "* الجنس",
-    "note": "ملاحظة: * تعني ان الخانة مطلوبة"
-  },
-  "completeDriverProfile": {
-    "title": "استكمال ملف تعريف السائق",
-    "drivingLicense": "رخصة القيادة *",
-    "carLicense": "رخصة السيارة *",
-    "carName": "اسم السيارة *",
-    "carPlate": "لوحة السيارة *",
-    "carModel": "طراز السيارة *",
-    "uploadCarLicense": "تحميل رخصة السيارة *",
-    "uploadLicense": "تحميل رخصة سياقة *",
-    "uploaded": "الرفع",
-    "note": "ملاحظة: * تشير إلى أنه حقل إلزامي",
-    "carManufacturer": "الشركة المصنعة *",
-    "send": "تأكيد معلومات السائق"
   },
   "profile": {
     "title": "الحساب",
@@ -120,9 +101,56 @@
     "pending": "قيد الانتظار...",
     "details": "تفاصيل الطلب"
   },
+  "completeProfile": {
+    "title": "أكمل الملف الشخصي",
+    "name": "* الاسم",
+    "nationalId": "* رقم الهوية",
+    "date": "* التاريخ",
+    "gender": "* الجنس",
+    "note": "ملاحظة: * تعني ان الخانة مطلوبة",
+    "send": "تأكيد المعلومات"
+  },
+  "completeDriverProfile": {
+    "title": "استكمال ملف تعريف السائق",
+    "drivingLicense": "رخصة القيادة *",
+    "carLicense": "رخصة السيارة *",
+    "carName": "اسم السيارة *",
+    "carPlate": "لوحة السيارة *",
+    "carModel": "طراز السيارة *",
+    "uploadCarLicense": "تحميل رخصة السيارة *",
+    "uploadLicense": "تحميل رخصة سياقة *",
+    "uploaded": "الرفع",
+    "note": "ملاحظة: * تشير إلى أنه حقل إلزامي",
+    "carManufacturer": "الشركة المصنعة *",
+    "send": "تأكيد معلومات السائق"
+  },
+  "postRide": {
+    "title": "نشر رحله",
+    "from": "من",
+    "to": "الى",
+    "date": "Date",
+    "time": "Time",
+    "price": "Price",
+    "pricePlaceholder": "Price",
+    "send": "Post Ride"
+  },
+  "bookRide": {
+    "title": "Post Ride",
+    "from": "From",
+    "to": "To",
+    "date": "Date",
+    "time": "Time",
+    "price": "Price",
+    "pricePlaceholder": "Price",
+    "send": "Book Ride"
+  },
   "settings": {
     "language": "اللغه",
     "save": "حفظ"
+  },
+  "tripsHistory": {
+    "title": "Trips History",
+    "noTrips": "No Trips Yet"
   },
   "becomeTalented": {
     "title": "كن موهوباً",

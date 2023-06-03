@@ -19,7 +19,46 @@ import * as regex from "../constants/regex";
 import { IUser } from "../constants/types";
 const isAndroid = Platform.OS === "android";
 
+interface IPayment {
+  cardNumber: string;
+  cardHolderName: string;
+  cardExpiry: string;
+  cardCvv: string;
+}
+interface IPaymentValidation {
+  cardNumber: boolean;
+  cardHolderName: boolean;
+  cardExpiry: boolean;
+  cardCvv: boolean;
+}
+
 const PaymentMethods = () => {
+  const { assets, colors, gradients, sizes } = useTheme();
+  const { t } = useTranslation();
+  const navigation = useNavigation();
+  const { user } = useData();
+  const [payment, setPayment] = useState<IPayment>({
+    cardNumber: "",
+    cardHolderName: "",
+    cardExpiry: "",
+    cardCvv: "",
+  });
+  const [isValid, setIsValid] = useState<IPaymentValidation>({
+    cardNumber: false,
+    cardHolderName: false,
+    cardExpiry: false,
+    cardCvv: false,
+  });
+  useEffect(() => {
+    setIsValid({
+      cardNumber: regex.cardNumber.test(payment.cardNumber),
+      cardHolderName: regex.cardHolderName.test(payment.cardHolderName),
+      cardExpiry: regex.cardExpiry.test(payment.cardExpiry),
+      cardCvv: regex.cardCvv.test(payment.cardCvv),
+    });
+  }, [payment, isValid]);
+  //const handlePayment = useCallback(() => {
+
   return (
     <Block safe marginTop={sizes.md}>
       <Block paddingHorizontal={sizes.s}>

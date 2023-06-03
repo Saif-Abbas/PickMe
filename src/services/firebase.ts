@@ -84,6 +84,20 @@ const loginWithCredentials = async (credential: any, phone: any) => {
   }
 };
 
+const getAllTrips = async () => {
+  try {
+    const snapshot = await get(ref(db, "trips"));
+    if (snapshot.exists()) {
+      return snapshot.val();
+    } else {
+      return null;
+    }
+  } catch (err: any) {
+    Alert.alert(err.message);
+    return null;
+  }
+};
+
 const logout = async () => {
   if (!auth.currentUser) return;
   try {
