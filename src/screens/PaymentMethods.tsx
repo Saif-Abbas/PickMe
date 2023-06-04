@@ -14,7 +14,7 @@ import {
   Modal,
 } from "../components/";
 
-import { db, update, ref } from "../services/firebase";
+import { db, update, ref, get } from "../services/firebase";
 import * as regex from "../constants/regex";
 import { IUser } from "../constants/types";
 const isAndroid = Platform.OS === "android";
@@ -22,13 +22,13 @@ const isAndroid = Platform.OS === "android";
 interface IPayment {
   cardNumber: string;
   cardHolderName: string;
-  cardExpiry: string;
+  cardExpiryDate: string;
   cardCvv: string;
 }
 interface IPaymentValidation {
   cardNumber: boolean;
   cardHolderName: boolean;
-  cardExpiry: boolean;
+  cardExpiryDate: boolean;
   cardCvv: boolean;
 }
 
@@ -36,28 +36,77 @@ const PaymentMethods = () => {
   const { assets, colors, gradients, sizes } = useTheme();
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const { user } = useData();
+  const { user, handleUser } = useData();
+  const [showAddCard, setShowAddCard] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [payment, setPayment] = useState<IPayment>({
     cardNumber: "",
     cardHolderName: "",
-    cardExpiry: "",
+    cardExpiryDate: "",
     cardCvv: "",
   });
   const [isValid, setIsValid] = useState<IPaymentValidation>({
     cardNumber: false,
     cardHolderName: false,
-    cardExpiry: false,
+    cardExpiryDate: false,
     cardCvv: false,
   });
+
   useEffect(() => {
-    setIsValid({
+    setIsValid((state) => ({
+      ...state,
       cardNumber: regex.cardNumber.test(payment.cardNumber),
       cardHolderName: regex.cardHolderName.test(payment.cardHolderName),
-      cardExpiry: regex.cardExpiry.test(payment.cardExpiry),
+      cardExpiryDate: regex.cardExpiryDate.test(payment.cardExpiryDate),
       cardCvv: regex.cardCvv.test(payment.cardCvv),
+    }));
+  }, [payment]);
+
+  const handleAddCard = useCallback(() => {
+    if (user) {
+      const userRef = ref(db, `users/${user.uid}`);
+      const updatedUser: any = {
+        ...user,
+        paymentMethods: [...user.data.paymentMethods, payment],
+      };
+      update(userRef, updatedUser)
+        .then(() => {
+          setPayment({
+            // Clearing the data
+            cardNumber: "",
+            cardHolderName: "",
+            cardExpiryDate: "",
+            cardCvv: "",
+          });
+          setShowAddCard(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
+
+  // This useEffect hook will update the whole page
+  // once the payment method is added
+  // to ensure smoother experience
+  const getData = useCallback(async () => {
+    if (!user) return;
+    await get(ref(db, `users/${user?.uid}`)).then((snapshot) => {
+      if (snapshot.exists()) {
+        const userData: IUser = snapshot.val();
+        // Updating the user data
+        // to ensure the new payment method is added
+        // to the user data
+        // HandleUser is a function that will update the user data across the app
+        user && handleUser(userData);
+        setLoading(false);
+      }
     });
-  }, [payment, isValid]);
-  //const handlePayment = useCallback(() => {
+  }, [handleUser, user]);
+  useEffect(() => {
+    // Calling the function
+    getData();
+  }, [handleUser, user]);
 
   return (
     <Block safe marginTop={sizes.md}>
@@ -90,14 +139,127 @@ const PaymentMethods = () => {
               </Text>
             </Button>
             <Text h4 center white marginBottom={sizes.md}>
-              {t("tripsHistory.title")}
+              {t("paymentMethods.title")}
             </Text>
           </Image>
+          <Button
+            row
+            black
+            marginVertical={sizes.s}
+            width={sizes.md * 4}
+            style={{ alignSelf: "flex-end" }}
+            onPress={() => {
+              setShowAddCard(true);
+            }}
+          >
+            <Ionicons
+              name="add-circle-outline"
+              size={24}
+              color={colors.white}
+            />
+            <Text>{t("paymentMethods.addCard")}</Text>
+          </Button>
         </Block>
-        {/* Trips History Here*/}
-        <Text p white center marginLeft={sizes.s}>
-          {t("tripsHistory.noTrips")}
-        </Text>
+        {/* Payment Methods Here*/}
+        {showAddCard && (
+          <Block scroll style={{ height: "100%" }}>
+            <Modal
+              visible={showAddCard}
+              onRequestClose={() => setShowAddCard(false)}
+            >
+              <Input
+                label={t("paymentMethods.cardHolderName")}
+                marginVertical={sizes.sm}
+                placeholder={t("paymentMethods.cardHolderNamePlaceholder")}
+                value={payment.cardHolderName}
+                onChangeText={(text) =>
+                  setPayment((state) => ({ ...state, cardHolderName: text }))
+                }
+                success={isValid.cardHolderName}
+                danger={
+                  !isValid.cardHolderName && payment.cardHolderName !== ""
+                }
+              />
+              <Input
+                label={t("paymentMethods.cardNumber")}
+                marginVertical={sizes.sm}
+                placeholder={t("paymentMethods.cardNumberPlaceholder")}
+                value={payment.cardNumber}
+                onChangeText={(text) =>
+                  setPayment((state) => ({ ...state, cardNumber: text }))
+                }
+                success={isValid.cardNumber}
+                danger={!isValid.cardNumber && payment.cardNumber !== ""}
+                keyboardType="number-pad"
+              />
+              <Block
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginBottom: sizes.sm * 6,
+                  marginTop: sizes.s,
+                }}
+              >
+                <Input
+                  label={t("paymentMethods.expiryDate")}
+                  marginVertical={sizes.sm}
+                  style={{
+                    width: "50%",
+                    left: 0,
+                  }}
+                  placeholder={t("paymentMethods.expiryDatePlaceholder")}
+                  value={payment.cardExpiryDate}
+                  onChangeText={(text) =>
+                    setPayment((state) => ({
+                      ...state,
+                      cardExpiryDate: text,
+                    }))
+                  }
+                  success={isValid.cardExpiryDate}
+                  danger={
+                    !isValid.cardExpiryDate && payment.cardExpiryDate !== ""
+                  }
+                  keyboardType="number-pad"
+                />
+                <Input
+                  label={t("paymentMethods.cvv")}
+                  marginVertical={sizes.sm}
+                  style={{
+                    width: "30%",
+                    left: 0,
+                  }}
+                  placeholder={t("paymentMethods.cvvPlaceholder")}
+                  value={payment.cardCvv}
+                  onChangeText={(text) =>
+                    setPayment((state) => ({ ...state, cardCvv: text }))
+                  }
+                  success={isValid.cardCvv}
+                  danger={!isValid.cardCvv && payment.cardCvv !== ""}
+                  keyboardType="number-pad"
+                />
+              </Block>
+              <Button
+                gradient={gradients.primary}
+                marginVertical={sizes.sm * 0.5}
+                onPress={() => {
+                  if (
+                    isValid.cardNumber &&
+                    isValid.cardHolderName &&
+                    isValid.cardExpiryDate &&
+                    isValid.cardCvv
+                  ) {
+                    handleAddCard();
+                  } else {
+                  }
+                }}
+              >
+                <Text white center>
+                  {t("paymentMethods.save")}
+                </Text>
+              </Button>
+            </Modal>
+          </Block>
+        )}
       </Block>
     </Block>
   );

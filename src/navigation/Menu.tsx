@@ -127,7 +127,7 @@ const DrawerContent = (
         name: "Test2",
         to: "PaymentMethods",
         icon: assets.bell,
-      }
+      },
     ];
   } else {
     screens = [
@@ -135,8 +135,8 @@ const DrawerContent = (
       { name: t("screens.talented"), to: "Talented", icon: assets.star },
       { name: t("screens.order"), to: "Orders", icon: assets.add },
       { name: t("screens.settings"), to: "Settings", icon: assets.settings },
-      { name: t("screens.test"), to: "Test", icon: assets.bell },
-      { name: t("screens.test2"), to: "Test2", icon: assets.bell}
+      { name: t("screens.test"), to: "TripHistory", icon: assets.bell },
+      { name: t("screens.test2"), to: "PaymentMethods", icon: assets.bell },
     ];
   }
 

@@ -3,7 +3,7 @@ import { ActivityIndicator } from "react-native";
 import { useTheme, useTranslation } from "../hooks/";
 import { Block, Input } from "../components/";
 import { firebase } from "../services/firebase";
-import UserCard from "../components/TripCard";
+import UserCard from "../components/HistoryCard";
 const Talented = () => {
   const { t } = useTranslation();
   const { colors, sizes } = useTheme();

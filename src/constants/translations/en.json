@@ -1,4 +1,19 @@
 {
+  "app": {
+    "name": "PickMe",
+    "fullname": "PickMe -  خذني معك",
+    "motto": "for a better future"
+  },
+  "bookRide": {
+    "title": "Post Ride",
+    "from": "From",
+    "to": "To",
+    "date": "Date",
+    "time": "Time",
+    "price": "Price",
+    "pricePlaceholder": "Price",
+    "send": "Book Ride"
+  },
   "common": {
     "appDetails": "App Details",
     "appName": "App name",
@@ -26,84 +41,6 @@
     "yes": "Yes",
     "no": "No"
   },
-  "app": {
-    "name": "PickMe",
-    "fullname": "PickMe -  خذني معك",
-    "motto": "for a better future"
-  },
-  "darkMode": "Dark Mode",
-  "screens": {
-    "home": "Home",
-    "profile": "Profile",
-    "talented": "Talented",
-    "settings": "Settings",
-    "login": "Login",
-    "logout": "Logout",
-    "order": "Order",
-    "test": "Test",
-    "test2": "Test2",
-    "becomeTalented": "Become Talented"
-  },
-  "navigation": {
-    "home": "PickMe",
-    "profile": "Profile",
-    "settings": "Settings",
-    "notifications": "Notifications",
-    "about": "About",
-    "login": "Login"
-  },
-  "home": {
-    "title": "PickMe",
-    "distance": "Distance {{distance}} km",
-    "duration": "Duration {{duration}} min",
-    "price": "Price {{price}} SAR",
-    "search": "Search"
-  },
-  "login": {
-    "title": "Login",
-    "phoneNumber": "Phone Number",
-    "phoneNumberPlaceholder": "5XXXXXXXX",
-    "requestCode": "Request Code",
-    "code": "Enter Your Verification Code",
-    "codePlaceholder": "XXXXXX",
-    "signin": "Sign In"
-  },
-  "profile": {
-    "title": "Profile",
-    "editProfile": "Edit Profile",
-    "aboutMe": "About me",
-    "rating": "Rating",
-    "jobsDone": "Jobs",
-    "skills": "Skills",
-    "hire": "Hire"
-  },
-  "edit": {
-    "title": "Edit Profile",
-    "name": "Name",
-    "edit": "Edit",
-    "upload": "Upload Avatar",
-    "uploaded": "Uploaded",
-    "about": "About",
-    "aboutPlaceholder": "Write something about yourself.."
-  },
-  "dark": {
-    "activated": "Dark Mode :)"
-  },
-  "hire": {
-    "title": "Hire",
-    "date": "Date",
-    "datePlaceholder": "Select Date",
-    "send": "Send Request",
-    "showProfile": "Show Profile",
-    "msg": "Message",
-    "msgPlaceholder": "Enter your message.."
-  },
-  "orders": {
-    "price": "Price: Decided Later",
-    "chat": "Chat",
-    "pending": "Pending...",
-    "details": "Order Details"
-  },
   "completeProfile": {
     "title": "Complete Profile",
     "name": "Name *",
@@ -127,6 +64,71 @@
     "carManufacturer": "Car Manufacturer *",
     "send": "Confirm Driver Information"
   },
+  "darkMode": "Dark Mode",
+  "screens": {
+    "home": "Home",
+    "profile": "Profile",
+    "talented": "Talented",
+    "settings": "Settings",
+    "login": "Login",
+    "logout": "Logout",
+    "order": "Order",
+    "test": "Test",
+    "test2": "Test2",
+    "trips": "Trips"
+  },
+  "dark": {
+    "activated": "Dark Mode :)"
+  },
+  "edit": {
+    "title": "Edit Profile",
+    "name": "Name",
+    "edit": "Edit",
+    "upload": "Upload Avatar",
+    "uploaded": "Uploaded",
+    "about": "About",
+    "aboutPlaceholder": "Write something about yourself.."
+  },
+  "home": {
+    "title": "PickMe",
+    "distance": "Distance {{distance}} km",
+    "duration": "Duration {{duration}} min",
+    "price": "Price {{price}} SAR",
+    "search": "Search",
+    "searching": "Searching for a nearby trip..."
+  },
+  "hire": {
+    "title": "Hire",
+    "date": "Date",
+    "datePlaceholder": "Select Date",
+    "send": "Send Request",
+    "showProfile": "Show Profile",
+    "msg": "Message",
+    "msgPlaceholder": "Enter your message.."
+  },
+  "login": {
+    "title": "Login",
+    "phoneNumber": "Phone Number",
+    "phoneNumberPlaceholder": "5XXXXXXXX",
+    "requestCode": "Request Code",
+    "code": "Enter Your Verification Code",
+    "codePlaceholder": "XXXXXX",
+    "signin": "Sign In"
+  },
+  "navigation": {
+    "home": "PickMe",
+    "profile": "Profile",
+    "settings": "Settings",
+    "notifications": "Notifications",
+    "about": "About",
+    "login": "Login"
+  },
+  "orders": {
+    "price": "Price: Decided Later",
+    "chat": "Chat",
+    "pending": "Pending...",
+    "details": "Order Details"
+  },
   "postRide": {
     "title": "Post Ride",
     "from": "From",
@@ -137,15 +139,30 @@
     "pricePlaceholder": "Price",
     "send": "Post Ride"
   },
-  "bookRide": {
-    "title": "Post Ride",
-    "from": "From",
-    "to": "To",
-    "date": "Date",
-    "time": "Time",
-    "price": "Price",
-    "pricePlaceholder": "Price",
-    "send": "Book Ride"
+  "profile": {
+    "title": "Profile",
+    "editProfile": "Edit Profile",
+    "aboutMe": "About me",
+    "rating": "Rating",
+    "jobsDone": "Jobs",
+    "skills": "Skills",
+    "hire": "Hire"
+  },
+  "paymentMethods": {
+    "title": "Payment Methods",
+    "addPaymentMethod": "Add Payment Method",
+    "add": "Add New Card",
+    "cardHolderName": "Card Holder Name",
+    "cardHolderNamePlaceholder": "Saif Omar H Abbas",
+    "cardNumber": "Card Number",
+    "cardNumberPlaceholder": "XXXX XXXX XXXX XXXX",
+    "expiryDate": "Expiry Date",
+    "expiryDatePlaceholder": "MM/YY",
+    "cvv": "CVV",
+    "cvvPlaceholder": "XXX",
+    "save": "Save",
+    "error": "Error",
+    "invalidCard": "Invalid Card"
   },
   "settings": {
     "language": "Language",
@@ -154,6 +171,9 @@
   "tripsHistory": {
     "title": "Trips History",
     "noTrips": "No Trips Yet"
+  },
+  "trip": {
+    "sendRequest": "Send Request"
   },
   "becomeTalented": {
     "title": "Become Talented",

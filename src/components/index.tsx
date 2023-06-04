@@ -10,7 +10,7 @@ import Image from "./Image";
 import Card from "./Card";
 import Tag from "./Tag";
 import MiniTag from "./MiniTag";
-
+import TripCard from "./TripCard";
 export {
   Alert,
   Block,
@@ -24,4 +24,5 @@ export {
   Modal,
   Tag,
   MiniTag,
+  TripCard,
 };

@@ -32,3 +32,10 @@ export const linkedin: RegExp = /^https:\/\/[a-z]{2,3}\.linkedin\.com\/.*$/;
 
 export const github: RegExp =
   /(https?:\/\/)?(www\.)?github\.com\/[A-Za-z0-9_]{3,18}(\?(\w+=\w+&?)*)?/;
+
+// Regex for credit cards visa and mastercard only
+export const cardNumber: RegExp = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
+export const cardHolderName: RegExp =
+  /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
+export const cardExpiryDate: RegExp = /^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/;
+export const cardCvv: RegExp = /^[0-9]{3}$/;

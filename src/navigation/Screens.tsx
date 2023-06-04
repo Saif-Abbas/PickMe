@@ -96,7 +96,7 @@ export default () => {
       <Stack.Screen
         name="Trips"
         component={Trips}
-        options={{ headerShown: false }}
+        options={screenOptions.back}
       />
       <Stack.Screen
         name="TripsHistory"

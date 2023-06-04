@@ -6,6 +6,7 @@ export * from "./components";
 export * from "./theme";
 
 export interface IUser {
+  uid: string;
   data: {
     id: string;
     phone: string;
@@ -20,6 +21,7 @@ export interface IUser {
     carLicense?: string;
     carPlate?: string;
     rating: number;
+    paymentMethods: any;
   };
   auth: Auth;
 }
@@ -36,6 +38,7 @@ export interface IHistory {
 }
 
 export interface ITrip {
+  id: number;
   date: Date;
   user: IUser;
   status: "pending" | "approved" | "rejected" | "completed";
@@ -74,6 +77,8 @@ export interface IUseData {
   locationSelected: boolean;
   mapRegion: any;
   setMapRegion: (data?: any) => void;
+  userLocation: any;
+  handleUserLocation: (lat: any, lon: any) => void;
   setLocationSelected: (data?: boolean) => void;
   handleSelectedLocation: (lat: any, lng: any) => void;
   notifications: INotification[];

@@ -14,6 +14,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedLocation, setSelectedLocation] = useState<any>(null);
   const [locationSelected, setLocationSelected] = useState(false);
   const [mapRegion, setMapRegion] = useState<any>(null);
+  const [userLocation, setUserLocation] = useState<any>(null);
 
   // get isDark mode from storage
   const getIsDark = useCallback(async () => {
@@ -74,6 +75,15 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     [selectedLocation]
   );
 
+  const handleUserLocation = useCallback(
+    (lat: any, lng: any) => {
+      setUserLocation({
+        latitude: lat,
+        longitude: lng,
+      });
+    },
+    [userLocation]
+  );
   // change theme based on isDark updates
   useEffect(() => {
     setTheme(isDark ? dark : light);
@@ -89,6 +99,8 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     handleUser,
     selectedLocation,
     setSelectedLocation,
+    userLocation,
+    handleUserLocation,
     locationSelected,
     setLocationSelected,
     handleSelectedLocation,

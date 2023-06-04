@@ -1,4 +1,19 @@
 {
+  "app": {
+    "name": "خذني معك ",
+    "fullname": "PickMe -  خذني معك",
+    "motto": " من أجل مستقبل أفضل "
+  },
+  "bookRide": {
+    "title": "حجز رحلة",
+    "from": "من",
+    "to": "الى",
+    "date": "التاريخ",
+    "time": "الوقت",
+    "price": "السعر",
+    "pricePlaceholder": "السعر",
+    "send": "حجز الرحلة"
+  },
   "common": {
     "appDetails": "تفاصيل التطبيق",
     "appName": "اسم التطبيق",
@@ -26,82 +41,6 @@
     "yes": "نعم",
     "no": "لا"
   },
-  "app": {
-    "name": "خذني معك ",
-    "fullname": "PickMe -  خذني معك",
-    "motto": " من أجل مستقبل أفضل "
-  },
-  "darkMode": "الوضع الليلي",
-  "screens": {
-    "home": "الرئيسية",
-    "profile": "الحساب",
-    "talented": "الموهوبين",
-    "settings": "الإعدادات",
-    "login": "تسجيل الدخول",
-    "logout": "تسجيل الخروج",
-    "order": "طلب",
-    "becomeTalented": "كن موهوباً"
-  },
-  "navigation": {
-    "home": "خذني معك ",
-    "profile": "الحساب",
-    "settings": "الإعدادات",
-    "notifications": "الإشعارات",
-    "about": "حول",
-    "login": "تسجيل الدخول"
-  },
-  "home": {
-    "title": "خذني معك ",
-    "distance": "المسافة {{distance}} كم",
-    "duration": "مدة {{duration}} دقيقة",
-    "price": "السعر {{price}} ريال",
-    "search": "بحث"
-  },
-  "login": {
-    "title": "تسجيل الدخول",
-    "phoneNumber": "رقم الهاتف",
-    "phoneNumberPlaceholder": "5XXXXXXXX",
-    "requestCode": "أرسل رمز التفعيل",
-    "code": "أدخل رمز التفعيل",
-    "codePlaceholder": "XXXXXX",
-    "signin": "تسجيل الدخول"
-  },
-  "profile": {
-    "title": "الحساب",
-    "editProfile": "تعديل الملف الشخصي",
-    "aboutMe": "عني",
-    "rating": "التقييم",
-    "jobsDone": "الأعمال",
-    "skills": "المهارات",
-    "hire": "توظيف"
-  },
-  "edit": {
-    "title": "تعديل الملف الشخصي",
-    "name": "الاسم",
-    "edit": "تعديل",
-    "upload": " إرفع صورة شخصية",
-    "uploaded": "رفع",
-    "about": "حول",
-    "aboutPlaceholder": "أكتب شيئاً عن نفسك"
-  },
-  "dark": {
-    "activated": "الوضع الليلي"
-  },
-  "hire": {
-    "title": "توظيف",
-    "date": "التاريخ",
-    "datePlaceholder": "حدد التاريخ",
-    "send": "إرسال الطلب",
-    "showProfile": "عرض الملف الشخصي",
-    "msg": "الرسالة",
-    "msgPlaceholder": "أدخل رسالتك.."
-  },
-  "orders": {
-    "price": "السعر: سيتم تحديده لاحقًا",
-    "chat": "الدردشة",
-    "pending": "قيد الانتظار...",
-    "details": "تفاصيل الطلب"
-  },
   "completeProfile": {
     "title": "أكمل الملف الشخصي",
     "name": "* الاسم",
@@ -125,6 +64,78 @@
     "carManufacturer": "الشركة المصنعة *",
     "send": "تأكيد معلومات السائق"
   },
+  "darkMode": "الوضع الليلي",
+  "screens": {
+    "home": "الرئيسية",
+    "profile": "الحساب",
+    "talented": "الموهوبين",
+    "settings": "الإعدادات",
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "order": "طلب",
+    "trip": "رحلة"
+  },
+  "dark": {
+    "activated": "الوضع الليلي"
+  },
+  "edit": {
+    "title": "تعديل الملف الشخصي",
+    "name": "الاسم",
+    "edit": "تعديل",
+    "upload": " إرفع صورة شخصية",
+    "uploaded": "رفع",
+    "about": "حول",
+    "aboutPlaceholder": "أكتب شيئاً عن نفسك"
+  },
+  "home": {
+    "title": "خذني معك ",
+    "distance": "المسافة {{distance}} كم",
+    "duration": "المدة{{duration}} دقيقة",
+    "price": "السعر {{price}} ريال",
+    "search": "بحث",
+    "searching": "جاري البحث عن أقرب رحلة..."
+  },
+  "hire": {
+    "title": "توظيف",
+    "date": "التاريخ",
+    "datePlaceholder": "حدد التاريخ",
+    "send": "إرسال الطلب",
+    "showProfile": "عرض الملف الشخصي",
+    "msg": "الرسالة",
+    "msgPlaceholder": "أدخل رسالتك.."
+  },
+  "login": {
+    "title": "تسجيل الدخول",
+    "phoneNumber": "رقم الهاتف",
+    "phoneNumberPlaceholder": "5XXXXXXXX",
+    "requestCode": "أرسل رمز التفعيل",
+    "code": "أدخل رمز التفعيل",
+    "codePlaceholder": "XXXXXX",
+    "signin": "تسجيل الدخول"
+  },
+  "navigation": {
+    "home": "خذني معك ",
+    "profile": "الحساب",
+    "settings": "الإعدادات",
+    "notifications": "الإشعارات",
+    "about": "حول",
+    "login": "تسجيل الدخول"
+  },
+  "orders": {
+    "price": "السعر: سيتم تحديده لاحقًا",
+    "chat": "الدردشة",
+    "pending": "قيد الانتظار...",
+    "details": "تفاصيل الطلب"
+  },
+  "profile": {
+    "title": "الحساب",
+    "editProfile": "تعديل الملف الشخصي",
+    "aboutMe": "عني",
+    "rating": "التقييم",
+    "jobsDone": "الأعمال",
+    "skills": "المهارات",
+    "hire": "توظيف"
+  },
   "postRide": {
     "title": "نشر رحله",
     "from": "من",
@@ -135,15 +146,22 @@
     "pricePlaceholder": "السعر",
     "send": "نشر الرحلة"
   },
-  "bookRide": {
-    "title": "حجز رحلة",
-    "from": "من",
-    "to": "الى",
-    "date": "التاريخ",
-    "time": "الوقت",
-    "price": "السعر",
-    "pricePlaceholder": "السعر",
-    "send": "حجز الرحلة"
+  "paymentMethods": {
+    "title": "طرق الدفع",
+    "addPaymentMethod": "إضافة طريقة دفع",
+    "add": "إضافة بطاقة جديدة",
+    "cardHolderName": "اسم صاحب البطاقة",
+    "cardHolderNamePlaceholder": "Saif Omar H Abbas",
+    "cardNumber": "رقم البطاقة",
+    "cardNumberPlaceholder": "XXXX XXXX XXXX XXXX",
+    "expiryDate": "تاريخ الانتهاء",
+    "expiryDatePlaceholder": "MM/YY",
+    "cvv": "CVV",
+    "cvvPlaceholder": "XXX",
+    "save": "حفظ",
+    "error": "خطأ",
+    "invalidCard": "بطاقة غير صالحة",
+    "addCard": "إضافة بطاقة"
   },
   "settings": {
     "language": "اللغه",
@@ -152,6 +170,9 @@
   "tripsHistory": {
     "title": "تاريخ الرحلات",
     "noTrips": "لا توجد رحلات"
+  },
+  "trip": {
+    "sendRequest": "إرسال طلب"
   },
   "becomeTalented": {
     "title": "كن موهوباً",

@@ -1,50 +1,69 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { ActivityIndicator } from "react-native";
 import { useTheme, useTranslation } from "../hooks/";
-import { Block, Input } from "../components/";
-import UserCard from "../components/TripCard";
-const Talented = () => {
+import { Block, Text, TripCard, Button, Image } from "../components/";
+import { ITrip } from "../constants/types";
+import { useNavigation } from "@react-navigation/native";
+import { useHeaderHeight } from "@react-navigation/stack";
+
+// ...
+
+const Trips = ({ route }: { route: any }) => {
   const { t } = useTranslation();
-  const { colors, sizes } = useTheme();
-  const [isLoading, setIsLoading] = useState(true);
-  const [talented, setTalented] = useState([]);
+  const { sizes, assets, colors } = useTheme();
+  const { trip, dedicatedPrice } = route.params;
+  const [loading, setLoading] = useState(true);
+  const navigation = useNavigation();
+  const [toArrayTrips, setToArrayTrips] = useState<ITrip[]>([]);
+
+  const headerHeight = useHeaderHeight();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerBackground: () => (
+        <Image
+          radius={0}
+          resizeMode="cover"
+          width={sizes.width}
+          height={headerHeight}
+          source={assets.header}
+        />
+      ),
+    });
+  }, [assets.header, navigation, sizes.width, headerHeight]);
 
   useEffect(() => {
-    async function getData() {
-      setIsLoading(false);
-    }
-    setIsLoading(true);
-    getData();
+    // Change trips from object to array
+    const toArray = () => {
+      const tripsArray = [];
+      console.log(trip);
+      for (const key in trip) {
+        tripsArray.push(trip[key]);
+      }
+      console.log("tripsArray", tripsArray);
+      setToArrayTrips(tripsArray);
+      setLoading(false);
+    };
+    toArray();
   }, []);
-  return (
-    <Block>
-      {/* search input */}
-      <Block color={colors.card} flex={0} padding={sizes.padding}>
-        <Input search placeholder={t("common.search")} />
-      </Block>
 
-      {/* products list */}
-      <Block
-        scroll
-        paddingHorizontal={sizes.padding}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: sizes.l }}
-      >
-        {isLoading ? (
-          <ActivityIndicator
-            size={"large"}
-            style={{ position: "absolute", alignSelf: "center", bottom: 0 }}
-          />
-        ) : (
-          <Block marginTop={sizes.sm}>
-            {talented?.map((talenter: any) => (
-              <UserCard key={`hi-${talenter?.fullName}`} {...talenter} />
-            ))}
+  return (
+    <Block safe>
+      <Block paddingHorizontal={sizes.s}>
+        <Block scroll marginTop={sizes.sm} paddingVertical={10}>
+          <Block justify="space-between">
+            {loading ? (
+              <ActivityIndicator />
+            ) : (
+              toArrayTrips.map((trip: ITrip) => (
+                <TripCard key={`trip-${trip.id}`} trip={trip} />
+              ))
+            )}
           </Block>
-        )}
+        </Block>
       </Block>
     </Block>
   );
 };
 
-export default Talented;
+export default Trips;
