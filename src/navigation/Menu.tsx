@@ -124,9 +124,9 @@ const DrawerContent = (
         icon: assets.bell,
       },
       {
-        name: "Test2",
+        name: t("screens.PaymentMethods"),
         to: "PaymentMethods",
-        icon: assets.bell,
+        icon: assets.card,
       },
     ];
   } else {
@@ -136,7 +136,11 @@ const DrawerContent = (
       { name: t("screens.order"), to: "Orders", icon: assets.add },
       { name: t("screens.settings"), to: "Settings", icon: assets.settings },
       { name: t("screens.test"), to: "TripHistory", icon: assets.bell },
-      { name: t("screens.test2"), to: "PaymentMethods", icon: assets.bell },
+      {
+        name: t("screens.PaymentMethods"),
+        to: "PaymentMethods",
+        icon: assets.card,
+      },
     ];
   }
 
@@ -213,7 +217,7 @@ const DrawerContent = (
               >
                 <Ionicons size={18} name="star" color={colors.white} />
                 <Text bold white left={10}>
-                  {t("screens.becomeTalented")}
+                  {t("screens.becomeDriver")}
                 </Text>
               </Button>
             </Block>

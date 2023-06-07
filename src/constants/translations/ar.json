@@ -73,7 +73,8 @@
     "login": "تسجيل الدخول",
     "logout": "تسجيل الخروج",
     "order": "طلب",
-    "trip": "رحلة"
+    "trip": "رحلة",
+    "PaymentMethods": "طرق الدفع"
   },
   "dark": {
     "activated": "الوضع الليلي"
@@ -161,7 +162,8 @@
     "save": "حفظ",
     "error": "خطأ",
     "invalidCard": "بطاقة غير صالحة",
-    "addCard": "إضافة بطاقة"
+    "addCard": "إضافة بطاقة",
+    "PaymentMethods": "طرق الدفع"
   },
   "settings": {
     "language": "اللغه",

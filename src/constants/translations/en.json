@@ -68,14 +68,15 @@
   "screens": {
     "home": "Home",
     "profile": "Profile",
-    "talented": "Talented",
+    "becomeDriver": "Become Driver",
     "settings": "Settings",
     "login": "Login",
     "logout": "Logout",
     "order": "Order",
     "test": "Test",
     "test2": "Test2",
-    "trips": "Trips"
+    "trips": "Trips",
+    "PaymentMethods": "Payment Methods"
   },
   "dark": {
     "activated": "Dark Mode :)"
@@ -95,7 +96,10 @@
     "duration": "Duration {{duration}} min",
     "price": "Price {{price}} SAR",
     "search": "Search",
-    "searching": "Searching for a nearby trip..."
+    "searching": "Searching for a nearby trip...",
+    "waitingForPassengers": "Waiting for passengers...",
+    "cancel": "Cancel",
+    "searchForPassengers": "Search for passengers..."
   },
   "hire": {
     "title": "Hire",
@@ -152,6 +156,8 @@
     "title": "Payment Methods",
     "addPaymentMethod": "Add Payment Method",
     "add": "Add New Card",
+    "addCard": "Add Card",
+    "noCard": "No Cards Yet",
     "cardHolderName": "Card Holder Name",
     "cardHolderNamePlaceholder": "Saif Omar H Abbas",
     "cardNumber": "Card Number",

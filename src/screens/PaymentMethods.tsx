@@ -4,19 +4,12 @@ import { useNavigation } from "@react-navigation/core";
 import { useData, useTheme, useTranslation } from "../hooks/";
 import { useRoute } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import {
-  Alert,
-  Block,
-  Button,
-  Input,
-  Image,
-  Text,
-  Modal,
-} from "../components/";
+import { Block, Card, Button, Input, Image, Text, Modal } from "../components/";
 
 import { db, update, ref, get } from "../services/firebase";
 import * as regex from "../constants/regex";
 import { IUser } from "../constants/types";
+import { ActivityIndicator } from "react-native";
 const isAndroid = Platform.OS === "android";
 
 interface IPayment {
@@ -35,10 +28,25 @@ interface IPaymentValidation {
 const PaymentMethods = () => {
   const { assets, colors, gradients, sizes } = useTheme();
   const { t } = useTranslation();
+  const { isDark } = useData();
   const navigation = useNavigation();
   const { user, handleUser } = useData();
   const [showAddCard, setShowAddCard] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [cards, setCards] = useState([
+    {
+      cardNumber: "4*** **** **** 1234",
+      cardHolderName: "John Doe",
+      cardExpiryDate: "12/24",
+      cardCvv: "123",
+    },
+    {
+      cardNumber: "5*** **** **** 4321",
+      cardHolderName: "Anya Foger",
+      cardExpiryDate: "10/25",
+      cardCvv: "6",
+    },
+  ]);
+  const [loading, setLoading] = useState(false); // NOTE: This is for testing purposes only
   const [payment, setPayment] = useState<IPayment>({
     cardNumber: "",
     cardHolderName: "",
@@ -144,7 +152,7 @@ const PaymentMethods = () => {
           </Image>
           <Button
             row
-            black
+            gradient={gradients.primary}
             marginVertical={sizes.s}
             width={sizes.md * 4}
             style={{ alignSelf: "flex-end" }}
@@ -157,7 +165,7 @@ const PaymentMethods = () => {
               size={24}
               color={colors.white}
             />
-            <Text>{t("paymentMethods.addCard")}</Text>
+            <Text white>{t("paymentMethods.addCard")}</Text>
           </Button>
         </Block>
         {/* Payment Methods Here*/}
@@ -259,6 +267,33 @@ const PaymentMethods = () => {
               </Button>
             </Modal>
           </Block>
+        )}
+        {loading && (
+          <ActivityIndicator
+            size="large"
+            color={isDark ? colors.white : colors.black}
+            style={{ marginTop: sizes.xxl * 2.5 }}
+          />
+        )}
+        <Block scroll style={{ height: "100%" }}>
+          {cards && !loading && (
+            <Block justify="space-between" style={{ marginBottom: sizes.sm }}>
+              {cards.map((card, index) => (
+                <Card
+                  key={`card-${index}`}
+                  {...{ card }}
+                  onPress={() => {
+                    // TODO: Later on, we will add the ability to delete the card
+                  }}
+                />
+              ))}
+            </Block>
+          )}
+        </Block>
+        {!cards && !loading && (
+          <Text p marginTop={sizes.xxl * 2.5}>
+            {t("paymentMethods.noCard")}
+          </Text>
         )}
       </Block>
     </Block>

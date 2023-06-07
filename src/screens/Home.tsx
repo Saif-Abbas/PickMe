@@ -3,12 +3,12 @@ import { ActivityIndicator, View } from "react-native";
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
-import { Alert, Block, Button, Text } from "../components/";
+import { Alert, Block, Button, Text, TripCard } from "../components/";
 import { useData, useTheme, useTranslation } from "../hooks";
 import { Ionicons } from "@expo/vector-icons";
 import keys from "../../keys.json";
 import { calculateDistance } from "../functions/mathematical";
-import { get, ref, db, update } from "../services/firebase";
+import { get, ref, db, update, onChildChanged } from "../services/firebase";
 import { ITrip } from "../constants/types";
 import { useNavigation } from "@react-navigation/native";
 
@@ -19,7 +19,13 @@ const Home = () => {
   const { t, locale } = useTranslation();
   const [searched, setSearched] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [trips, setTrips] = useState<ITrip[]>([]);
+  const [myTrip, setMyTrip] = useState<any>(null);
+  const [matchedTrip, setMatchedTrip] = useState<ITrip | any>(null);
+  const [foundMatch, setFoundMatch] = useState(false);
   const navigation = useNavigation();
+  const [zoom, setZoom] = useState(15);
+  const [id, setId] = useState(Math.floor(Math.random() * 100000));
   const mapView = useRef<MapView>(null);
   const {
     isDark,
@@ -55,12 +61,14 @@ const Home = () => {
     setSearched(true);
     console.log("searching for trip");
     console.log(locationSelected, selectedLocation);
-    await Location.getCurrentPositionAsync().then(({ coords }) => {
-      let found = false;
-      if (locationSelected && selectedLocation) {
-        get(ref(db, "trips")).then((snapshot) => {
-          const trips = snapshot.val();
-          const trip = trips.filter((trip: ITrip) => {
+    let found = false;
+    if (locationSelected && selectedLocation) {
+      // && user.data.type === "user")
+      await get(ref(db, "trips")).then(async (snapshot) => {
+        console.log(snapshot.val());
+        const allTrips = snapshot.val();
+        await Location.getCurrentPositionAsync().then((userLocation) => {
+          const trip = Object.entries(allTrips).filter(([key, trip]: any) => {
             const distance = calculateDistance(
               selectedLocation.latitude,
               selectedLocation.longitude,
@@ -81,8 +89,8 @@ const Home = () => {
                 console.log("less than 1.5");
                 found = true;
                 return { ...trip, found };
-              case distance < 100:
-                console.log("less than 100");
+              case distance < 2:
+                console.log("less than 2");
                 found = true;
                 return { ...trip, found };
             }
@@ -91,28 +99,70 @@ const Home = () => {
           if (found) {
             const dedicatedPrice = Math.round(5 + route.distance * 0.5);
             showAlert("success", t("home.tripFound"));
-            setSearched(false);
-            navigation.navigate("Trips", {
-              trip,
-              dedicatedPrice: dedicatedPrice,
+            console.log(trip);
+            setFoundMatch(true);
+            trip.forEach((t: any) => {
+              console.log(user);
+              console.log(`trips/${t[1].id}/requests/${user.auth.uid}`);
+              update(ref(db, `trips/${t[1].id}/requests/${user.auth.uid}`), {
+                id: user.auth.uid,
+                name: user.data.name,
+                avatar: user.data.avatar,
+                from: {
+                  latitude: userLocation.coords.latitude,
+                  longitude: userLocation.coords.longitude,
+                },
+                to: {
+                  latitude: selectedLocation.latitude,
+                  longitude: selectedLocation.longitude,
+                },
+                status: "pending",
+              });
             });
           } else {
             showAlert("danger", t("home.tripNotFound"));
             setSearched(false);
           }
         });
-      }
+      });
+    }
+  }, [user, selectedLocation, locationSelected, route]);
+
+  const updateMyTrip = useCallback(async () => {
+    console.log("updating my trip");
+    await get(ref(db, `trips/${id}`)).then((snapshot) => {
+      console.log(snapshot.val());
+      setMyTrip(snapshot.val());
     });
-  }, [selectedLocation, locationSelected, route]);
+  }, []);
+
+  const dataChanged = onChildChanged(ref(db, "trips"), (snapshot) => {
+    console.log("data changed");
+    if (snapshot.val()) {
+      // push new trip to trips array
+      searched ? handleTripSearch() : updateMyTrip();
+    }
+  });
+
+  useEffect(() => {
+    dataChanged();
+  }, []);
 
   const handleTripSubmit = useCallback(async () => {
-    setSearched(true);
     console.log("submitting trip");
-    await Location.getCurrentPositionAsync().then(({ coords }) => {
-      update(ref(db, "trips"), {
+    await Location.getCurrentPositionAsync().then(async ({ coords }) => {
+      console.log(
+        id,
+        user.data,
+        coords.latitude,
+        coords.longitude,
+        selectedLocation.latitude,
+        selectedLocation.longitude
+      );
+      await update(ref(db, `trips/${id}`), {
         availability: "available",
-        date: new Date().toLocaleString(),
-        id: Math.floor(Math.random() * 100000),
+        date: new Date(),
+        id: id,
         status: "pending",
         from: {
           latitude: coords.latitude,
@@ -122,7 +172,22 @@ const Home = () => {
           latitude: selectedLocation.latitude,
           longitude: selectedLocation.longitude,
         },
-        user: user,
+        user: user.data,
+      });
+      setMyTrip({
+        availability: "available",
+        date: new Date(),
+        id: id,
+        status: "pending",
+        from: {
+          latitude: coords.latitude,
+          longitude: coords.longitude,
+        },
+        to: {
+          latitude: selectedLocation.latitude,
+          longitude: selectedLocation.longitude,
+        },
+        user: user.data,
       });
       setSubmitted(true);
       setSearched(false);
@@ -189,7 +254,7 @@ const Home = () => {
                   },
                   heading: 0,
                   pitch: 0,
-                  zoom: locationSelected ? 10 : 15,
+                  zoom: zoom,
                 }
               : undefined
           }
@@ -197,13 +262,14 @@ const Home = () => {
           onLongPress={(e) => {
             const { latitude, longitude } = e.nativeEvent.coordinate;
             handleSelectedLocation(latitude, longitude);
+            setZoom(10);
           }}
         >
           {locationSelected && (
             <>
               <Marker
                 pinColor={colors.primary.toString()}
-                coordinate={selectedLocation}
+                coordinate={locationSelected ? selectedLocation : undefined}
               />
               <MapViewDirections
                 origin={{
@@ -254,8 +320,29 @@ const Home = () => {
               justify="space-between"
               horizontal
             >
-              {route && !searched ? (
+              {route && !searched && !submitted ? (
                 <>
+                  <Button
+                    style={{
+                      top: -40,
+                      right: -20,
+                      bottom: 40,
+                      left: "auto",
+                      position: "absolute",
+                    }}
+                    onPress={() => {
+                      console.log("pressed");
+                      setLocationSelected(false);
+                      setRoute(null);
+                      setZoom(15);
+                    }}
+                  >
+                    <Ionicons
+                      name={"close-outline"}
+                      size={24}
+                      color={isDark ? colors.white : colors.black}
+                    />
+                  </Button>
                   <Text bold>
                     <Ionicons
                       name="location"
@@ -288,16 +375,22 @@ const Home = () => {
                   </Text>
                 </>
               ) : (
-                <>
-                  <ActivityIndicator
-                    size="small"
-                    color={isDark ? colors.white : colors.black}
-                  />
-                  <Text bold>{t("home.searching")}</Text>
-                </>
+                searched && (
+                  <>
+                    <ActivityIndicator
+                      size="small"
+                      color={isDark ? colors.white : colors.black}
+                    />
+                    {foundMatch ? (
+                      <Text bold>{t("home.foundMatch")}</Text>
+                    ) : (
+                      <Text bold>{t("home.searching")}</Text>
+                    )}
+                  </>
+                )
               )}
             </Block>
-            {!searched && (
+            {!searched && !submitted && (
               <Button
                 top={10}
                 vibrate={[300, 200, 100]}
@@ -309,7 +402,7 @@ const Home = () => {
                 <Text bold>{t("home.search")}</Text>
               </Button>
             )}
-            {!searched && user && user.data.type === "Driver" && (
+            {!searched && user && user.data.type === "Driver" && !submitted && (
               <Button
                 top={20}
                 vibrate={[300, 200, 100]}
@@ -327,11 +420,20 @@ const Home = () => {
                   size="small"
                   color={isDark ? colors.white : colors.black}
                 />
-                <Text>{t("home.waitingForPassengers")}</Text>
+                <Text>
+                  {matchedTrip
+                    ? t("home.gotAMatch")
+                    : t("home.waitingForPassengers")}
+                </Text>
+                {myTrip &&
+                  myTrip.requests &&
+                  Object.entries(myTrip.requests).map((requester: any) => (
+                    <TripCard key={`request-${requester}`} trip={requester} />
+                  ))}
                 <Button
-                  top={10}
+                  top={100}
                   vibrate={[300, 200, 100]}
-                  gradient={gradients.primary}
+                  danger
                   onPress={() => {
                     //TODO: CANCEL TRIP
                   }}

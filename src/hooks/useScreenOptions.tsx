@@ -19,13 +19,12 @@ import Block from "../components/Block";
 
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import keys from "../../keys.json";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 export default () => {
   const { t, locale } = useTranslation();
   const { user, isDark, handleSelectedLocation } = useData();
   const navigation = useNavigation();
   const { icons, colors, gradients, sizes } = useTheme();
-
-  const [query, setQuery] = useState("");
 
   const menu = {
     headerStyle: { elevation: 0 },
@@ -140,9 +139,10 @@ export default () => {
       headerRight: () => null,
       headerLeft: () => (
         <Button
+          gradient={gradients.primary}
           onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
         >
-          <Image source={icons.menu} radius={0} color={colors.icon} />
+          <Image source={icons.menu} radius={0} color={colors.white} />
         </Button>
       ),
       headerTitle: () => (
@@ -152,16 +152,10 @@ export default () => {
           placeholder="Search"
           fetchDetails={true}
           renderRow={(data) => (
-            <Block collapsable row safe>
-              <TouchableOpacity
-                onPress={() => {
-                  console.log(data);
-                }}
-              >
-                <Text p black>
-                  {data.description}
-                </Text>
-              </TouchableOpacity>
+            <Block row>
+              <TouchableWithoutFeedback>
+                <Text p>{data.description}</Text>
+              </TouchableWithoutFeedback>
             </Block>
           )}
           onPress={(data, details) => {
@@ -178,19 +172,38 @@ export default () => {
                   container: {
                     position: "absolute",
                     top: -23,
-                    left: 0,
+                    left: 5,
                     right: 0,
-                    height: sizes.xxl * 6,
+                    height: sizes.xxl * 8,
                   },
-                  description: null,
-                  textInput: isDark ? colors.dark : colors.white,
-                  loader: null,
-                  row: {},
+                  textInput: {
+                    backgroundColor: colors.dark,
+                    color: colors.white,
+                    height: sizes.xl,
+                    marginHorizontal: 5,
+                  },
+                  row: {
+                    backgroundColor: colors.dark,
+                  },
+                  poweredContainer: {
+                    backgroundColor: colors.dark,
+                  },
+                  powered: {
+                    tintColor: colors.white,
+                  },
                 }
               : {
+                  container: {
+                    position: "absolute",
+                    top: -23,
+                    left: 5,
+                    right: 0,
+                    height: sizes.xxl * 8,
+                  },
                   textInput: {
-                    backgroundColor: colors.white,
                     color: colors.black,
+                    height: sizes.xl,
+                    marginHorizontal: 5,
                   },
                 }
           }

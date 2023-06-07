@@ -13,6 +13,7 @@ import {
   set,
   get,
   update,
+  remove,
   onChildChanged,
 } from "firebase/database";
 
@@ -118,6 +119,7 @@ export {
   ref,
   set,
   update,
+  remove,
   get,
   onChildChanged,
   sendVerificationCode,

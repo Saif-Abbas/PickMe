@@ -187,20 +187,6 @@ const Profile = () => {
                     paddingVertical={sizes.s}
                   >
                     <Block flex={0}>
-                      <Text p bold white>
-                        Add Social Account GitHub/LinkedIn Only{" "}
-                        {/*t('profile.addSocial')*/}
-                      </Text>
-                      <Input
-                        white
-                        autoCapitalize="none"
-                        marginBottom={sizes.sm}
-                        keyboardType="url"
-                        placeholder={"https://github.com/peekok"} //t('profile.socialPlaceholder')
-                        success={Boolean(profile.url && isValid.url)}
-                        danger={Boolean(profile.url && !isValid.url)}
-                        onChangeText={(value) => handleChange({ url: value })}
-                      />
                       <Button
                         primary
                         outlined
@@ -210,42 +196,8 @@ const Profile = () => {
                         <Text white>Send{/*t('profile.send')*/}</Text>
                       </Button>
                     </Block>
-                    <Text white>
-                      ⚡️ Pro Tip: Long Press on GitHub/LinkedIn makes you able
-                      to edit your social account later on{" "}
-                      {/*t('profile.proTip')*/}
-                    </Text>
                   </Block>
                 </Modal>
-                <Button
-                  shadow={false}
-                  radius={sizes.m}
-                  marginHorizontal={sizes.sm}
-                  color="rgba(255,255,255,0.2)"
-                  outlined={String(colors.white)}
-                  onPress={() => {}}
-                  onLongPress={() => {
-                    setSocialModal(true);
-                  }}
-                >
-                  <Ionicons size={18} name="logo-github" color={colors.white} />
-                </Button>
-                <Button
-                  shadow={false}
-                  radius={sizes.m}
-                  color="rgba(255,255,255,0.2)"
-                  outlined={String(colors.white)}
-                  onPress={() => {}}
-                  onLongPress={() => {
-                    setSocialModal(true);
-                  }}
-                >
-                  <Ionicons
-                    size={18}
-                    name="logo-linkedin"
-                    color={colors.white}
-                  />
-                </Button>
               </Block>
             </Block>
           </Image>

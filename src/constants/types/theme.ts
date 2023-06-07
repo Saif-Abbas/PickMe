@@ -1,56 +1,56 @@
-import * as React from 'react';
+import * as React from "react";
 import {
   ColorValue,
   FlexStyle,
   ImageSourcePropType,
   ScaledSize,
   TextStyle,
-} from 'react-native';
+} from "react-native";
 
 // Spacing types
 export interface ISpacing
   extends Pick<
     FlexStyle,
-    | 'margin'
-    | 'marginVertical'
-    | 'marginHorizontal'
-    | 'marginLeft'
-    | 'marginRight'
-    | 'marginTop'
-    | 'marginBottom'
-    | 'padding'
-    | 'paddingVertical'
-    | 'paddingHorizontal'
-    | 'paddingLeft'
-    | 'paddingRight'
-    | 'paddingTop'
-    | 'paddingBottom'
+    | "margin"
+    | "marginVertical"
+    | "marginHorizontal"
+    | "marginLeft"
+    | "marginRight"
+    | "marginTop"
+    | "marginBottom"
+    | "padding"
+    | "paddingVertical"
+    | "paddingHorizontal"
+    | "paddingLeft"
+    | "paddingRight"
+    | "paddingTop"
+    | "paddingBottom"
   > {}
 
 export type TWeight =
   /** fontWeight: 400 */
-  | 'normal'
+  | "normal"
   /** fontWeight: 100 */
-  | 'thin'
+  | "thin"
   /** fontWeight: 200 */
-  | 'extralight'
+  | "extralight"
   /** fontWeight: 300 */
-  | 'light'
+  | "light"
   /** fontWeight: 500 */
-  | 'medium'
+  | "medium"
   /** fontWeight: 600 */
-  | 'semibold'
+  | "semibold"
   /** fontWeight: 700 */
-  | 'bold'
+  | "bold"
   /** fontWeight: 800 */
-  | 'extrabold'
+  | "extrabold"
   /** fontWeight: 900 */
-  | 'black';
+  | "black";
 
 export interface ITheme {
   colors: ThemeColors;
   gradients: ThemeGradients;
-  sizes: ThemeSizes & ThemeSpacing & ICommonTheme['sizes'];
+  sizes: ThemeSizes & ThemeSpacing & ICommonTheme["sizes"];
   assets: ThemeAssets & ThemeIcons;
   icons: ThemeIcons;
   fonts: ThemeFonts;
@@ -64,8 +64,8 @@ export interface ICommonTheme {
   weights: ThemeWeights;
   lines: ThemeLineHeights;
   sizes: {
-    width: ScaledSize['width'];
-    height: ScaledSize['height'];
+    width: ScaledSize["width"];
+    height: ScaledSize["height"];
   };
 }
 
@@ -102,7 +102,7 @@ export interface ThemeColors {
   github: ColorValue;
   linkedin: ColorValue;
   icon: ColorValue;
-  blurTint: 'light' | 'dark' | 'default';
+  blurTint: "light" | "dark" | "default";
   link: ColorValue;
 }
 
@@ -187,29 +187,30 @@ export interface ThemeSpacing {
 }
 
 export interface ThemeWeights {
-  text: TextStyle['fontWeight'];
-  h1?: TextStyle['fontWeight'];
-  h2?: TextStyle['fontWeight'];
-  h3?: TextStyle['fontWeight'];
-  h4?: TextStyle['fontWeight'];
-  h5?: TextStyle['fontWeight'];
-  p?: TextStyle['fontWeight'];
+  text: TextStyle["fontWeight"];
+  h1?: TextStyle["fontWeight"];
+  h2?: TextStyle["fontWeight"];
+  h3?: TextStyle["fontWeight"];
+  h4?: TextStyle["fontWeight"];
+  h5?: TextStyle["fontWeight"];
+  p?: TextStyle["fontWeight"];
 
-  thin: TextStyle['fontWeight'];
-  extralight: TextStyle['fontWeight'];
-  light: TextStyle['fontWeight'];
-  normal: TextStyle['fontWeight'];
-  medium: TextStyle['fontWeight'];
-  semibold?: TextStyle['fontWeight'];
-  bold?: TextStyle['fontWeight'];
-  extrabold?: TextStyle['fontWeight'];
-  black?: TextStyle['fontWeight'];
+  thin: TextStyle["fontWeight"];
+  extralight: TextStyle["fontWeight"];
+  light: TextStyle["fontWeight"];
+  normal: TextStyle["fontWeight"];
+  medium: TextStyle["fontWeight"];
+  semibold?: TextStyle["fontWeight"];
+  bold?: TextStyle["fontWeight"];
+  extrabold?: TextStyle["fontWeight"];
+  black?: TextStyle["fontWeight"];
 }
 export interface ThemeIcons {
   add: ImageSourcePropType;
   arrow: ImageSourcePropType;
   bell: ImageSourcePropType;
   check: ImageSourcePropType;
+  card: ImageSourcePropType;
   clock: ImageSourcePropType;
   close: ImageSourcePropType;
   components: ImageSourcePropType;
@@ -241,6 +242,9 @@ export interface ThemeAssets {
   photo1: ImageSourcePropType;
   photo2: ImageSourcePropType;
   photo3: ImageSourcePropType;
+
+  visa: ImageSourcePropType;
+  mastercard: ImageSourcePropType;
 }
 
 export interface ThemeFonts {

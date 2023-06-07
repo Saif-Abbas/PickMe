@@ -23,7 +23,7 @@ export interface IUser {
     rating: number;
     paymentMethods: any;
   };
-  auth: Auth;
+  auth: any;
 }
 
 export interface IHistory {
