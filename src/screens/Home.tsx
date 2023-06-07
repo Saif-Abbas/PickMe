@@ -428,7 +428,11 @@ const Home = () => {
                 {myTrip &&
                   myTrip.requests &&
                   Object.entries(myTrip.requests).map((requester: any) => (
-                    <TripCard key={`request-${requester}`} trip={requester} />
+                    <TripCard
+                      key={`request-${requester}`}
+                      trip={requester}
+                      reference={myTrip}
+                    />
                   ))}
                 <Button
                   top={100}

@@ -6,12 +6,8 @@ import {
   Profile,
   Login,
   Settings,
-  Talented,
   UserProfile,
   BecomeDriver,
-  Orders,
-  Hire,
-  Chat,
   CompleteProfile,
   CompleteDriverProfile,
   PostRide,
@@ -38,11 +34,6 @@ export default () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Talented"
-        component={Talented}
-        options={screenOptions.profile}
-      />
-      <Stack.Screen
         name="Settings"
         component={Settings}
         options={screenOptions.back}
@@ -56,21 +47,6 @@ export default () => {
         name="BecomeDriver"
         component={BecomeDriver}
         options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Orders"
-        component={Orders}
-        options={screenOptions.profile}
-      />
-      <Stack.Screen
-        name="Hire"
-        component={Hire}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Chat"
-        component={Chat}
-        options={screenOptions.profile}
       />
       <Stack.Screen
         name="CompleteProfile"

@@ -7,14 +7,19 @@ import Button from "../components/Button";
 import Image from "../components/Image";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { remove } from "../services/firebase";
+import { db, ref, remove } from "../services/firebase";
 
-const TripCard = (trip: any) => {
+const TripCard = (trip: any, reference: any) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const { sizes, gradients, colors } = useTheme();
 
   // TODO: SetTimeOut to remove the user from the trip from database
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     remove(ref(db, "trips/"));
+  //   }, 10000);
+  // })
   return (
     <Block>
       <Block>
@@ -22,7 +27,7 @@ const TripCard = (trip: any) => {
           <TouchableOpacity
             onPress={() => {
               // TODO: Navigate to user profile
-              console.log(trip.trip[0]);
+              console.log(trip, reference);
             }}
           >
             <Image

@@ -181,8 +181,8 @@
   "trip": {
     "sendRequest": "Send Request"
   },
-  "becomeTalented": {
-    "title": "Become Talented",
+  "becomeDriver": {
+    "title": "Become Driver",
     "terms": {
       "introduction": "Introduction",
       "intellectualPropertyRights": "Intellectual Property Rights",

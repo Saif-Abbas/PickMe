@@ -68,7 +68,6 @@
   "screens": {
     "home": "الرئيسية",
     "profile": "الحساب",
-    "talented": "الموهوبين",
     "settings": "الإعدادات",
     "login": "تسجيل الدخول",
     "logout": "تسجيل الخروج",
@@ -176,11 +175,11 @@
   "trip": {
     "sendRequest": "إرسال طلب"
   },
-  "becomeTalented": {
-    "title": "كن موهوباً",
+  "becomeDriver": {
+    "title": "أصبح سائق",
     "terms": {
       "introduction": "المقدمة",
-      "intellectualPropertyRights": "حقوق الملكية الفكرية",
+      "intellectualPropertyRights": "حقوق الملكية الفكري",
       "licenseToUseApplication": "ترخيص استخدام التطبيق",
       "acceptableUse": "الاستخدام المقبول",
       "userContent": "محتوى المستخدم",
@@ -215,7 +214,7 @@
       "governingLawText": "سيتم تحكيم هذا الاتفاق وفقًا لقوانين البلد الذي يتم استضافة التطبيق فيه، ويتعين عليك الخضوع للاختصاص غير الحصري للمحاكم في ذلك البلد.",
       "entireAgreementText": "تشكل هذه الشروط والأحكام الموافقة الكاملة بينك وبيننا فيما يتعلق باستخدام هذا التطبيق، وتحل محل جميع الاتفاقيات السابقة المتعلقة باستخدام هذا التطبيق.",
       "ourDetailsText": {
-        "companyName": "رغبة المواهب",
+        "companyName": "PickMe",
         "registeredAddress": "جامعة جدة، جدة، المملكة العربية السعودية"
       },
       "submit": "الموافقة على الشروط والأحكام",
