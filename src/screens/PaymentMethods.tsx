@@ -71,27 +71,27 @@ const PaymentMethods = () => {
   }, [payment]);
 
   const handleAddCard = useCallback(() => {
-    if (user) {
-      const userRef = ref(db, `users/${user.uid}`);
-      const updatedUser: any = {
-        ...user,
-        paymentMethods: [...user.data.paymentMethods, payment],
-      };
-      update(userRef, updatedUser)
-        .then(() => {
-          setPayment({
-            // Clearing the data
-            cardNumber: "",
-            cardHolderName: "",
-            cardExpiryDate: "",
-            cardCvv: "",
-          });
-          setShowAddCard(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    // if (user) {
+    //   const userRef = ref(db, `users/${user.uid}`);
+    //   const updatedUser: any = {
+    //     ...user,
+    //     paymentMethods: [...user.data.paymentMethods, payment],
+    //   };
+    //   update(userRef, updatedUser)
+    //     .then(() => {
+    //       setPayment({
+    //         // Clearing the data
+    //         cardNumber: "",
+    //         cardHolderName: "",
+    //         cardExpiryDate: "",
+    //         cardCvv: "",
+    //       });
+    //       setShowAddCard(false);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // }
   }, []);
 
   // This useEffect hook will update the whole page

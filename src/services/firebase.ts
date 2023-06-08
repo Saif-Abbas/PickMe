@@ -11,10 +11,12 @@ import {
   getDatabase,
   ref,
   set,
+  off,
   get,
   update,
   remove,
   onChildChanged,
+  onChildRemoved,
 } from "firebase/database";
 
 import keys from "../../keys.json";
@@ -116,12 +118,14 @@ export {
   user,
   app,
   db,
+  off,
   ref,
   set,
   update,
   remove,
   get,
   onChildChanged,
+  onChildRemoved,
   sendVerificationCode,
   loginWithCredentials,
   PhoneAuthProvider,

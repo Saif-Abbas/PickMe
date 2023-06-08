@@ -1,22 +1,24 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, Linking, TouchableOpacity } from "react-native";
 import { useTheme, useTranslation } from "../hooks/";
 import { Block, Text, TripCard, Button, Image } from "../components/";
 import { ITrip } from "../constants/types";
 import { useNavigation } from "@react-navigation/native";
 import { useHeaderHeight } from "@react-navigation/stack";
-
+import { Ionicons } from "@expo/vector-icons";
 // ...
 
 const Trips = ({ route }: { route: any }) => {
   const { t } = useTranslation();
-  const { sizes, assets, colors } = useTheme();
-  const { trip, dedicatedPrice } = route.params;
-  const [loading, setLoading] = useState(true);
+  const { sizes, assets, colors, gradients } = useTheme();
+  const { trip } = route.params;
   const navigation = useNavigation();
-  const [toArrayTrips, setToArrayTrips] = useState<ITrip[]>([]);
 
   const headerHeight = useHeaderHeight();
+
+  useEffect(() => {
+    console.log(trip), [];
+  });
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -32,33 +34,72 @@ const Trips = ({ route }: { route: any }) => {
     });
   }, [assets.header, navigation, sizes.width, headerHeight]);
 
-  useEffect(() => {
-    // Change trips from object to array
-    const toArray = () => {
-      const tripsArray = [];
-      console.log(trip);
-      for (const key in trip) {
-        tripsArray.push(trip[key]);
-      }
-      console.log("tripsArray", tripsArray);
-      setToArrayTrips(tripsArray);
-      setLoading(false);
-    };
-    toArray();
-  }, []);
-
   return (
     <Block safe>
-      <Block paddingHorizontal={sizes.s}>
-        <Block scroll marginTop={sizes.sm} paddingVertical={10}>
+      <Block>
+        <Block scroll marginTop={sizes.sm} paddingVertical={6}>
           <Block justify="space-between">
-            {loading ? (
-              <ActivityIndicator />
-            ) : (
-              toArrayTrips.map((trip: ITrip) => (
-                <TripCard key={`trip-${trip.id}`} trip={trip} />
-              ))
-            )}
+            {trip &&
+              trip.passengers &&
+              Object.entries(trip.passengers).map((passenger: any) => (
+                <Block key={passenger} card row paddingBottom={40}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      // TODO: Nothing rn
+                    }}
+                  >
+                    <Image
+                      source={{ uri: passenger[1].avatar }}
+                      style={{
+                        width: sizes.xxl,
+                        height: sizes.xxl,
+                        borderRadius: sizes.s,
+                        marginLeft: sizes.s,
+                      }}
+                    />
+                  </TouchableOpacity>
+                  <Text
+                    p
+                    style={{
+                      position: "absolute",
+                      top: sizes.s,
+                      left: sizes.xxl * 1.5,
+                      marginTop: sizes.s,
+                    }}
+                  >
+                    {passenger[1].name}
+                  </Text>
+                  <Block row justify="flex-end" marginHorizontal={5} top={7}>
+                    <Button
+                      gradient={gradients.primary}
+                      onPress={() => {
+                        Linking.openURL(`tel:${passenger[1].phone}`);
+                      }}
+                      paddingHorizontal={5}
+                    >
+                      <Ionicons
+                        size={24}
+                        name="phone-portrait-outline"
+                        color={colors.white}
+                      />
+                    </Button>
+                    <Button
+                      gradient={gradients.primary}
+                      onPress={() => {
+                        Linking.openURL(
+                          `https://maps.google.com/?q=${passenger[1].from.latitude},${passenger[1].from.longitude}`
+                        );
+                      }}
+                    >
+                      <Ionicons
+                        size={24}
+                        name="location-outline"
+                        color={colors.white}
+                      />
+                    </Button>
+                  </Block>
+                </Block>
+              ))}
           </Block>
         </Block>
       </Block>

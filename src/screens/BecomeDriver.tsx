@@ -44,7 +44,7 @@ const BecomeDriver = () => {
             </Button>
 
             <Text h4 center white marginBottom={sizes.md}>
-              {t("becomeTalented.title")}
+              {t("becomeDriver.title")}
             </Text>
           </Image>
         </Block>
@@ -72,68 +72,67 @@ const BecomeDriver = () => {
             >
               <Block paddingHorizontal={sizes.sm}>
                 <Text h5 bold marginBottom={sizes.s}>
-                  1. {t("becomeTalented.terms.introduction")}
+                  1. {t("becomeDriver.terms.introduction")}
                 </Text>
                 <Text
                   h5
                   marginBottom={sizes.s}
                   style={{ textAlign: "justify" }}
                 >
-                  {t("becomeTalented.terms.introductionText")}
+                  {t("becomeDriver.terms.introductionText")}
                 </Text>
                 <Text h5 bold marginBottom={sizes.s}>
-                  2. {t("becomeTalented.terms.intellectualPropertyRights")}
+                  2. {t("becomeDriver.terms.intellectualPropertyRights")}
                 </Text>
                 <Text
                   h5
                   marginBottom={sizes.s}
                   style={{ textAlign: "justify" }}
                 >
-                  {t("becomeTalented.terms.intellectualPropertyRightsText")}
+                  {t("becomeDriver.terms.intellectualPropertyRightsText")}
                 </Text>
                 <Text h5 bold marginBottom={sizes.s}>
-                  3. {t("becomeTalented.terms.licenseToUseApplication")}
+                  3. {t("becomeDriver.terms.licenseToUseApplication")}
                 </Text>
                 <Text
                   h5
                   marginBottom={sizes.s}
                   style={{ textAlign: "justify" }}
                 >
-                  {t("becomeTalented.terms.licenseToUseApplicationText")}
+                  {t("becomeDriver.terms.licenseToUseApplicationText")}
                 </Text>
                 <Text h5 bold marginBottom={sizes.s}>
-                  4. {t("becomeTalented.terms.acceptableUse")}
+                  4. {t("becomeDriver.terms.acceptableUse")}
                 </Text>
                 <Text
                   h5
                   marginBottom={sizes.s}
                   style={{ textAlign: "justify" }}
                 >
-                  {t("becomeTalented.terms.acceptableUseText")}
+                  {t("becomeDriver.terms.acceptableUseText")}
                 </Text>
                 <Text h5 bold marginBottom={sizes.s}>
-                  5. {t("becomeTalented.terms.userContent")}
+                  5. {t("becomeDriver.terms.userContent")}
                 </Text>
                 <Text
                   h5
                   marginBottom={sizes.s}
                   style={{ textAlign: "justify" }}
                 >
-                  {t("becomeTalented.terms.userContentText")}
+                  {t("becomeDriver.terms.userContentText")}
                 </Text>
                 <Text h5 bold marginBottom={sizes.s}>
-                  6. {t("becomeTalented.terms.indemnity")}
+                  6. {t("becomeDriver.terms.indemnity")}
                 </Text>
                 <Text
                   h5
                   marginBottom={sizes.s}
                   style={{ textAlign: "justify" }}
                 >
-                  {t("becomeTalented.terms.indemnityText")}
+                  {t("becomeDriver.terms.indemnityText")}
                 </Text>
                 <Text h5 bold marginBottom={sizes.s}>
-                  7.{" "}
-                  {t("becomeTalented.terms.breachesOfTheseTermsAndConditions")}
+                  7. {t("becomeDriver.terms.breachesOfTheseTermsAndConditions")}
                 </Text>
                 <Text
                   h5
@@ -141,120 +140,125 @@ const BecomeDriver = () => {
                   style={{ textAlign: "justify" }}
                 >
                   {t(
-                    "becomeTalented.terms.breachesOfTheseTermsAndConditionsText"
+                    "becomeDriver.terms.breachesOfTheseTermsAndConditionsText"
                   )}
                 </Text>
                 <Text h5 bold marginBottom={sizes.s}>
-                  8. {t("becomeTalented.terms.variation")}
+                  8. {t("becomeDriver.terms.variation")}
                 </Text>
                 <Text
                   h5
                   marginBottom={sizes.s}
                   style={{ textAlign: "justify" }}
                 >
-                  {t("becomeTalented.terms.variationText")}
+                  {t("becomeDriver.terms.variationText")}
                 </Text>
                 <Text h5 bold marginBottom={sizes.s}>
-                  9. {t("becomeTalented.terms.ourService")}
+                  9. {t("becomeDriver.terms.ourService")}
                 </Text>
                 <Text
                   h5
                   marginBottom={sizes.s}
                   style={{ textAlign: "justify" }}
                 >
-                  {t("becomeTalented.terms.ourServiceText")}
+                  {t("becomeDriver.terms.ourServiceText")}
                 </Text>
                 <Text h5 bold marginBottom={sizes.s}>
-                  10. {t("becomeTalented.terms.eligibility")}
+                  10. {t("becomeDriver.terms.eligibility")}
                 </Text>
                 <Text
                   h5
                   marginBottom={sizes.s}
                   style={{ textAlign: "justify" }}
                 >
-                  {t("becomeTalented.terms.eligibilityText")}
+                  {t("becomeDriver.terms.eligibilityText")}
                 </Text>
                 <Text h5 bold marginBottom={sizes.s}>
-                  11. {t("becomeTalented.terms.clientObligations")}
+                  11. {t("becomeDriver.terms.clientObligations")}
                 </Text>
                 <Text
                   h5
                   marginBottom={sizes.s}
                   style={{ textAlign: "justify" }}
                 >
-                  {t("becomeTalented.terms.clientObligationsText")}
+                  {t("becomeDriver.terms.clientObligationsText")}
                 </Text>
                 <Text h5 bold marginBottom={sizes.s}>
-                  12. {t("becomeTalented.terms.freelancerObligations")}
+                  12. {t("becomeDriver.terms.freelancerObligations")}
                 </Text>
                 <Text
                   h5
                   marginBottom={sizes.s}
                   style={{ textAlign: "justify" }}
                 >
-                  {t("becomeTalented.terms.freelancerObligationsText")}
+                  {t("becomeDriver.terms.freelancerObligationsText")}
                 </Text>
                 <Text h5 bold marginBottom={sizes.s}>
-                  13. {t("becomeTalented.terms.disputeResolution")}
+                  13. {t("becomeDriver.terms.disputeResolution")}
                 </Text>
                 <Text
                   h5
                   marginBottom={sizes.s}
                   style={{ textAlign: "justify" }}
                 >
-                  {t("becomeTalented.terms.disputeResolutionText")}
+                  {t("becomeDriver.terms.disputeResolutionText")}
                 </Text>
                 <Text h5 bold marginBottom={sizes.s}>
-                  14. {t("becomeTalented.terms.termination")}
+                  14. {t("becomeDriver.terms.termination")}
                 </Text>
                 <Text
                   h5
                   marginBottom={sizes.s}
                   style={{ textAlign: "justify" }}
                 >
-                  {t("becomeTalented.terms.terminationText")}
+                  {t("becomeDriver.terms.terminationText")}
                 </Text>
                 <Text h5 bold marginBottom={sizes.s}>
-                  15. {t("becomeTalented.terms.liability")}
+                  15. {t("becomeDriver.terms.liability")}
                 </Text>
                 <Text
                   h5
                   marginBottom={sizes.s}
                   style={{ textAlign: "justify" }}
                 >
-                  {t("becomeTalented.terms.liabilityText")}
+                  {t("becomeDriver.terms.liabilityText")}
                 </Text>
                 <Text h5 bold marginBottom={sizes.s}>
-                  16. {t("becomeTalented.terms.governingLaw")}
+                  16. {t("becomeDriver.terms.governingLaw")}
                 </Text>
                 <Text
                   h5
                   marginBottom={sizes.s}
                   style={{ textAlign: "justify" }}
                 >
-                  {t("becomeTalented.terms.governingLawText")}
+                  {t("becomeDriver.terms.governingLawText")}
                 </Text>
                 <Text h5 bold marginBottom={sizes.s}>
-                  17. {t("becomeTalented.terms.entireAgreement")}
+                  17. {t("becomeDriver.terms.entireAgreement")}
                 </Text>
                 <Text
                   h5
                   marginBottom={sizes.s}
                   style={{ textAlign: "justify" }}
                 >
-                  {t("becomeTalented.terms.entireAgreementText")}
+                  {t("becomeDriver.terms.entireAgreementText")}
                 </Text>
                 <Text h5 bold marginBottom={sizes.s}>
-                  © {t("becomeTalented.terms.ourDetailsText.companyName")}
+                  © {t("becomeDriver.terms.ourDetailsText.companyName")}
                   {"\n"}
-                  {t("becomeTalented.terms.ourDetailsText.registeredAddress")}
+                  {t("becomeDriver.terms.ourDetailsText.registeredAddress")}
                 </Text>
                 <Text p marginBottom={sizes.s}>
-                  {t("becomeTalented.terms.dateOfTerms")}
+                  {t("becomeDriver.terms.dateOfTerms")}
                 </Text>
-                <Button gradient={gradients.primary}>
+                <Button
+                  onPress={() => {
+                    navigation.navigate("CompleteDriverProfile");
+                  }}
+                  gradient={gradients.primary}
+                >
                   <Text h5 white>
-                    {t("becomeTalented.terms.submit")}
+                    {t("becomeDriver.terms.submit")}
                   </Text>
                 </Button>
               </Block>

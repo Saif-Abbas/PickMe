@@ -25,33 +25,9 @@ const Profile = () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const { assets, colors, sizes } = useTheme();
-  const [skills, setSkills] = useState([]);
+
   const [isLoading, setIsLoading] = useState(true);
-  const skillList: any = [
-    "C/C++",
-    "C#",
-    "Java",
-    "Swift",
-    "PHP",
-    "Python",
-    "JavaScript",
-    "TypeScript",
-    "Ruby",
-    "React",
-    "Vue.js",
-    "Angular.js",
-    "Django",
-    "Web Development",
-    "CSS",
-    "SCSS",
-    "SQL",
-    "NoSQL",
-    "Full-Stack Dev",
-    "Mobile Development",
-    "Gaming Development",
-  ];
-  const [showSkillsModal, setSkillsModal] = useState(false);
-  const [showSocialModal, setSocialModal] = useState(false);
+
   const [isValid, setIsValid] = useState<IProfileValidation>({
     url: false,
   });
@@ -123,82 +99,33 @@ const Profile = () => {
                   <Ionicons
                     size={14}
                     name={
-                      user.data.type === "Talented" ? "star-outline" : "person"
+                      user.data.type === "Driver" ? "star-outline" : "person"
                     }
                     color={colors.white}
                   />
                 </Text>
               )}
-              <Block row marginVertical={sizes.sm}>
-                <>
-                  <Modal
-                    visible={showSkillsModal}
-                    onRequestClose={() => setSkillsModal(false)}
-                  >
-                    <FlatList
-                      keyExtractor={(index) => `${index}`}
-                      data={skillList}
-                      renderItem={({ item }) => (
-                        <Button
-                          marginBottom={sizes.sm}
-                          onPress={() => {
-                            setSkillsModal(false);
-                          }}
-                        >
-                          <Text p white semibold transform="uppercase">
-                            {item}
-                          </Text>
-                        </Button>
-                      )}
-                    />
-                  </Modal>
-                  <Button
-                    white
-                    outlined
-                    shadow={false}
-                    radius={sizes.m}
-                    onPress={() => {
-                      setSkillsModal(true);
-                    }}
-                  >
-                    <Block
-                      justify="center"
-                      radius={sizes.m}
-                      paddingHorizontal={sizes.m}
-                      color="rgba(255,255,255,0.2)"
-                    >
-                      <Text white bold transform="uppercase">
-                        {t("profile.editProfile")}
-                      </Text>
-                    </Block>
-                  </Button>
-                </>
-                <Modal
-                  visible={showSocialModal}
-                  onRequestClose={() => setSocialModal(false)}
+              <Button
+                white
+                marginVertical={sizes.sm}
+                outlined
+                shadow={false}
+                radius={sizes.m}
+                onPress={() => {
+                  navigation.navigate("EditProfile");
+                }}
+              >
+                <Block
+                  justify="center"
+                  radius={sizes.m}
+                  paddingHorizontal={sizes.m}
+                  color="rgba(255,255,255,0.2)"
                 >
-                  <Block
-                    flex={0}
-                    intensity={65}
-                    radius={sizes.sm}
-                    overflow="hidden"
-                    justify="space-evenly"
-                    tint={colors.blurTint}
-                    paddingVertical={sizes.s}
-                  >
-                    <Block flex={0}>
-                      <Button
-                        primary
-                        outlined
-                        disabled={!isValid.url}
-                        onPress={() => {}}
-                      >
-                        <Text white>Send{/*t('profile.send')*/}</Text>
-                      </Button>
-                    </Block>
-                  </Block>
-                </Modal>
-              </Block>
+                  <Text white bold transform="uppercase">
+                    {t("profile.editProfile")}
+                  </Text>
+                </Block>
+              </Button>
             </Block>
           </Image>
 
@@ -235,29 +162,11 @@ const Profile = () => {
                 </Text>
                 <Text>{t("profile.rating")}</Text>
               </Block>
-              <Block align="center">
-                <Text>{t("profile.jobsDone")}</Text>
-              </Block>
             </Block>
           </Block>
 
           {/* Profile: Skills */}
-          <Block paddingHorizontal={sizes.sm}>
-            {isLoading ? (
-              <ActivityIndicator size={"small"} />
-            ) : user.data.type === "Talented" ? (
-              <>
-                <Text h5 semibold marginBottom={sizes.s} marginTop={sizes.sm}>
-                  {t("profile.skills")}
-                </Text>
-                <Block wrap="wrap" justify="space-between" row>
-                  {skills?.map((skill: any) => (
-                    <Tag {...skill} key={`skill-${skill.skillId}`} />
-                  ))}
-                </Block>
-              </>
-            ) : null}
-          </Block>
+          <Block paddingHorizontal={sizes.sm}></Block>
         </Block>
       </Block>
     </Block>

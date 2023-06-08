@@ -118,24 +118,16 @@ const DrawerContent = (
         to: "Settings",
         icon: assets.settings,
       },
-      {
-        name: "Test",
-        to: "TripsHistory",
-        icon: assets.bell,
-      },
-      {
-        name: t("screens.PaymentMethods"),
-        to: "PaymentMethods",
-        icon: assets.card,
-      },
     ];
   } else {
     screens = [
       { name: t("screens.home"), to: "Home", icon: assets.home },
-      { name: t("screens.talented"), to: "Talented", icon: assets.star },
-      { name: t("screens.order"), to: "Orders", icon: assets.add },
       { name: t("screens.settings"), to: "Settings", icon: assets.settings },
-      { name: t("screens.test"), to: "TripHistory", icon: assets.bell },
+      {
+        name: t("screens.tripsHistory"),
+        to: "TripsHistory",
+        icon: assets.bell,
+      },
       {
         name: t("screens.PaymentMethods"),
         to: "PaymentMethods",
@@ -265,10 +257,10 @@ const DrawerContent = (
           marginBottom={sizes.l}
           marginTop={
             user && user.data.type === "User"
+              ? sizes.xxl * 6.5
+              : user && user.data.type === "Driver"
               ? sizes.xxl * 7.0
-              : user && user.data.type === "Talented"
-              ? sizes.xxl * 8
-              : sizes.xxl * 10.4
+              : sizes.xxl * 9.0
           }
         >
           <Image

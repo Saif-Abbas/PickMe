@@ -21,7 +21,26 @@ export interface IUser {
     carLicense?: string;
     carPlate?: string;
     rating: number;
-    paymentMethods: any;
+    paymentMethods?: {
+      cardHolderName: string;
+      cardNumber: string;
+      expiryDate: string;
+    };
+    trips?: {
+      id: number;
+      date: Date;
+      user: IUser;
+      status: "pending" | "approved" | "rejected" | "completed";
+      availability: "available" | "unavailable";
+      from: {
+        latitude: number;
+        longitude: number;
+      };
+      to: {
+        latitude: number;
+        longitude: number;
+      };
+    };
   };
   auth: any;
 }

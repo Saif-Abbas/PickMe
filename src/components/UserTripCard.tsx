@@ -9,14 +9,7 @@ import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { db, ref, remove, update } from "../services/firebase";
 
-const TripCard = ({
-  trip,
-  reference,
-  avatar,
-  name,
-  id,
-  onTripAccepted,
-}: any) => {
+const UserTripCard = ({ trip, reference, avatar, name }: any) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const { sizes, gradients, colors } = useTheme();
@@ -32,7 +25,7 @@ const TripCard = ({
             }}
           >
             <Image
-              source={{ uri: trip[1].avatar }}
+              source={{ uri: avatar }}
               style={{
                 width: sizes.xxl,
                 height: sizes.xxl,
@@ -50,44 +43,12 @@ const TripCard = ({
               marginTop: sizes.s,
             }}
           >
-            {trip[1].name}
+            {name}
           </Text>
-          <Block row justify="flex-end" top={7}>
-            <Button
-              success
-              onPress={() => {
-                // Adding user to passengers
-                update(ref(db, `trips/${reference}/passengers`), {
-                  [trip[0]]: trip[1],
-                });
-                // Removing user from requests
-                remove(ref(db, `trips/${reference}/requests/${trip[0]}`));
-                // Adding trip to user's trips
-                update(ref(db, `users/${trip[0]}/trips`), {
-                  [reference]: {
-                    avatar: avatar,
-                    name: name,
-                    id: id,
-                    from: trip[1].from,
-                    to: trip[1].to,
-                  },
-                });
-                // Return a value to Home that user accepted the trip
-                onTripAccepted();
-                console.log("Trip accepted");
-              }}
-            >
-              <Ionicons
-                size={24}
-                name="checkmark-outline"
-                color={colors.white}
-              />
-            </Button>
-          </Block>
         </Block>
       </Block>
     </Block>
   );
 };
 
-export default TripCard;
+export default UserTripCard;

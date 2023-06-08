@@ -68,6 +68,7 @@
   "screens": {
     "home": "Home",
     "profile": "Profile",
+    "tripsHistory": "Trips History",
     "becomeDriver": "Become Driver",
     "settings": "Settings",
     "login": "Login",
@@ -96,10 +97,17 @@
     "duration": "Duration {{duration}} min",
     "price": "Price {{price}} SAR",
     "search": "Search",
+    "timeLeft": "{{timer}} Time Left",
+    "tripFound": "Trip Founded",
+    "tripNotFound": "No Trips Founded",
+    "tripSubmitted": "Trip Submitted",
     "searching": "Searching for a nearby trip...",
     "waitingForPassengers": "Waiting for passengers...",
+    "start": "Start",
     "cancel": "Cancel",
-    "searchForPassengers": "Search for passengers..."
+    "end": "End",
+    "searchForPassengers": "Search for passengers...",
+    "foundMatch": "Found a match!   waiting for approval..."
   },
   "hire": {
     "title": "Hire",
@@ -146,11 +154,10 @@
   "profile": {
     "title": "Profile",
     "editProfile": "Edit Profile",
-    "aboutMe": "About me",
+    "name": "Name ",
     "rating": "Rating",
-    "jobsDone": "Jobs",
-    "skills": "Skills",
-    "hire": "Hire"
+    "dateOfBirth": "Date Of Birth",
+    "gender": "Gender"
   },
   "paymentMethods": {
     "title": "Payment Methods",
@@ -169,6 +176,14 @@
     "save": "Save",
     "error": "Error",
     "invalidCard": "Invalid Card"
+  },
+  "editProfile": {
+    "title": "Edit Profile",
+    "name": "Name",
+    "edit": "Edit",
+    "upload": "Upload Avatar",
+    "uploaded": "Uploaded",
+    "save": "Save"
   },
   "settings": {
     "language": "Language",

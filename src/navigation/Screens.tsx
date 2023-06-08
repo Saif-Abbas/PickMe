@@ -14,6 +14,7 @@ import {
   BookRide,
   Trips,
   TripsHistory,
+  EditProfile,
   PaymentMethods,
 } from "../screens";
 import { useScreenOptions } from "../hooks";
@@ -68,7 +69,11 @@ export default () => {
         component={BookRide}
         options={{ headerShown: false }}
       />
-
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfile}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Trips"
         component={Trips}

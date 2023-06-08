@@ -3,14 +3,23 @@ import { ActivityIndicator, View } from "react-native";
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
-import { Alert, Block, Button, Text, TripCard } from "../components/";
+import { Alert, Block, Button, Card, Text, TripCard } from "../components/";
 import { useData, useTheme, useTranslation } from "../hooks";
 import { Ionicons } from "@expo/vector-icons";
 import keys from "../../keys.json";
 import { calculateDistance } from "../functions/mathematical";
-import { get, ref, db, update, onChildChanged } from "../services/firebase";
+import {
+  get,
+  ref,
+  db,
+  update,
+  onChildChanged,
+  remove,
+} from "../services/firebase";
 import { ITrip } from "../constants/types";
 import { useNavigation } from "@react-navigation/native";
+import { DataSnapshot, onChildRemoved } from "firebase/database";
+import UserTripCard from "../components/UserTripCard";
 
 const Home = () => {
   const [showMap, setShowMap] = useState(false);
@@ -21,7 +30,7 @@ const Home = () => {
   const [submitted, setSubmitted] = useState(false);
   const [trips, setTrips] = useState<ITrip[]>([]);
   const [myTrip, setMyTrip] = useState<any>(null);
-  const [matchedTrip, setMatchedTrip] = useState<ITrip | any>(null);
+  const [matchedTrips, setMatchedTrips] = useState<ITrip | any>(null);
   const [foundMatch, setFoundMatch] = useState(false);
   const navigation = useNavigation();
   const [zoom, setZoom] = useState(15);
@@ -44,6 +53,10 @@ const Home = () => {
     type: "",
     message: "",
   });
+  const [timer, setTimer] = useState(10);
+  const [tripAccepted, setTripAccepted] = useState(false);
+  const [userAccepted, setUserAccepted] = useState(false);
+  const [assignedTrip, setAssignedTrip] = useState<any>(null);
 
   // Show the alert and close it after 5 seconds
   const showAlert = useCallback(
@@ -57,7 +70,31 @@ const Home = () => {
     [setAlert, setIsAlertVisible]
   );
 
+  // Function to handle trip acceptance
+  const handleTripAccepted = () => {
+    setTripAccepted(true);
+  };
+
+  const handleTripStart = () => {
+    navigation.navigate("Trips", { trip: myTrip });
+  };
+
+  useEffect(() => {
+    // Use the tripAccepted state here or perform any other logic
+    console.log("Trip accepted state:", tripAccepted);
+  }, [tripAccepted]);
+
+  // Function to handle user acceptance from the passengers object in database
+  const handleUserAccepted = useCallback(() => {
+    get(ref(db, `trips/${id}/passengers/${user.data.id}`)).then((snapshot) => {
+      if (snapshot.exists()) {
+        setUserAccepted(true);
+      }
+    });
+  }, [user]);
+
   const handleTripSearch = useCallback(async () => {
+    if (!user) return navigation.navigate("Login");
     setSearched(true);
     console.log("searching for trip");
     console.log(locationSelected, selectedLocation);
@@ -104,10 +141,12 @@ const Home = () => {
             trip.forEach((t: any) => {
               console.log(user);
               console.log(`trips/${t[1].id}/requests/${user.auth.uid}`);
+              setId(t[1].id);
               update(ref(db, `trips/${t[1].id}/requests/${user.auth.uid}`), {
                 id: user.auth.uid,
                 name: user.data.name,
                 avatar: user.data.avatar,
+                phone: user.data.phone,
                 from: {
                   latitude: userLocation.coords.latitude,
                   longitude: userLocation.coords.longitude,
@@ -118,6 +157,17 @@ const Home = () => {
                 },
                 status: "pending",
               });
+              if (!userAccepted) {
+                // If there's no response after 10 seconds drop the request
+                setTimeout(() => {
+                  remove(ref(db, `trips/${t[1].id}/requests/${user.auth.uid}`));
+                  setFoundMatch(false);
+                }, 10000);
+
+                setTimeout(() => {
+                  setSearched(false);
+                }, 12000);
+              }
             });
           } else {
             showAlert("danger", t("home.tripNotFound"));
@@ -128,6 +178,16 @@ const Home = () => {
     }
   }, [user, selectedLocation, locationSelected, route]);
 
+  // Timer to start if a match is found and the user doesn't respond
+  useEffect(() => {
+    if (foundMatch) {
+      const interval = setInterval(() => {
+        setTimer((timer) => timer - 1);
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [foundMatch]);
+
   const updateMyTrip = useCallback(async () => {
     console.log("updating my trip");
     await get(ref(db, `trips/${id}`)).then((snapshot) => {
@@ -136,16 +196,46 @@ const Home = () => {
     });
   }, []);
 
-  const dataChanged = onChildChanged(ref(db, "trips"), (snapshot) => {
+  useEffect(() => {
+    const unsubscribe = onChildRemoved(
+      ref(db, `trips/${id}/requests`),
+      (data) => {
+        if (user && user.auth) {
+          get(ref(db, `trips/${id}/passengers/${user.auth.uid}`)).then(
+            (snapshot) => {
+              if (snapshot.exists()) {
+                setUserAccepted(true);
+                get(ref(db, `trips/${id}`)).then((snapshot) => {
+                  setAssignedTrip(snapshot.val());
+                });
+              }
+            }
+          );
+        }
+      }
+    );
+
+    return () => {
+      unsubscribe();
+    };
+  }, [foundMatch]);
+
+  const handleChildChange = (snapshot: DataSnapshot) => {
     console.log("data changed");
     if (snapshot.val()) {
-      // push new trip to trips array
-      searched ? handleTripSearch() : updateMyTrip();
+      if (searched) {
+        handleTripSearch();
+      } else {
+        updateMyTrip();
+      }
     }
-  });
+  };
 
   useEffect(() => {
-    dataChanged();
+    const unsubscribe = onChildChanged(ref(db, "trips"), handleChildChange);
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   const handleTripSubmit = useCallback(async () => {
@@ -194,6 +284,19 @@ const Home = () => {
       showAlert("success", t("home.tripSubmitted"));
     });
   }, [selectedLocation, userLocation, user]);
+
+  const handleTripCancel = useCallback(async () => {
+    console.log("cancelling trip");
+    await remove(ref(db, `trips/${id}`));
+    setSubmitted(false);
+    setSearched(false);
+    setLocationSelected(false);
+    setMyTrip(null);
+    setAssignedTrip(null);
+    setSelectedLocation(null);
+    setFoundMatch(false);
+    showAlert("success", t("home.tripCancelled"));
+  }, []);
 
   useEffect(() => {
     const getLocation = async () => {
@@ -265,6 +368,22 @@ const Home = () => {
             setZoom(10);
           }}
         >
+          {userAccepted && assignedTrip && (
+            <Marker
+              pinColor={colors.black.toString()}
+              coordinate={assignedTrip.from}
+            />
+          )}
+          {tripAccepted &&
+            myTrip &&
+            myTrip.passengers &&
+            Object.entries(myTrip.passengers).map(([key, value]: any) => (
+              <Marker
+                key={key}
+                pinColor={colors.black.toString()}
+                coordinate={value.from}
+              />
+            ))}
           {locationSelected && (
             <>
               <Marker
@@ -309,7 +428,12 @@ const Home = () => {
             bottom: sizes.xxl,
             left: sizes.sm,
             right: sizes.sm,
-            height: user && user.data.type === "Driver" ? 270 : "auto",
+            height:
+              user && user.data.type === "Driver" && submitted
+                ? 350
+                : user && user.data.type === "Driver"
+                ? 250
+                : "auto",
             backgroundColor: isDark ? colors.black : colors.white,
           }}
         >
@@ -320,7 +444,7 @@ const Home = () => {
               justify="space-between"
               horizontal
             >
-              {route && !searched && !submitted ? (
+              {route && !searched && !submitted && !tripAccepted ? (
                 <>
                   <Button
                     style={{
@@ -381,11 +505,19 @@ const Home = () => {
                       size="small"
                       color={isDark ? colors.white : colors.black}
                     />
-                    {foundMatch ? (
+                    {foundMatch && !userAccepted ? (
                       <Text bold>{t("home.foundMatch")}</Text>
+                    ) : userAccepted && assignedTrip ? (
+                      <UserTripCard
+                        trip={assignedTrip}
+                        reference={id}
+                        avatar={assignedTrip.user.avatar}
+                        name={assignedTrip.user.name}
+                      />
                     ) : (
                       <Text bold>{t("home.searching")}</Text>
                     )}
+                    {tripAccepted && <Text bold>{t("home.tripAccepted")}</Text>}
                   </>
                 )
               )}
@@ -414,35 +546,51 @@ const Home = () => {
                 <Text bold>{t("home.searchForPassengers")}</Text>
               </Button>
             )}
-            {!searched && submitted && (
+            {submitted && (
               <>
                 <ActivityIndicator
                   size="small"
                   color={isDark ? colors.white : colors.black}
                 />
                 <Text>
-                  {matchedTrip
+                  {matchedTrips
                     ? t("home.gotAMatch")
                     : t("home.waitingForPassengers")}
                 </Text>
                 {myTrip &&
                   myTrip.requests &&
-                  Object.entries(myTrip.requests).map((requester: any) => (
+                  Object.entries(myTrip.requests).map(([key, value]: any) => (
                     <TripCard
-                      key={`request-${requester}`}
-                      trip={requester}
-                      reference={myTrip}
+                      key={`request-${key}`}
+                      trip={[key, value]}
+                      reference={id}
+                      avatar={user.data.avatar}
+                      name={user.data.name}
+                      id={user.auth.uid}
+                      onTripAccepted={handleTripAccepted}
                     />
                   ))}
                 <Button
                   top={100}
                   vibrate={[300, 200, 100]}
-                  danger
+                  color={tripAccepted ? colors.success : colors.danger}
                   onPress={() => {
-                    //TODO: CANCEL TRIP
+                    tripAccepted ? handleTripStart() : handleTripCancel();
                   }}
                 >
-                  <Text bold>{t("home.cancel")}</Text>
+                  <Text bold>
+                    {tripAccepted ? t("home.start") : t("home.cancel")}
+                  </Text>
+                </Button>
+                <Button
+                  top={100}
+                  vibrate={[300, 200, 100]}
+                  secondary
+                  onPress={() => {
+                    handleTripCancel();
+                  }}
+                >
+                  <Text bold>{t("home.end")}</Text>
                 </Button>
               </>
             )}
