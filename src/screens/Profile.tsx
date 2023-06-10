@@ -5,12 +5,14 @@ import {
   Linking,
   Platform,
   RefreshControl,
+  Touchable,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import * as regex from "../constants/regex";
 import { Block, Button, Image, Text, Tag, Modal, Input } from "../components/";
 import { useData, useTheme, useTranslation } from "../hooks/";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const isAndroid = Platform.OS === "android";
 interface IProfile {
@@ -84,12 +86,16 @@ const Profile = () => {
               </Text>
             </Button>
             <Block flex={0} align="center">
+              <TouchableOpacity
+              onPress={() => {navigation.navigate("EditProfile");}}
+              >
               <Image
                 width={64}
                 height={64}
                 marginBottom={sizes.sm}
                 source={{ uri: user.data.avatar }}
               />
+              </TouchableOpacity>
               <Text h5 center white>
                 {user.data.name}
               </Text>

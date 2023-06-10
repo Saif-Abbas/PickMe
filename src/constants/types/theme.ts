@@ -214,6 +214,7 @@ export interface ThemeIcons {
   clock: ImageSourcePropType;
   close: ImageSourcePropType;
   components: ImageSourcePropType;
+  history: ImageSourcePropType;
   home: ImageSourcePropType;
   location: ImageSourcePropType;
   login: ImageSourcePropType;

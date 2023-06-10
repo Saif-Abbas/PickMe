@@ -126,7 +126,7 @@ const DrawerContent = (
       {
         name: t("screens.tripsHistory"),
         to: "TripsHistory",
-        icon: assets.bell,
+        icon: assets.history,
       },
       {
         name: t("screens.PaymentMethods"),

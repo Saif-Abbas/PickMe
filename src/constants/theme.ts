@@ -40,6 +40,7 @@ export const ICONS: ThemeIcons = {
   clock: require("../assets/icons/clock.png"),
   close: require("../assets/icons/close.png"),
   components: require("../assets/icons/components.png"),
+  history: require("../assets/icons/history.png"),
   home: require("../assets/icons/home.png"),
   location: require("../assets/icons/location.png"),
   login: require("../assets/icons/login.png"),
